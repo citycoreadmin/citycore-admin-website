@@ -39,7 +39,7 @@ const D = {
     cat_other: "Other problems.",
     sign_in: "Sign in", sign_up: "Create account", sign_out: "Sign out", email: "Email", password: "Password",
     auth_needed: "Please sign in so we can link your ticket to your account and keep it private.",
-    auth_demo: "Demo mode: data is stored only in this browser.",
+    auth_demo: "Demo mode: data is stored only in this browser.", auth_identifier: "Email or username", auth_google: "Continue with Google", auth_forgot: "Forgot password?", auth_forgot_hint: "Enter your email above first.", auth_reset_sent: "If that email has an account, a reset link is on its way.",
     subject: "Subject", message: "Message", msg_ph: "Describe your issue…", attach: "Attach images or videos",
     send: "Send", submit_ticket: "Submit ticket", ticket: "Ticket", created: "Created",
     no_tickets: "You have no tickets yet.", reply_ph: "Write a reply…", closed_note: "This ticket is closed. Please open a new ticket.",
@@ -58,7 +58,7 @@ const D = {
     s_add_staff: "Add / update staff member", s_save: "Save", s_actor: "Actor", s_action: "Action", s_when: "When",
     s_perm_reply: "Reply", s_perm_assign: "Assign / prioritise", s_perm_change_status: "Change status",
     s_perm_view_stats: "View statistics", s_perm_view_audit: "View audit log", s_select: "Select a ticket",
-    s_no_perm: "You don't have permission for this.", r_founder: "Founder", r_admin: "Admin", r_agent: "Agent"
+    s_no_perm: "You don't have permission for this.", s_team_note: "Staff come from the CityCore Admin platform roles. Roles are managed in the app, not here.", s_role_perms: "Support permissions per role", s_saved: "Saved.", r_founder: "Founder", r_admin: "Admin", r_agent: "Agent", r_admin_5: "Admin L5", r_admin_4: "Admin L4", r_admin_3: "Admin L3", r_admin_2: "Admin L2", r_admin_1: "Admin L1"
   },
   fr: {
     nav_home: "Accueil", nav_help: "Centre d'aide", nav_support: "Assistance", nav_staff: "Équipe",
@@ -89,7 +89,7 @@ const D = {
     cat_other: "Autres problèmes.",
     sign_in: "Se connecter", sign_up: "Créer un compte", sign_out: "Se déconnecter", email: "E-mail", password: "Mot de passe",
     auth_needed: "Connectez-vous pour que nous liions votre ticket à votre compte et le gardions privé.",
-    auth_demo: "Mode démo : les données restent uniquement dans ce navigateur.",
+    auth_demo: "Mode démo : les données restent uniquement dans ce navigateur.", auth_identifier: "E-mail ou nom d'utilisateur", auth_google: "Continuer avec Google", auth_forgot: "Mot de passe oublié ?", auth_forgot_hint: "Saisissez d'abord votre e-mail ci-dessus.", auth_reset_sent: "Si cet e-mail a un compte, un lien de réinitialisation est en route.",
     subject: "Objet", message: "Message", msg_ph: "Décrivez votre problème…", attach: "Joindre des images ou vidéos",
     send: "Envoyer", submit_ticket: "Envoyer le ticket", ticket: "Ticket", created: "Créé",
     no_tickets: "Vous n'avez pas encore de ticket.", reply_ph: "Écrire une réponse…", closed_note: "Ce ticket est fermé. Veuillez ouvrir un nouveau ticket.",
@@ -108,7 +108,7 @@ const D = {
     s_add_staff: "Ajouter / modifier un membre", s_save: "Enregistrer", s_actor: "Acteur", s_action: "Action", s_when: "Quand",
     s_perm_reply: "Répondre", s_perm_assign: "Assigner / prioriser", s_perm_change_status: "Changer le statut",
     s_perm_view_stats: "Voir les statistiques", s_perm_view_audit: "Voir le journal d'audit", s_select: "Sélectionnez un ticket",
-    s_no_perm: "Vous n'avez pas la permission.", r_founder: "Fondateur", r_admin: "Admin", r_agent: "Agent"
+    s_no_perm: "Vous n'avez pas la permission.", s_team_note: "Le personnel provient des rôles de la plateforme CityCore Admin. Les rôles se gèrent dans l'app, pas ici.", s_role_perms: "Permissions du support par rôle", s_saved: "Enregistré.", r_founder: "Fondateur", r_admin: "Admin", r_agent: "Agent", r_admin_5: "Admin N5", r_admin_4: "Admin N4", r_admin_3: "Admin N3", r_admin_2: "Admin N2", r_admin_1: "Admin N1"
   },
   ht: {
     nav_home: "Akèy", nav_help: "Sant Èd", nav_support: "Sipò", nav_staff: "Ekip",
@@ -139,7 +139,7 @@ const D = {
     cat_other: "Lòt pwoblèm.",
     sign_in: "Konekte", sign_up: "Kreye yon kont", sign_out: "Dekonekte", email: "Imèl", password: "Modpas",
     auth_needed: "Tanpri konekte pou nou ka lye tikè w la ak kont ou epi kenbe l prive.",
-    auth_demo: "Mòd demo : done yo rete sèlman nan navigatè sa a.",
+    auth_demo: "Mòd demo : done yo rete sèlman nan navigatè sa a.", /* NEEDS NATIVE REVIEW (Haitian Creole) */ auth_identifier: "Imèl oswa non itilizatè", auth_google: "Kontinye ak Google", auth_forgot: "Ou bliye modpas ou?", auth_forgot_hint: "Antre imèl ou anlè a anvan.", auth_reset_sent: "Si imèl sa a gen yon kont, yon lyen pou reyinisyalize ap voye ba ou.",
     subject: "Sijè", message: "Mesaj", msg_ph: "Dekri pwoblèm ou an…", attach: "Ajoute imaj oswa videyo",
     send: "Voye", submit_ticket: "Voye tikè a", ticket: "Tikè", created: "Kreye",
     no_tickets: "Ou poko gen tikè.", reply_ph: "Ekri yon repons…", closed_note: "Tikè sa a fèmen. Tanpri louvri yon nouvo tikè.",
@@ -158,7 +158,7 @@ const D = {
     s_add_staff: "Ajoute / modifye yon manm", s_save: "Anrejistre", s_actor: "Aktè", s_action: "Aksyon", s_when: "Kilè",
     s_perm_reply: "Reponn", s_perm_assign: "Asiyen / priyorite", s_perm_change_status: "Chanje estati",
     s_perm_view_stats: "Wè estatistik", s_perm_view_audit: "Wè jounal odit", s_select: "Chwazi yon tikè",
-    s_no_perm: "Ou pa gen pèmisyon pou sa.", r_founder: "Fondatè", r_admin: "Admin", r_agent: "Ajan"
+    s_no_perm: "Ou pa gen pèmisyon pou sa.", s_team_note: "Anplwaye yo soti nan wòl platfòm CityCore Admin yo. Wòl yo jere nan app la, pa isit la.", s_role_perms: "Pèmisyon sipò pou chak wòl", s_saved: "Anrejistre.", r_founder: "Fondatè", r_admin: "Admin", r_agent: "Ajan", r_admin_5: "Admin N5", r_admin_4: "Admin N4", r_admin_3: "Admin N3", r_admin_2: "Admin N2", r_admin_1: "Admin N1"
   }
 };
 

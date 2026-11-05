@@ -73,7 +73,8 @@ export function mountWidget(getPlatform = () => "web") {
 
   async function viewAuth() {
     const err = h("p", { class: "form-err", role: "alert" });
-    const email = h("input", { type: "email", required: true, autocomplete: "email", id: "ccEmail" });
+    const signin = state.authMode === "signin";
+    const email = h("input", { type: signin ? "text" : "email", required: true, autocomplete: signin ? "username" : "email", id: "ccEmail", autocapitalize: "none", spellcheck: "false" });
     const pw = h("input", { type: "password", required: true, minlength: 6, autocomplete: state.authMode === "signin" ? "current-password" : "new-password", id: "ccPw" });
     const form = h("form", { class: "form", onsubmit: async e => {
       e.preventDefault(); err.textContent = "";
@@ -87,8 +88,16 @@ export function mountWidget(getPlatform = () => "web") {
       h("div", { class: "tabs" },
         h("button", { type: "button", class: "tab" + (state.authMode === "signin" ? " on" : ""), onclick: () => go("auth", { authMode: "signin" }) }, t("sign_in")),
         h("button", { type: "button", class: "tab" + (state.authMode === "signup" ? " on" : ""), onclick: () => go("auth", { authMode: "signup" }) }, t("sign_up"))),
-      h("label", { for: "ccEmail" }, t("email")), email, h("label", { for: "ccPw" }, t("password")), pw, err,
-      h("button", { class: "btn btn-primary", type: "submit" }, state.authMode === "signin" ? t("sign_in") : t("sign_up")));
+      h("label", { for: "ccEmail" }, signin ? t("auth_identifier") : t("email")), email, h("label", { for: "ccPw" }, t("password")), pw, err,
+      h("button", { class: "btn btn-primary", type: "submit" }, signin ? t("sign_in") : t("sign_up")),
+      signin ? h("button", { type: "button", class: "btn btn-link", onclick: async () => {
+        err.textContent = "";
+        if (!email.value.includes("@")) { err.textContent = t("auth_forgot_hint"); return; }
+        try { await backend.resetPassword(email.value); err.textContent = t("auth_reset_sent"); } catch (x) { err.textContent = x.message; }
+      } }, t("auth_forgot")) : null,
+      backend.hasGoogle ? h("button", { type: "button", class: "btn btn-ghost", onclick: async () => {
+        try { await backend.signInWithGoogle(); } catch (x) { err.textContent = x.message; }
+      } }, t("auth_google")) : null);
     body.append(form);
   }
 

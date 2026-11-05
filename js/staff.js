@@ -1,4 +1,4 @@
-import { backend, isDemo } from "./backend.js";
+import { backend, isDemo, PLATFORM_ROLES } from "./backend.js";
 import { t, CATEGORIES, STATUSES, PRIORITIES, fmtDate } from "./i18n.js";
 import { h, initTheme, initLangSelects } from "./ui.js";
 
@@ -31,21 +31,27 @@ function render() {
     h("button", { class: "btn btn-ghost btn-sm", onclick: async () => { await backend.signOut(); boot(); } }, t("sign_out"))));
   const body = h("div", { id: "tabBody" });
   app.append(body);
-  ({ tickets: ticketsTab, stats: statsTab, team: teamTab, audit: auditTab }[S.tab])(body);
+  Promise.resolve(({ tickets: ticketsTab, stats: statsTab, team: teamTab, audit: auditTab }[S.tab])(body)).catch(async () => {
+    const u = await backend.getUser();
+    if (!u || !S.me || u.id !== S.me.id) boot();
+  });
 }
 async function refresh() { const b = document.getElementById("tabBody"); if (b && S.tab === "tickets") await ticketsTab(b); }
 
 function loginView() {
   const err = h("p", { class: "form-err", role: "alert" });
-  const email = h("input", { type: "email", required: true, autocomplete: "email" });
+  const email = h("input", { type: "text", required: true, autocomplete: "username", autocapitalize: "none", spellcheck: "false", "aria-label": t("auth_identifier") });
   const pw = h("input", { type: "password", required: true, autocomplete: "current-password" });
   return h("form", { class: "card form narrow", onsubmit: async e => {
     e.preventDefault(); err.textContent = "";
     try { await backend.signIn(email.value, pw.value); await boot(); } catch (x) { err.textContent = x.message; }
   } }, h("h2", {}, t("s_title")),
     isDemo ? h("p", { class: "demo-note" }, t("auth_demo") + " (founder@demo.test)") : null,
-    h("label", {}, t("email")), email, h("label", {}, t("password")), pw, err,
-    h("button", { class: "btn btn-primary", type: "submit" }, t("sign_in")));
+    h("label", {}, t("auth_identifier")), email, h("label", {}, t("password")), pw, err,
+    h("button", { class: "btn btn-primary", type: "submit" }, t("sign_in")),
+    backend.hasGoogle ? h("button", { type: "button", class: "btn btn-ghost", onclick: async () => {
+      try { await backend.signInWithGoogle(); } catch (x) { err.textContent = x.message; }
+    } }, t("auth_google")) : null);
 }
 
 function selectOf(opts, value, onchange, allLabel) {
@@ -115,23 +121,37 @@ async function statsTab(root) {
 }
 
 async function teamTab(root) {
-  const staff = await backend.staffList();
-  const email = h("input", { type: "email", required: true, "aria-label": t("email") });
-  const role = selectOf(["founder", "admin", "agent"].map(r => [r, t("r_" + r)]), "agent", () => {});
-  const perms = Object.fromEntries(PERMS.map(p => [p, h("input", { type: "checkbox", checked: ["reply", "change_status", "view_stats"].includes(p) })]));
-  const active = h("input", { type: "checkbox", checked: true });
+  const [staff, rolePerms] = await Promise.all([backend.staffList(), backend.rolePermissions()]);
   const err = h("p", { class: "form-err", role: "alert" });
-  root.replaceChildren(
-    h("div", { class: "card" }, h("table", { class: "tbl" }, h("thead", {}, h("tr", {}, [t("email"), t("s_role"), t("s_active"), "Permissions"].map(x => h("th", {}, x)))),
-      h("tbody", {}, staff.map(s => h("tr", {}, h("td", {}, s.email), h("td", {}, t("r_" + s.role)), h("td", {}, s.active ? "✓" : "—"),
-        h("td", {}, s.role === "founder" ? "★" : PERMS.filter(p => s.permissions && s.permissions[p]).map(p => t("s_perm_" + p)).join(", "))))))),
-    h("form", { class: "card form", onsubmit: async e => {
-      e.preventDefault(); err.textContent = "";
-      try { await backend.setStaff({ email: email.value, role: role.value, permissions: Object.fromEntries(PERMS.map(p => [p, perms[p].checked])), active: active.checked }); teamTab(root); }
+  const permList = p => (p || {});
+  const members = h("div", { class: "card" }, h("p", { class: "muted small" }, t("s_team_note")),
+    h("div", { class: "tbl-wrap" }, h("table", { class: "tbl" }, h("thead", {}, h("tr", {}, [t("email"), t("s_role"), "Permissions"].map(x => h("th", {}, x)))),
+      h("tbody", {}, staff.map(s => h("tr", {}, h("td", {}, s.email), h("td", {}, t("r_" + s.role)),
+        h("td", {}, s.role === "founder" ? "★" : PERMS.filter(p => permList(s.permissions)[p]).map(p => t("s_perm_" + p)).join(", ") || "—")))))));
+  const current = rolePerms;
+  const rows = PLATFORM_ROLES.map(r => {
+    const boxes = Object.fromEntries(PERMS.map(p => [p, h("input", { type: "checkbox", checked: !!permList(current[r])[p], "aria-label": `${t("r_" + r)} ${t("s_perm_" + p)}` })]));
+    const save = h("button", { class: "btn btn-ghost btn-sm", type: "button", onclick: async () => {
+      err.textContent = "";
+      try { await backend.setRolePermissions(r, Object.fromEntries(PERMS.map(p => [p, boxes[p].checked]))); err.textContent = t("s_saved"); }
       catch (x) { err.textContent = x.message; }
-    } }, h("h3", {}, t("s_add_staff")), h("label", {}, t("email")), email, h("label", {}, t("s_role")), role,
-      h("div", { class: "checks" }, PERMS.map(p => h("label", { class: "check" }, perms[p], t("s_perm_" + p))), h("label", { class: "check" }, active, t("s_active"))),
-      err, h("button", { class: "btn btn-primary", type: "submit" }, t("s_save"))));
+    } }, t("s_save"));
+    return h("tr", {}, h("td", {}, t("r_" + r)), PERMS.map(p => h("td", {}, boxes[p])), h("td", {}, save));
+  });
+  const matrix = h("div", { class: "card" }, h("h3", {}, t("s_role_perms")),
+    h("div", { class: "tbl-wrap" }, h("table", { class: "tbl" }, h("thead", {}, h("tr", {}, [t("s_role"), ...PERMS.map(p => t("s_perm_" + p)), ""].map(x => h("th", {}, x)))), h("tbody", {}, rows))), err);
+  root.replaceChildren(members, matrix, isDemo ? demoGrant(root) : null);
+}
+
+function demoGrant(root) {
+  const email = h("input", { type: "email", required: true, "aria-label": t("email") });
+  const role = selectOf(PLATFORM_ROLES.map(r => [r, t("r_" + r)]), "admin_1", () => {});
+  const err = h("p", { class: "form-err", role: "alert" });
+  return h("form", { class: "card form", onsubmit: async e => {
+    e.preventDefault(); err.textContent = "";
+    try { await backend.demoGrantRole(email.value, role.value); teamTab(root); } catch (x) { err.textContent = x.message; }
+  } }, h("h3", {}, "Demo only: simulate platform_administrators"), h("p", { class: "demo-note" }, "The live site never assigns platform roles."),
+    email, role, err, h("button", { class: "btn btn-primary", type: "submit" }, t("s_save")));
 }
 
 async function auditTab(root) {

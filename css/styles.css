@@ -155,3 +155,6 @@ img { max-width: 100%; }
   .fab.is-open { display: none; }
   .search { flex-wrap: wrap; } .search .btn { width: 100%; }
 }
+.tbl-wrap { overflow-x: auto; }
+.tbl-wrap .tbl { min-width: 560px; }
+.tbl-wrap .tbl th, .tbl-wrap .tbl td { overflow-wrap: normal; }

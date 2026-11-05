@@ -15,14 +15,23 @@ const uuid = () => (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())
 
 /* ============================================================== DEMO */
 const DB_KEY = "cc_demo_db", SESSION_KEY = "cc_demo_session";
-const DEMO_PERMS = { reply: true, assign: false, change_status: true, view_stats: true, view_audit: false };
+export const PLATFORM_ROLES = ["admin_5", "admin_4", "admin_3", "admin_2", "admin_1"];
+// Mirrors the seeded defaults in the SQL migration (admin_5 = highest level below founder).
+const DEFAULT_ROLE_PERMS = {
+  admin_5: { reply: true, assign: true, change_status: true, view_stats: true, view_audit: true },
+  admin_4: { reply: true, assign: true, change_status: true, view_stats: true, view_audit: true },
+  admin_3: { reply: true, assign: true, change_status: true, view_stats: true, view_audit: false },
+  admin_2: { reply: true, assign: false, change_status: true, view_stats: true, view_audit: false },
+  admin_1: { reply: true, assign: false, change_status: false, view_stats: false, view_audit: false }
+};
+const ALL_PERMS = { reply: true, assign: true, change_status: true, view_stats: true, view_audit: true };
 
 function loadDb() {
   let db = null;
   try { db = JSON.parse(localStorage.getItem(DB_KEY)); } catch { /* ignore */ }
   if (!db) {
     db = { seq: 1000, users: {}, tickets: [], messages: [], notifications: [], audit: [],
-      staff: { "founder@demo.test": { role: "founder", permissions: {}, active: true } } };
+      staff: { "founder@demo.test": { role: "founder" } }, rolePerms: DEFAULT_ROLE_PERMS };
   }
   return db;
 }
@@ -34,8 +43,9 @@ function demoBackend() {
   window.addEventListener("storage", e => { if (e.key === DB_KEY || e.key === SESSION_KEY) emit(); });
   const me = () => { try { return JSON.parse(localStorage.getItem(SESSION_KEY)); } catch { return null; } };
   const requireUser = () => { const u = me(); if (!u) throw new Error("auth"); return u; };
-  const staffEntry = (db, u) => u && db.staff[u.email] && db.staff[u.email].active ? db.staff[u.email] : null;
-  const can = (db, u, perm) => { const s = staffEntry(db, u); return !!s && (s.role === "founder" || !!s.permissions[perm]); };
+  const staffEntry = (db, u) => (u && db.staff[u.email]) || null;
+  const permsOf = (db, s) => (s.role === "founder" ? ALL_PERMS : (db.rolePerms || DEFAULT_ROLE_PERMS)[s.role] || {});
+  const can = (db, u, perm) => { const s = staffEntry(db, u); return !!s && !!permsOf(db, s)[perm]; };
   const audit = (db, u, action, ticket_id, details = {}) =>
     db.audit.unshift({ id: uuid(), actor_email: u.email, action, ticket_id: ticket_id || null, details, created_at: new Date().toISOString() });
   const canSee = (db, u, t) => t.user_id === u.id || !!staffEntry(db, u);
@@ -53,8 +63,10 @@ function demoBackend() {
     async init() {},
     onChange(cb) { listeners.add(cb); return () => listeners.delete(cb); },
     async getUser() { return me(); },
-    async signIn(email, pw) {
-      const db = loadDb(); email = email.trim().toLowerCase();
+    hasGoogle: false,
+    async signIn(identifier, pw) {
+      const db = loadDb(); let email = identifier.trim().toLowerCase();
+      if (!email.includes("@")) email = Object.keys(db.users).find(e => e.split("@")[0] === email) || email;
       const u = db.users[email];
       if (!u || u.pw !== pw) throw new Error("Invalid email or password");
       localStorage.setItem(SESSION_KEY, JSON.stringify({ id: u.id, email })); emit();
@@ -66,10 +78,12 @@ function demoBackend() {
       db.users[email] = { id: uuid(), pw }; saveDb(db);
       localStorage.setItem(SESSION_KEY, JSON.stringify({ id: db.users[email].id, email })); emit();
     },
+    async signInWithGoogle() { throw new Error("Google sign-in is not available in demo mode"); },
+    async resetPassword() {},
     async signOut() { localStorage.removeItem(SESSION_KEY); emit(); },
     async staffRole() {
       const db = loadDb(), u = me(); const s = staffEntry(db, u);
-      return s ? { role: s.role, permissions: s.role === "founder" ? { reply: 1, assign: 1, change_status: 1, view_stats: 1, view_audit: 1 } : s.permissions } : null;
+      return s ? { role: s.role, permissions: permsOf(db, s) } : null;
     },
 
     async createTicket({ category, subject, body, files = [], platform, language }) {
@@ -78,7 +92,7 @@ function demoBackend() {
       if (!validateFiles(files)) throw new Error("file");
       const now = new Date().toISOString();
       const t = { id: uuid(), ticket_number: "CC-" + (++db.seq), user_id: u.id, requester_email: u.email, category,
-        subject: subject.trim().slice(0, 200), priority: "normal", status: "open", assigned_to: null, platform, language,
+        subject: subject.trim().slice(0, 200), priority: "normal", status: "open", assigned_to: null, platform, language, source: "web",
         created_at: now, updated_at: now };
       db.tickets.push(t);
       db.messages.push({ id: uuid(), ticket_id: t.id, author_id: u.id, is_staff: false, body: body.trim(), created_at: now,
@@ -141,7 +155,8 @@ function demoBackend() {
       const ok = { status: "change_status", priority: "assign", assigned_to: "assign" };
       for (const k of Object.keys(patch)) {
         if (!ok[k]) throw new Error("forbidden field");
-        if (!can(db, u, ok[k])) throw new Error("forbidden");
+        if (t[k] !== patch[k] && !can(db, u, ok[k])) throw new Error("forbidden");
+        if (k === "assigned_to" && patch[k] && !Object.keys(db.staff).some(e => (db.users[e] || {}).id === patch[k])) throw new Error("assignee must be support staff");
         if (t[k] !== patch[k]) {
           audit(db, u, k === "status" ? "status_changed" : k === "priority" ? "priority_changed" : "assigned", t.id, { from: t[k], to: patch[k] });
           t[k] = patch[k];
@@ -151,15 +166,27 @@ function demoBackend() {
     },
     async staffList() {
       const db = loadDb(), u = requireUser(); if (!staffEntry(db, u)) throw new Error("forbidden");
-      return Object.entries(db.staff).map(([email, s]) => ({ user_id: (db.users[email] || {}).id || email, email, ...s }));
+      return Object.entries(db.staff).map(([email, st]) => ({ user_id: (db.users[email] || {}).id || email, email, role: st.role, permissions: permsOf(db, st) }));
     },
-    async setStaff({ email, role, permissions, active }) {
+    async rolePermissions() {
+      const db = loadDb(), u = requireUser(); if (!staffEntry(db, u)) throw new Error("forbidden");
+      return db.rolePerms || DEFAULT_ROLE_PERMS;
+    },
+    async setRolePermissions(role, permissions) {
+      const db = loadDb(), u = requireUser();
+      const s = staffEntry(db, u); if (!s || s.role !== "founder") throw new Error("forbidden");
+      if (!PLATFORM_ROLES.includes(role)) throw new Error("founder permissions are fixed");
+      db.rolePerms = { ...(db.rolePerms || DEFAULT_ROLE_PERMS), [role]: Object.fromEntries(Object.keys(ALL_PERMS).map(k => [k, !!permissions[k]])) };
+      audit(db, u, "role_permissions_changed", null, { role }); saveDb(db); emit();
+    },
+    // DEMO ONLY: stands in for the existing platform_administrators table so staff flows can be tested.
+    // The real website never assigns platform roles.
+    async demoGrantRole(email, role) {
       const db = loadDb(), u = requireUser();
       const s = staffEntry(db, u); if (!s || s.role !== "founder") throw new Error("forbidden");
       email = email.trim().toLowerCase();
       if (!db.users[email]) throw new Error("no user with that email");
-      db.staff[email] = { role, permissions: permissions || {}, active: active !== false };
-      audit(db, u, "staff_changed", null, { email, role, active }); saveDb(db); emit();
+      db.staff[email] = { role }; saveDb(db); emit();
     },
     async stats() {
       const db = loadDb(), u = requireUser(); if (!can(db, u, "view_stats")) throw new Error("forbidden");
@@ -194,7 +221,7 @@ async function supabaseBackend() {
     }
   }
   async function addMessage(ticketId, body, files) {
-    const m = must(await sb.from("support_messages").insert({ ticket_id: ticketId, body: body.trim(), author_id: user.id }).select().single());
+    const m = must(await sb.from("support_messages").insert({ ticket_id: ticketId, body: body.trim() }).select().single());
     await uploadFiles(ticketId, m.id, files);
   }
 
@@ -209,7 +236,32 @@ async function supabaseBackend() {
     },
     onChange(cb) { listeners.add(cb); return () => listeners.delete(cb); },
     async getUser() { return user ? { id: user.id, email: user.email } : null; },
-    async signIn(email, password) { must(await sb.auth.signInWithPassword({ email, password })); await refreshUser(); },
+    hasGoogle: true,
+    // Accepts an email or a CityCore username (resolved by the existing `username-sign-in` Edge Function).
+    async signIn(identifier, password) {
+      identifier = identifier.trim();
+      if (identifier.includes("@")) must(await sb.auth.signInWithPassword({ email: identifier, password }));
+      else {
+        let res;
+        try {
+          res = await fetch(`${CFG.SUPABASE_URL}/functions/v1/username-sign-in`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", apikey: CFG.SUPABASE_ANON_KEY },
+            body: JSON.stringify({ username: identifier, password })
+          });
+        } catch { throw new Error("Network error"); }
+        if (!res.ok) throw new Error("Invalid username or password");
+        const tok = await res.json();
+        must(await sb.auth.setSession({ access_token: tok.access_token, refresh_token: tok.refresh_token }));
+      }
+      await refreshUser();
+    },
+    async signInWithGoogle() {
+      must(await sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.href.split("#")[0] } }));
+    },
+    async resetPassword(email) {
+      must(await sb.auth.resetPasswordForEmail(email.trim(), { redirectTo: location.origin + "/" }));
+    },
     async signUp(email, password) {
       const d = must(await sb.auth.signUp({ email, password }));
       if (!d.session) throw new Error("Check your email to confirm your account, then sign in.");
@@ -218,14 +270,12 @@ async function supabaseBackend() {
     async signOut() { await sb.auth.signOut(); user = null; },
     async staffRole() {
       if (!user) return null;
-      const { data } = await sb.from("support_staff").select("role,permissions,active").eq("user_id", user.id).maybeSingle();
-      if (!data || !data.active) return null;
-      return { role: data.role, permissions: data.role === "founder" ? { reply: 1, assign: 1, change_status: 1, view_stats: 1, view_audit: 1 } : data.permissions };
+      return must(await sb.rpc("support_me"));
     },
     async createTicket({ category, subject, body, files = [], platform, language }) {
       if (!subject.trim() || !body.trim()) throw new Error("required");
       if (!validateFiles(files)) throw new Error("file");
-      const t = must(await sb.from("support_tickets").insert({ category, subject: subject.trim().slice(0, 200), platform, language, user_id: user.id, ticket_number: "pending" }).select().single());
+      const t = must(await sb.from("support_tickets").insert({ category, subject: subject.trim().slice(0, 200), platform, language, source: "web" }).select().single());
       await addMessage(t.id, body, files);
       return t;
     },
@@ -275,12 +325,16 @@ async function supabaseBackend() {
       return must(await query);
     },
     async updateTicket(id, patch) { must(await sb.from("support_tickets").update(patch).eq("id", id)); },
-    async staffList() { return must(await sb.from("support_staff").select("*").order("created_at")); },
-    async setStaff({ email, role, permissions, active }) {
-      must(await sb.rpc("support_set_staff", { p_email: email, p_role: role, p_permissions: permissions || {}, p_active: active !== false }));
+    async staffList() { return must(await sb.rpc("support_staff_list")); },
+    async rolePermissions() {
+      const rows = must(await sb.from("support_role_permissions").select("role,permissions"));
+      return Object.fromEntries(rows.map(r => [r.role, r.permissions]));
+    },
+    async setRolePermissions(role, permissions) {
+      must(await sb.rpc("support_set_role_permissions", { p_role: role, p_permissions: permissions }));
     },
     async stats() { return must(await sb.rpc("support_stats")); },
-    async auditLog() { return must(await sb.from("support_audit_log").select("*").order("created_at", { ascending: false }).limit(200)); }
+    async auditLog() { return must(await sb.rpc("support_audit_list")); }
   };
   return api;
 }
