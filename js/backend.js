@@ -16,14 +16,9 @@ const uuid = () => (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())
 /* ============================================================== DEMO */
 const DB_KEY = "cc_demo_db", SESSION_KEY = "cc_demo_session";
 export const PLATFORM_ROLES = ["admin_5", "admin_4", "admin_3", "admin_2", "admin_1"];
-// Mirrors the seeded defaults in the SQL migration (admin_5 = highest level below founder).
-const DEFAULT_ROLE_PERMS = {
-  admin_5: { reply: true, assign: true, change_status: true, view_stats: true, view_audit: true },
-  admin_4: { reply: true, assign: true, change_status: true, view_stats: true, view_audit: true },
-  admin_3: { reply: true, assign: true, change_status: true, view_stats: true, view_audit: false },
-  admin_2: { reply: true, assign: false, change_status: true, view_stats: true, view_audit: false },
-  admin_1: { reply: true, assign: false, change_status: false, view_stats: false, view_audit: false }
-};
+// Mirrors the SQL seed: no ranking is assumed between admin_1..admin_5; the Founder tunes each role.
+const BASE = { reply: true, assign: false, change_status: true, view_stats: true, view_audit: false };
+const DEFAULT_ROLE_PERMS = Object.fromEntries(["admin_5", "admin_4", "admin_3", "admin_2", "admin_1"].map(r => [r, { ...BASE }]));
 const ALL_PERMS = { reply: true, assign: true, change_status: true, view_stats: true, view_audit: true };
 
 function loadDb() {

@@ -13,13 +13,12 @@ create table if not exists public.support_role_permissions (
   permissions jsonb not null default '{}'::jsonb,
   updated_at  timestamptz not null default now()
 );
--- ASSUMPTION (confirm): admin_5 is the most senior non-founder level, admin_1 the least.
-insert into public.support_role_permissions (role, permissions) values
-  ('admin_5', '{"reply":true,"assign":true,"change_status":true,"view_stats":true,"view_audit":true}'),
-  ('admin_4', '{"reply":true,"assign":true,"change_status":true,"view_stats":true,"view_audit":true}'),
-  ('admin_3', '{"reply":true,"assign":true,"change_status":true,"view_stats":true,"view_audit":false}'),
-  ('admin_2', '{"reply":true,"assign":false,"change_status":true,"view_stats":true,"view_audit":false}'),
-  ('admin_1', '{"reply":true,"assign":false,"change_status":false,"view_stats":false,"view_audit":false}')
+-- No admin_1..admin_5 hierarchy is defined anywhere in the app or schema (existing policies treat every platform
+-- administrator equally), so no ranking is assumed: all five roles start identical and conservative.
+-- The Founder tunes them per role via support_set_role_permissions().
+insert into public.support_role_permissions (role, permissions)
+select r, '{"reply":true,"assign":false,"change_status":true,"view_stats":true,"view_audit":false}'::jsonb
+from unnest(array['admin_1','admin_2','admin_3','admin_4','admin_5']::public.platform_role[]) r
 on conflict (role) do nothing;
 
 create or replace function public.support_is_staff()
@@ -287,6 +286,20 @@ revoke all on function public.support_me(), public.support_staff_list(), public.
   public.support_stats(), public.support_audit_list() from public, anon;
 grant execute on function public.support_me(), public.support_staff_list(), public.support_set_role_permissions(text,jsonb),
   public.support_stats(), public.support_audit_list() to authenticated;
+
+-- Future-compat with profiles.notification_preferences (not used by any trigger yet; email stays disabled).
+-- Reads {"support": false} or {"support": {"email": false}}; a missing key means "allowed".
+create or replace function public.support_wants_notification(p_user uuid, p_channel text default 'in_app')
+returns boolean language sql stable security definer set search_path = public as $$
+  select coalesce((
+    select case
+      when jsonb_typeof(p.notification_preferences -> 'support') = 'boolean' then (p.notification_preferences ->> 'support')::boolean
+      when jsonb_typeof(p.notification_preferences -> 'support') = 'object'
+        then coalesce((p.notification_preferences -> 'support' ->> p_channel)::boolean, true)
+      else true end
+    from public.profiles p where p.id = p_user), true);
+$$;
+revoke all on function public.support_wants_notification(uuid, text) from public, anon, authenticated;
 
 -- ------------------------------------------------------------------ RLS
 alter table public.support_role_permissions enable row level security;

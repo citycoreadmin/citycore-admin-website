@@ -28,6 +28,8 @@ Deno.serve(async (req) => {
   const { data: profile } = await admin.from("profiles").select("email, preferred_language").eq("id", rec.user_id).maybeSingle();
   const { data: ticket } = await admin.from("support_tickets").select("ticket_number").eq("id", rec.ticket_id).maybeSingle();
   if (!profile?.email || !ticket) return new Response("skipped", { status: 200 });
+  const { data: allowed } = await admin.rpc("support_wants_notification", { p_user: rec.user_id, p_channel: "email" });
+  if (allowed === false) return new Response("opted out", { status: 200 });
 
   const lang = String(profile.preferred_language ?? "en").slice(0, 2);
   const copy: Record<string, { subject: string; body: string }> = {

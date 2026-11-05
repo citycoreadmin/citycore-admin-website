@@ -26,7 +26,7 @@ update public.support_tickets set status='resolved';
 update public.support_tickets set subject='hack';
 select status from public.support_tickets;
 
-\echo '--- admin_1: can reply, cannot change status, cannot view stats'
+\echo '--- admin_1 (uniform defaults): reply + status + stats allowed; assign + audit not'
 select set_config('request.jwt.claim.sub','00000000-0000-0000-0000-000000000001',false);
 select count(*) sees from public.support_tickets;
 insert into public.support_messages(ticket_id,body) select id,'staff hi' from public.support_tickets;
@@ -40,6 +40,11 @@ select count(*) notifs from public.support_notifications;
 update public.support_notifications set read=true;
 select count(*) unread from public.support_notifications where not read;
 
+\echo '--- founder tunes admin_5 (no ranking assumed): assign + audit'
+select set_config('request.jwt.claim.sub','00000000-0000-0000-0000-00000000000f',false);
+select support_set_role_permissions('admin_5','{"reply":true,"assign":true,"change_status":true,"view_stats":true,"view_audit":true}');
+select set_config('request.jwt.claim.sub','00000000-0000-0000-0000-000000000001',false);
+select role, support_can('assign') admin1_assign, support_can('view_audit') admin1_audit from (select support_role() role) x;
 \echo '--- admin_5: change status, assign, stats, audit'
 select set_config('request.jwt.claim.sub','00000000-0000-0000-0000-000000000005',false);
 update public.support_tickets set status='in_progress', assigned_to='00000000-0000-0000-0000-000000000001';
@@ -70,7 +75,12 @@ insert into storage.objects(bucket_id,name) select 'support-attachments', id::te
 select count(*) other_user_visible from storage.objects;
 
 \echo '--- anon denied'
-reset role; set role anon;
+\echo '--- notification_preferences helper'
+reset role;
+select support_wants_notification('00000000-0000-0000-0000-0000000000a1') as default_allowed;
+update public.profiles set notification_preferences='{"support":{"email":false}}' where id='00000000-0000-0000-0000-0000000000a1';
+select support_wants_notification('00000000-0000-0000-0000-0000000000a1','email') as email_off, support_wants_notification('00000000-0000-0000-0000-0000000000a1','in_app') as in_app_on;
+set role anon;
 select count(*) from public.support_tickets;
 reset role;
 select 'cleanup';

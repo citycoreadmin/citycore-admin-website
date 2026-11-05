@@ -6,7 +6,7 @@ and `platform_role` (no second account or staff system). It never writes to exis
 
 - Identity: Supabase Auth + `profiles` (email, username via the existing `username-sign-in` function, Google).
 - Staff: any `platform_administrators` row. `founder` has every support permission; `admin_1`..`admin_5` get permissions from
-  `support_role_permissions` (seeded assuming admin_5 is highest below founder; **verify**). Only the founder can edit those
+  `support_role_permissions` (seeded identically; no admin_1..admin_5 ranking is defined in the app). Only the founder can edit those
   permissions (`support_set_role_permissions`). The website never assigns or changes platform roles.
 - Tickets carry `source` (`web` / `ios`) so the iOS app can share the same tickets, messages, attachments and statuses.
 - `support_notifications` is separate from the app's `notifications` table, which is left untouched.
