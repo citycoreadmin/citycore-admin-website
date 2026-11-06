@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="css/styles.css">
   <script>try{var s=localStorage.getItem("cc_theme");document.documentElement.dataset.theme=s||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}catch(e){}</script>
   <script src="js/config.js"></script>
-  <script src="js/config.local.js"></script>
+  <script>if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) document.write('<script src="js/config.local.js"><\/script>');</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
