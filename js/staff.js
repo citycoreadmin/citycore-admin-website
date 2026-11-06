@@ -1,4 +1,4 @@
-import { backend, isDemo, PLATFORM_ROLES } from "./backend.js";
+import { backend, isDemo, unavailable, PLATFORM_ROLES } from "./backend.js";
 import { t, CATEGORIES, STATUSES, PRIORITIES, fmtDate } from "./i18n.js";
 import { h, initTheme, initLangSelects } from "./ui.js";
 
@@ -20,6 +20,7 @@ window.addEventListener("cc:lang", () => render());
 
 function render() {
   app.replaceChildren();
+  if (unavailable) return app.append(h("div", { class: "card" }, h("p", {}, t("unavailable"))));
   if (!S.me) return app.append(loginView());
   // Authorization is enforced server-side (RLS); this only decides what to display.
   if (!S.role) return app.append(h("div", { class: "card" }, h("p", {}, t("s_denied")),

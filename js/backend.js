@@ -1,7 +1,11 @@
 // Backend adapter. Uses Supabase when js/config.js has credentials; otherwise a local
 // DEMO backend (localStorage) so every feature can be exercised without touching production.
 const CFG = window.CITYCORE_CONFIG || {};
-export const isDemo = !(CFG.SUPABASE_URL && CFG.SUPABASE_ANON_KEY);
+const configured = !!(CFG.SUPABASE_URL && CFG.SUPABASE_ANON_KEY);
+const isLocalhost = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
+// Demo data (localStorage only) is allowed on localhost; any other host without Supabase config is "unavailable".
+export const isDemo = !configured && isLocalhost;
+export const unavailable = !configured && !isLocalhost;
 const MAX_BYTES = (CFG.MAX_ATTACHMENT_MB || 50) * 1024 * 1024;
 
 export function validateFiles(files) {
@@ -334,5 +338,14 @@ async function supabaseBackend() {
   return api;
 }
 
-export const backend = isDemo ? demoBackend() : await supabaseBackend();
+function unavailableBackend() {
+  const no = async () => { throw new Error("Support is temporarily unavailable."); };
+  return {
+    init: async () => {}, getUser: async () => null, onChange: () => () => {}, hasGoogle: false,
+    signIn: no, signUp: no, signOut: async () => {}, resetPassword: no, signInWithGoogle: no,
+    staffRole: async () => null, notifications: async () => [], myTickets: no
+  };
+}
+
+export const backend = unavailable ? unavailableBackend() : isDemo ? demoBackend() : await supabaseBackend();
 await backend.init();

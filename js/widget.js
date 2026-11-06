@@ -1,4 +1,4 @@
-import { backend, isDemo, validateFiles } from "./backend.js";
+import { backend, isDemo, unavailable, validateFiles } from "./backend.js";
 import { t, CATEGORIES, fmtDate } from "./i18n.js";
 import { h } from "./ui.js";
 
@@ -46,6 +46,7 @@ export function mountWidget(getPlatform = () => "web") {
     backBtn.hidden = state.view === "home";
     bell.hidden = !u;
     body.replaceChildren();
+    if (unavailable) { bell.hidden = true; backBtn.hidden = true; body.append(h("p", { class: "wp-unavailable" }, t("unavailable"))); return; }
     const v = { home: viewHome, auth: viewAuth, compose: viewCompose, tickets: viewTickets, thread: viewThread, notifs: viewNotifs }[state.view];
     await v(u);
     body.scrollTop = 0;
