@@ -1,52 +1,67 @@
-# Staging deployment and test plan (nothing here touches production)
+# Staging-only installation plan for the support system (v2)
 
-## Rules
-- Use a **separate** Supabase project (or a Supabase branch) for staging. Never point `js/config.js` at production until approved.
-- Only the project URL and the **anon/publishable** key go in `js/config.js`. Service-role keys never go in this repo or the browser.
-- Do not apply the migration to production without explicit approval.
+Nothing here touches production or the App Store backend. Every SQL step is run **manually by the owner**, one at a time,
+in the **website staging project** only, after its project reference has been checked against the one expected in
+`js/config.local.js` (`EXPECTED_PROJECT_REF`). Never paste keys into chat; only the staging publishable/anon key belongs in the
+git-ignored `js/config.local.js`. No service-role key ever goes in the repo or browser.
 
-## Staging status and steps
-1. The owner reported applying `CityCoreSchema.sql` and `FixAdminPanelRLS.sql`. Read-only checks confirmed the
-   `create_admin_panel` description/game-name mapping and execution privileges. Invitation functions, policies,
-   index and column were also reported present; these checks do not prove every statement of
-   `SecurePanelInvitations.sql` ran or that every policy definition matches the file.
-2. The owner reported that the checked moderation columns and functions are absent. Do not assume
-   `ProductionModerationRLS.sql` ran; review its remaining objects before proposing it. It is not a direct
-   prerequisite of the support migration. The extra `Citicore admin website` table remains unexplained; do not alter it.
-3. Before any support migration, confirm the staging project identity against the released app configuration,
-   inspect existing `support_*` objects and the `support-attachments` bucket, and verify the prerequisites in
-   `migrations/20261105000000_support_system.sql`. Do not assume `IF NOT EXISTS` reconciles an existing object.
-   The migration changes support policies/triggers and may add tables to the Realtime publication. Review it and
-   obtain approval for staging before the owner applies it; never apply it to production without separate approval.
-4. After application, verify the support objects, RLS, private bucket and actual authenticated table grants.
-   The migration relies on default privileges for some table SELECT and INSERT access, which may vary by project.
-   Confirm the Realtime publication and use only synthetic staging accounts, including two users and separate
-   founder and staff accounts. Do not run scratch database seed/cleanup scripts on a shared project.
-5. Deploy the existing `username-sign-in` Edge Function to staging only (JWT verification off, as in the app repo).
-   Configure staging Auth URLs for the exact local origin and a separate staging Google OAuth client. Keep support
-   reply email delivery disabled; Auth confirmation and password-reset emails are separate from support reply email.
-6. Copy `js/config.local.example.js` to `js/config.local.js`, set only the staging URL and publishable/anon key,
-   and serve the site on `localhost` or `127.0.0.1`. The override is ignored by git and loaded only on those hosts.
-   Never paste keys into chat or put privileged keys in browser files. Run the real staging checklist below.
-7. Production configuration, database changes, public hosting and deployment require separate explicit approval.
+## What v2 changed (vs. the unapplied v1)
+- Tickets are created only by `support_create_ticket()` (ticket + first message are atomic); direct INSERT on tickets is revoked.
+- Storage objects must live at `<ticket>/<message>/<file>`. Upload is allowed only for the author of that message, on a ticket they
+  own (or staff with `reply`), within 15 minutes of the message, max 5 objects per message. No overwrite or rename (no UPDATE policy).
+- An attachment row is accepted only if the object exists, is owned by the caller, and its stored mime type and size match the row.
+  Path must match `ticket_id` / `message_id`; mime allowlist excludes SVG; 50 MB cap; max 5 per message.
+- The client removes uploaded objects if any attachment fails. `support_orphan_objects()` (founder, read-only) reports leftovers.
+- Forgeable `support.internal` setting removed; internal updates are recognised by trigger depth.
+- Explicit grants: table/column-level grants only, `anon` and `PUBLIC` have nothing; trigger/internal functions are not executable by clients.
+- Rate limits: 5 new tickets/hour, 20 open tickets, 30 messages/10 min per user.
+- `support_set_role_permissions` validates role (admin_1..5) and payload (five known boolean keys). Founder only.
+- The migration runs in one transaction and **aborts** if any support object, bucket or `support_objects_*` policy already exists
+  (unless already v2), or a prerequisite is missing.
+- Auth callback in the browser is synchronous (no deadlock risk); partial attachment failures show a notice instead of losing the message.
 
-## Automated SQL checks (local throwaway Postgres, already passing)
-`tests/00_supabase_stub.sql` emulates Supabase roles/auth/storage. The scripts `01_seed_users.sql`, `02_rls_behaviour.sql`, `03_client_contract.sql`
-are for an isolated scratch database loaded with the app schema, not the live staging project: they create and delete data. They cover cross-user isolation, role permissions, founder-only RPCs, notifications,
-audit log, closed-ticket rules, storage policies and anon denial. These emulate Supabase; confirm on the real staging project too.
+## Automated evidence (no Supabase needed)
+- `supabase/tests/run_scratch.sh` — on a throwaway local Postgres: fresh install, ~110 security/functional assertions
+  (`10_security_functional.sql`), idempotent re-run, and the conflict guards. It refuses any non-local host.
+- `node --test tests/js/` — secrets scan, i18n parity, auth-callback check, mime allowlist parity, demo-backend isolation and role tests.
+These use a Supabase **emulation**; they do not prove real Supabase Auth/Storage/Realtime behaviour. Step 5 below does.
+
+## Installation order (owner, staging project only)
+1. **Identity.** Dashboard → Project Settings → General: compare the project reference with `EXPECTED_PROJECT_REF` and confirm it is
+   *different* from the reference in the iOS app's release configuration (compare references only; never share keys).
+2. **Read-only gate.** Run `supabase/tests/05_preinstall_preflight.sql`. Install only if every `ok` is `true`.
+   If any is `false`, stop and share the result row (not data); do not drop or alter anything to "make it pass".
+   Optionally run `supabase/tests/04_support_readonly_inventory.sql` for the full inventory.
+3. **Back up** staging (Database → Backups, or a dump) if it holds anything you care about.
+4. **Install.** Paste `supabase/migrations/20261105000000_support_system.sql` into the SQL Editor and run it once. It is one
+   transaction; an error rolls everything back. Expected: "Success. No rows returned."
+5. **Verify on real Supabase** (synthetic accounts only: founder, an `admin_1`, two normal users):
+   - Re-run `04_support_readonly_inventory.sql`; confirm RLS on, bucket private, no `anon` grants.
+   - **Storage metadata check (unverified assumption):** the attachment trigger compares the row's `mime_type`/`size_bytes` with
+     `storage.objects.metadata->>'mimetype'` / `'size'`. Upload one image from the widget; if saving the attachment fails with
+     "does not match the stored object", report it and do not retry blindly — the trigger needs adjusting, not the data.
+   - Run the manual checklist below.
+6. **Edge Function / Auth URLs** (staging only): deploy `username-sign-in`, add the exact local origin to Auth redirect URLs.
+   Keep `support-reply-email` disabled.
+7. Production, public hosting and deployment each require separate explicit approval.
+
+## Rollback (staging)
+Only if step 4 succeeded and you want to remove it (staging, synthetic data only): drop the `support_*` tables, functions and the
+`support_objects_*` storage policies, then empty and delete the `support-attachments` bucket from the Storage UI. Ask for the exact
+statements first; do not run ad-hoc drops.
 
 ## Manual checklist on real staging
-- [ ] Sign in with email, with username (Edge Function) and with Google; password reset email arrives and returns to the site.
-- [ ] Existing profile/role is recognised: founder sees all tabs, `admin_N` sees tabs per its support permissions, a normal user is denied `/staff.html`.
+- [ ] Sign in with email, with username (Edge Function), with Google; password reset returns to the site.
+- [ ] Founder sees all tabs; `admin_N` sees tabs per its support permissions; a normal user is denied `/staff.html`.
 - [ ] User A cannot read/reply to User B's ticket, messages, attachments or signed URLs.
-- [ ] Image and video upload works; objects are private (direct URL without a signed token fails); signed URL expires.
-- [ ] Staff reply creates a notification and the user's widget updates in realtime; status moves to Pending.
-- [ ] Founder edits per-role support permissions; non-founder cannot. Platform roles are unchanged afterwards.
-- [ ] iOS app still signs in and its existing screens/notifications behave exactly as before.
-- [ ] Desktop, iPhone (390px) and iPad (820px) layouts.
+- [ ] Image and video upload works; direct bucket URL fails; signed URL expires; SVG/HTML are rejected.
+- [ ] A forced failed upload (e.g. disconnect mid-upload) leaves the message saved, shows the notice, and no attachment row.
+- [ ] Staff reply creates a notification, the user's widget updates in realtime, status becomes Pending.
+- [ ] Founder edits per-role permissions; non-founder cannot. Platform roles are unchanged afterwards.
+- [ ] iOS app still signs in and its screens/notifications are unchanged.
+- [ ] Desktop, iPhone (390px), iPad (820px).
 
 ## Not activated
-- `functions/support-reply-email`: email on staff reply. Disabled unless `SUPPORT_EMAIL_ENABLED=true`; no webhook exists.
-- Writing support events into the app's existing `notifications` table (server-scoped, owner-select only in the app schema). Left alone until
-  compatibility is confirmed. The schema is designed to allow a compatible iOS client to use the same session and RLS;
-  app integration and real-device notification behavior are not yet verified.
+- `functions/support-reply-email` (disabled unless `SUPPORT_EMAIL_ENABLED=true`; no webhook).
+- Writing support events into the app's `notifications` table.
+- Founder-only deletion/cleanup of orphan objects (report only).

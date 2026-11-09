@@ -1,6 +1,7 @@
 # CityCore Admin support backend (NOT applied)
 
-`migrations/20261105000000_support_system.sql` is **additive** and re-runnable. It adds `support_*` tables, functions,
+`migrations/20261105000000_support_system.sql` (v2, hardened) is **additive**, transactional, and **aborts on any pre-existing
+support object, bucket or policy** (re-runnable only over its own v2 install). Run `tests/05_preinstall_preflight.sql` first. It adds `support_*` tables, functions,
 policies and a private `support-attachments` bucket, and **reuses** the existing `profiles`, `platform_administrators`
 and `platform_role` (no second account or staff system). It never writes to existing tables.
 
@@ -14,6 +15,8 @@ and `platform_role` (no second account or staff system). It never writes to exis
 
 Before applying anywhere, follow `STAGING.md`. Do not apply to production without approval. Put only `SUPABASE_URL` and
 the **anon** key in `js/config.js`; never a service-role key.
+
+Tests: `tests/run_scratch.sh` (local throwaway Postgres only) and `node --test tests/js/` from the repo root.
 
 Security model: RLS everywhere; users see only their own tickets/messages/attachments/notifications; staff access and
 permissions (`reply`, `assign`, `change_status`, `view_stats`, `view_audit`) are enforced in policies and triggers; changes

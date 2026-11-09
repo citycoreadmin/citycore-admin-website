@@ -46,6 +46,7 @@ const D = {
     you: "You", support: "Support", sending: "Sending…", saved: "Saved",
     notif: "Notifications", notif_reply: "Support replied to", notif_none: "No notifications.", mark_read: "Mark all read",
     err_generic: "Something went wrong. Please try again.", err_file: "Only images and videos up to {mb} MB are allowed.",
+    err_attach_partial: "Your message was sent, but the attachments could not be uploaded. Please try attaching them again in a reply.",
     err_required: "Please fill in all fields.",
     st_open: "Open", st_pending: "Pending", st_in_progress: "In Progress", st_resolved: "Resolved", st_closed: "Closed",
     pr_low: "Low", pr_normal: "Normal", pr_high: "High", pr_urgent: "Urgent",
@@ -96,6 +97,7 @@ const D = {
     you: "Vous", support: "Assistance", sending: "Envoi…", saved: "Enregistré",
     notif: "Notifications", notif_reply: "L'assistance a répondu à", notif_none: "Aucune notification.", mark_read: "Tout marquer comme lu",
     err_generic: "Une erreur est survenue. Veuillez réessayer.", err_file: "Seules les images et vidéos jusqu'à {mb} Mo sont autorisées.",
+    err_attach_partial: "Votre message a été envoyé, mais les pièces jointes n'ont pas pu être téléversées. Veuillez les joindre à nouveau dans une réponse.",
     err_required: "Veuillez remplir tous les champs.",
     st_open: "Ouvert", st_pending: "En attente", st_in_progress: "En cours", st_resolved: "Résolu", st_closed: "Fermé",
     pr_low: "Faible", pr_normal: "Normale", pr_high: "Élevée", pr_urgent: "Urgente",
@@ -146,6 +148,7 @@ const D = {
     you: "Ou", support: "Sipò", sending: "Y ap voye…", saved: "Anrejistre",
     notif: "Notifikasyon", notif_reply: "Sipò reponn sou", notif_none: "Pa gen notifikasyon.", mark_read: "Make tout tankou li",
     err_generic: "Gen yon bagay ki pa mache. Tanpri eseye ankò.", err_file: "Se sèlman imaj ak videyo jiska {mb} Mo ki aksepte.",
+    err_attach_partial: "Mesaj ou a voye, men nou pa t kapab voye fichye yo. Tanpri eseye ankò nan yon repons.", // NEEDS NATIVE REVIEW
     err_required: "Tanpri ranpli tout chan yo.",
     st_open: "Ouvè", st_pending: "An datant", st_in_progress: "An kou", st_resolved: "Rezoud", st_closed: "Fèmen",
     pr_low: "Ba", pr_normal: "Nòmal", pr_high: "Wo", pr_urgent: "Ijan",

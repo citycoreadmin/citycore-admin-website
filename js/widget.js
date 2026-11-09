@@ -1,4 +1,4 @@
-import { backend, isDemo, unavailable, validateFiles } from "./backend.js";
+import { backend, isDemo, unavailable, validateFiles, AttachmentError } from "./backend.js";
 import { t, CATEGORIES, fmtDate } from "./i18n.js";
 import { h } from "./ui.js";
 
@@ -146,7 +146,7 @@ export function mountWidget(getPlatform = () => "web") {
       submit.disabled = true; submit.textContent = t("sending");
       try {
         const tk = await backend.createTicket({ category: state.category, subject: subject.value, body: msg.value, files: state.files, platform: getPlatform(), language: document.documentElement.lang });
-        state.files = []; go("thread", { ticketId: tk.id });
+        state.files = []; state.notice = tk.attachmentError ? t("err_attach_partial") : ""; go("thread", { ticketId: tk.id });
       } catch (x) { err.textContent = x.message === "file" ? t("err_file", { mb: CFG.MAX_ATTACHMENT_MB || 50 }) : t("err_generic"); submit.disabled = false; submit.textContent = t("submit_ticket"); }
     } },
       h("div", { class: "cat-pill" }, t("cat_" + state.category)),
@@ -195,11 +195,15 @@ export function mountWidget(getPlatform = () => "web") {
       if (!text.value.trim()) return;
       send.disabled = true;
       try { await backend.reply(state.ticketId, text.value, state.files); text.value = ""; state.files = []; fp.replaceWith(fp = filePicker()); await load(); }
-      catch (x) { err.textContent = x.message === "file" ? t("err_file", { mb: CFG.MAX_ATTACHMENT_MB || 50 }) : t("err_generic"); }
+      catch (x) {
+        if (x instanceof AttachmentError) { text.value = ""; state.files = []; fp.replaceWith(fp = filePicker()); err.textContent = t("err_attach_partial"); await load(); }
+        else err.textContent = x.message === "file" ? t("err_file", { mb: CFG.MAX_ATTACHMENT_MB || 50 }) : t("err_generic");
+      }
       send.disabled = false;
     } }, text);
     let fp = filePicker();
     composer.append(fp, err, send);
+    if (state.notice) { err.textContent = state.notice; state.notice = ""; }
     body.append(head, msgs, composer);
     async function load() {
       let d;

@@ -13,14 +13,25 @@ if (wrongProject) console.error("CityCore: SUPABASE_URL does not match EXPECTED_
 export const unavailable = (!configured && !isLocalhost) || wrongProject;
 const MAX_BYTES = (CFG.MAX_ATTACHMENT_MB || 50) * 1024 * 1024;
 
+// Must match the allowlist in the migration (bucket allowed_mime_types and support_attachments.mime_type). No SVG.
+export const ALLOWED_MIME = ["image/jpeg", "image/png", "image/gif", "image/webp", "image/heic", "video/mp4", "video/quicktime", "video/webm"];
+export const MAX_FILES = 5;
+export class AttachmentError extends Error { constructor() { super("attachments"); this.code = "attachments"; } }
 export function validateFiles(files) {
+  if (files.length > MAX_FILES) return false;
   for (const f of files) {
-    if (!/^(image|video)\//.test(f.type) || f.size > MAX_BYTES || f.size === 0) return false;
+    if (!ALLOWED_MIME.includes(f.type) || f.size > MAX_BYTES || f.size === 0) return false;
   }
   return true;
 }
 const safeName = n => n.replace(/[^\w.\-]+/g, "_").slice(0, 100);
-const uuid = () => (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random());
+const uuid = () => {
+  if (crypto.randomUUID) return crypto.randomUUID();
+  const b = crypto.getRandomValues(new Uint8Array(16));
+  b[6] = (b[6] & 0x0f) | 0x40; b[8] = (b[8] & 0x3f) | 0x80;
+  const h = [...b].map(x => x.toString(16).padStart(2, "0")).join("");
+  return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`;
+};
 
 /* ============================================================== DEMO */
 const DB_KEY = "cc_demo_db", SESSION_KEY = "cc_demo_session";
@@ -218,16 +229,29 @@ async function supabaseBackend() {
   let user = null, recovery = false;
   const refreshUser = async () => { const { data } = await sb.auth.getSession(); user = data.session ? data.session.user : null; };
 
+  // Objects live at <ticket>/<message>/<uuid>-<name>; the server ties each object to that ticket, message and user.
+  // Either every attachment is saved or none is: on any failure the uploaded objects are removed and AttachmentError is thrown.
   async function uploadFiles(ticketId, messageId, files) {
-    for (const f of files) {
-      const path = `${ticketId}/${uuid()}-${safeName(f.name)}`;
-      const up = await sb.storage.from(CFG.ATTACHMENT_BUCKET).upload(path, f, { contentType: f.type, upsert: false });
-      if (up.error) throw new Error(up.error.message);
-      must(await sb.from("support_attachments").insert({ ticket_id: ticketId, message_id: messageId, path, file_name: f.name, mime_type: f.type, size_bytes: f.size }));
+    if (!files.length) return;
+    const bucket = sb.storage.from(CFG.ATTACHMENT_BUCKET);
+    const done = [];
+    try {
+      const rows = [];
+      for (const f of files) {
+        const path = `${ticketId}/${messageId}/${uuid()}-${safeName(f.name)}`;
+        const up = await bucket.upload(path, f, { contentType: f.type, upsert: false });
+        if (up.error) throw new Error(up.error.message);
+        done.push(path);
+        rows.push({ ticket_id: ticketId, message_id: messageId, path, file_name: f.name.slice(0, 200), mime_type: f.type, size_bytes: f.size });
+      }
+      must(await sb.from("support_attachments").insert(rows));
+    } catch {
+      if (done.length) { try { await bucket.remove(done); } catch { /* reported by the orphan check */ } }
+      throw new AttachmentError();
     }
   }
   async function addMessage(ticketId, body, files) {
-    const m = must(await sb.from("support_messages").insert({ ticket_id: ticketId, body: body.trim() }).select().single());
+    const m = must(await sb.from("support_messages").insert({ ticket_id: ticketId, body: body.trim() }).select("id").single());
     await uploadFiles(ticketId, m.id, files);
   }
 
@@ -235,7 +259,13 @@ async function supabaseBackend() {
     mode: "supabase",
     async init() {
       await refreshUser();
-      sb.auth.onAuthStateChange(async event => { if (event === "PASSWORD_RECOVERY") recovery = true; await refreshUser(); emit(); });
+      // Must stay synchronous: awaiting Supabase calls inside this callback can deadlock the auth client.
+      sb.auth.onAuthStateChange((event, session) => {
+        if (event === "PASSWORD_RECOVERY") recovery = true;
+        if (event === "SIGNED_OUT") recovery = false;
+        user = session ? session.user : null;
+        setTimeout(emit, 0);
+      });
       sb.channel("cc-support").on("postgres_changes", { event: "*", schema: "public", table: "support_messages" }, emit)
         .on("postgres_changes", { event: "*", schema: "public", table: "support_tickets" }, emit)
         .on("postgres_changes", { event: "*", schema: "public", table: "support_notifications" }, emit).subscribe();
@@ -282,14 +312,19 @@ async function supabaseBackend() {
     async signOut() { await sb.auth.signOut(); user = null; },
     async staffRole() {
       if (!user) return null;
-      return must(await sb.rpc("support_me"));
+      try { return must(await sb.rpc("support_me")); } catch { return null; }
     },
     async createTicket({ category, subject, body, files = [], platform, language }) {
       if (!subject.trim() || !body.trim()) throw new Error("required");
       if (!validateFiles(files)) throw new Error("file");
-      const t = must(await sb.from("support_tickets").insert({ category, subject: subject.trim().slice(0, 200), platform, language, source: "web" }).select().single());
-      await addMessage(t.id, body, files);
-      return t;
+      // One server call creates the ticket and its first message together; nothing is left behind on failure.
+      const r = must(await sb.rpc("support_create_ticket", { p_category: category, p_subject: subject.trim().slice(0, 200), p_body: body.trim(), p_platform: platform || null, p_language: language || null }));
+      const ticket = r.ticket;
+      try { await uploadFiles(ticket.id, r.message_id, files); } catch (e) {
+        if (e instanceof AttachmentError) return { ...ticket, attachmentError: true };
+        throw e;
+      }
+      return ticket;
     },
     async myTickets() {
       return must(await sb.from("support_tickets").select("*").eq("user_id", user.id).order("updated_at", { ascending: false }));
@@ -326,7 +361,7 @@ async function supabaseBackend() {
       if (category) query = query.eq("category", category);
       if (priority) query = query.eq("priority", priority);
       if (assigned === "none") query = query.is("assigned_to", null); else if (assigned) query = query.eq("assigned_to", assigned);
-      q = (q || "").trim().replace(/[%,()*]/g, " ");
+      q = (q || "").trim().replace(/[%,()*"\\]/g, " ");
       if (q) {
         const { data: hits } = await sb.from("support_messages").select("ticket_id").ilike("body", `%${q}%`).limit(200);
         const ids = [...new Set((hits || []).map(h => h.ticket_id))];

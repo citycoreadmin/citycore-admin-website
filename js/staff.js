@@ -11,8 +11,10 @@ const PERMS = ["reply", "assign", "change_status", "view_stats", "view_audit"];
 const can = p => !!(S.role && S.role.permissions && S.role.permissions[p]);
 
 async function boot() {
-  S.me = await backend.getUser();
-  S.role = S.me ? await backend.staffRole() : null;
+  try {
+    S.me = await backend.getUser();
+    S.role = S.me ? await backend.staffRole() : null;
+  } catch { S.role = null; }
   render();
 }
 backend.onChange(() => { if (S.role) refresh().catch(boot); else boot(); });
