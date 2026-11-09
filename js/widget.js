@@ -47,7 +47,7 @@ export function mountWidget(getPlatform = () => "web") {
     bell.hidden = !u;
     body.replaceChildren();
     if (unavailable) { bell.hidden = true; backBtn.hidden = true; body.append(h("p", { class: "wp-unavailable" }, t("unavailable"))); return; }
-    const v = { home: viewHome, auth: viewAuth, compose: viewCompose, tickets: viewTickets, thread: viewThread, notifs: viewNotifs }[state.view];
+    const v = { home: viewHome, auth: viewAuth, compose: viewCompose, tickets: viewTickets, thread: viewThread, notifs: viewNotifs, recovery: viewRecovery }[state.view];
     await v(u);
     body.scrollTop = 0;
     refreshUnread();
@@ -71,6 +71,22 @@ export function mountWidget(getPlatform = () => "web") {
   async function requireAuth(next) {
     if (await backend.getUser()) next(); else { state.afterAuth = next; go("auth"); }
   }
+
+  function viewRecovery() {
+    const err = h("p", { class: "form-err", role: "alert" });
+    const pw = h("input", { type: "password", required: true, minlength: 8, autocomplete: "new-password", id: "ccNewPw" });
+    body.append(h("form", { class: "form", onsubmit: async e => {
+      e.preventDefault(); err.textContent = "";
+      if (pw.value.length < 8) { err.textContent = t("auth_pw_short"); return; }
+      try { await backend.updatePassword(pw.value); history.replaceState(null, "", location.pathname); go("home"); }
+      catch (x) { err.textContent = x.message; }
+    } },
+      h("p", {}, t("auth_new_pw")), h("label", { for: "ccNewPw" }, t("password")), pw, err,
+      h("button", { class: "btn btn-primary", type: "submit" }, t("auth_new_pw_btn"))));
+  }
+  const openForRecovery = () => { if (backend.isRecovery && backend.isRecovery() && state.view !== "recovery") { state.view = "recovery"; if (!state.open) toggle(); else render(); } };
+  backend.onChange(openForRecovery);
+  openForRecovery();
 
   async function viewAuth() {
     const err = h("p", { class: "form-err", role: "alert" });
@@ -206,6 +222,6 @@ export function mountWidget(getPlatform = () => "web") {
       rows.some(n => !n.read) ? h("button", { class: "btn btn-ghost btn-sm", onclick: async () => { await backend.markNotificationsRead(); render(); } }, t("mark_read")) : null);
   }
 
-  backend.onChange(() => { refreshUnread(); if (state.open && state.view !== "home") backend.getUser().then(u => { if (!u && state.view !== "auth") go("home"); }); });
+  backend.onChange(() => { refreshUnread(); if (state.open && state.view !== "home") backend.getUser().then(u => { if (!u && state.view !== "auth" && state.view !== "recovery") go("home"); }); });
   refreshUnread();
 }

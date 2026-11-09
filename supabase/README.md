@@ -19,5 +19,6 @@ Security model: RLS everywhere; users see only their own tickets/messages/attach
 permissions (`reply`, `assign`, `change_status`, `view_stats`, `view_audit`) are enforced in policies and triggers; changes
 are written to `support_audit_log` by triggers; attachments are private and served via short-lived signed URLs.
 
-GitHub Pages is static, so no separate server is needed: Supabase (Auth, Postgres/RLS, Storage, Realtime) is the backend.
-In-app notifications work today. `functions/support-reply-email` is an inactive scaffold for optional email on staff replies.
+GitHub Pages is static, so Supabase (Auth, Postgres/RLS, Storage, Realtime) is the backend.
+Support notifications are implemented but not yet verified against real staging or integrated into the iOS app.
+`functions/support-reply-email` is an inactive scaffold for optional email on staff replies.

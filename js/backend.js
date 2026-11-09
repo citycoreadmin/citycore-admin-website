@@ -5,7 +5,12 @@ const configured = !!(CFG.SUPABASE_URL && CFG.SUPABASE_ANON_KEY);
 const isLocalhost = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
 // Demo data (localStorage only) is allowed on localhost; any other host without Supabase config is "unavailable".
 export const isDemo = !configured && isLocalhost;
-export const unavailable = !configured && !isLocalhost;
+// Safety guard: on localhost a configured project must be explicitly named (EXPECTED_PROJECT_REF) and match the URL,
+// so a pasted production URL can never be used by accident.
+const refOf = u => { try { return new URL(u).hostname.split(".")[0]; } catch { return ""; } };
+const wrongProject = configured && isLocalhost && (!CFG.EXPECTED_PROJECT_REF || CFG.EXPECTED_PROJECT_REF !== refOf(CFG.SUPABASE_URL));
+if (wrongProject) console.error("CityCore: SUPABASE_URL does not match EXPECTED_PROJECT_REF in js/config.local.js; backend disabled.");
+export const unavailable = (!configured && !isLocalhost) || wrongProject;
 const MAX_BYTES = (CFG.MAX_ATTACHMENT_MB || 50) * 1024 * 1024;
 
 export function validateFiles(files) {
@@ -79,6 +84,8 @@ function demoBackend() {
     },
     async signInWithGoogle() { throw new Error("Google sign-in is not available in demo mode"); },
     async resetPassword() {},
+    isRecovery: () => false,
+    async updatePassword() { throw new Error("Not available in demo mode"); },
     async signOut() { localStorage.removeItem(SESSION_KEY); emit(); },
     async staffRole() {
       const db = loadDb(), u = me(); const s = staffEntry(db, u);
@@ -208,7 +215,7 @@ async function supabaseBackend() {
   const listeners = new Set();
   const emit = () => listeners.forEach(f => f());
   const must = ({ data, error }) => { if (error) throw new Error(error.message); return data; };
-  let user = null;
+  let user = null, recovery = false;
   const refreshUser = async () => { const { data } = await sb.auth.getSession(); user = data.session ? data.session.user : null; };
 
   async function uploadFiles(ticketId, messageId, files) {
@@ -228,7 +235,7 @@ async function supabaseBackend() {
     mode: "supabase",
     async init() {
       await refreshUser();
-      sb.auth.onAuthStateChange(async () => { await refreshUser(); emit(); });
+      sb.auth.onAuthStateChange(async event => { if (event === "PASSWORD_RECOVERY") recovery = true; await refreshUser(); emit(); });
       sb.channel("cc-support").on("postgres_changes", { event: "*", schema: "public", table: "support_messages" }, emit)
         .on("postgres_changes", { event: "*", schema: "public", table: "support_tickets" }, emit)
         .on("postgres_changes", { event: "*", schema: "public", table: "support_notifications" }, emit).subscribe();
@@ -257,6 +264,12 @@ async function supabaseBackend() {
     },
     async signInWithGoogle() {
       must(await sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.href.split("#")[0] } }));
+    },
+    isRecovery: () => recovery,
+    async updatePassword(pw) {
+      if (!recovery) throw new Error("No password reset in progress");
+      must(await sb.auth.updateUser({ password: pw }));
+      recovery = false; emit();
     },
     async resetPassword(email) {
       must(await sb.auth.resetPasswordForEmail(email.trim(), { redirectTo: location.origin + "/" }));
@@ -341,7 +354,7 @@ async function supabaseBackend() {
 function unavailableBackend() {
   const no = async () => { throw new Error("Support is temporarily unavailable."); };
   return {
-    init: async () => {}, getUser: async () => null, onChange: () => () => {}, hasGoogle: false,
+    init: async () => {}, getUser: async () => null, onChange: () => () => {}, hasGoogle: false, isRecovery: () => false,
     signIn: no, signUp: no, signOut: async () => {}, resetPassword: no, signInWithGoogle: no,
     staffRole: async () => null, notifications: async () => [], myTickets: no
   };

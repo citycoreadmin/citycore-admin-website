@@ -5,19 +5,34 @@
 - Only the project URL and the **anon/publishable** key go in `js/config.js`. Service-role keys never go in this repo or the browser.
 - Do not apply the migration to production without explicit approval.
 
-## Steps
-1. Create the staging project and load the existing schema (`pg_dump --schema-only` of production, or the app's `CityCoreSchema.sql` /
-   `RepairExistingProductionSchema.sql`). Create 1 founder + a few `platform_administrators` rows (`admin_1`..`admin_5`) and 2 normal users.
-2. Apply `migrations/20261105000000_support_system.sql` (safe to re-run).
-3. Deploy the existing `username-sign-in` Edge Function to staging (JWT verification off, as in the app repo).
-4. Auth settings (staging): Site URL = staging site; add the staging site to Redirect URLs; enable the Google provider with a staging OAuth client.
-5. Copy `js/config.js` to a local, uncommitted override with the staging URL + anon key and serve the site locally or on a staging host.
-6. Run the checklist below. Production values to add later (needs approval): Site URL `https://citycoreadmin.com`, the same URL in
-   Redirect URLs, and the Google OAuth authorised origin/redirect.
+## Staging status and steps
+1. The owner reported applying `CityCoreSchema.sql` and `FixAdminPanelRLS.sql`. Read-only checks confirmed the
+   `create_admin_panel` description/game-name mapping and execution privileges. Invitation functions, policies,
+   index and column were also reported present; these checks do not prove every statement of
+   `SecurePanelInvitations.sql` ran or that every policy definition matches the file.
+2. The owner reported that the checked moderation columns and functions are absent. Do not assume
+   `ProductionModerationRLS.sql` ran; review its remaining objects before proposing it. It is not a direct
+   prerequisite of the support migration. The extra `Citicore admin website` table remains unexplained; do not alter it.
+3. Before any support migration, confirm the staging project identity against the released app configuration,
+   inspect existing `support_*` objects and the `support-attachments` bucket, and verify the prerequisites in
+   `migrations/20261105000000_support_system.sql`. Do not assume `IF NOT EXISTS` reconciles an existing object.
+   The migration changes support policies/triggers and may add tables to the Realtime publication. Review it and
+   obtain approval for staging before the owner applies it; never apply it to production without separate approval.
+4. After application, verify the support objects, RLS, private bucket and actual authenticated table grants.
+   The migration relies on default privileges for some table SELECT and INSERT access, which may vary by project.
+   Confirm the Realtime publication and use only synthetic staging accounts, including two users and separate
+   founder and staff accounts. Do not run scratch database seed/cleanup scripts on a shared project.
+5. Deploy the existing `username-sign-in` Edge Function to staging only (JWT verification off, as in the app repo).
+   Configure staging Auth URLs for the exact local origin and a separate staging Google OAuth client. Keep support
+   reply email delivery disabled; Auth confirmation and password-reset emails are separate from support reply email.
+6. Copy `js/config.local.example.js` to `js/config.local.js`, set only the staging URL and publishable/anon key,
+   and serve the site on `localhost` or `127.0.0.1`. The override is ignored by git and loaded only on those hosts.
+   Never paste keys into chat or put privileged keys in browser files. Run the real staging checklist below.
+7. Production configuration, database changes, public hosting and deployment require separate explicit approval.
 
 ## Automated SQL checks (local throwaway Postgres, already passing)
-`tests/00_supabase_stub.sql` emulates Supabase roles/auth/storage. Then run `01_seed_users.sql`, `02_rls_behaviour.sql`, `03_client_contract.sql`
-against a scratch database loaded with the app schema. They cover cross-user isolation, role permissions, founder-only RPCs, notifications,
+`tests/00_supabase_stub.sql` emulates Supabase roles/auth/storage. The scripts `01_seed_users.sql`, `02_rls_behaviour.sql`, `03_client_contract.sql`
+are for an isolated scratch database loaded with the app schema, not the live staging project: they create and delete data. They cover cross-user isolation, role permissions, founder-only RPCs, notifications,
 audit log, closed-ticket rules, storage policies and anon denial. These emulate Supabase; confirm on the real staging project too.
 
 ## Manual checklist on real staging
@@ -33,4 +48,5 @@ audit log, closed-ticket rules, storage policies and anon denial. These emulate 
 ## Not activated
 - `functions/support-reply-email`: email on staff reply. Disabled unless `SUPPORT_EMAIL_ENABLED=true`; no webhook exists.
 - Writing support events into the app's existing `notifications` table (server-scoped, owner-select only in the app schema). Left alone until
-  compatibility is confirmed. iOS can already read `support_notifications` / tickets with the same Supabase session under the same RLS.
+  compatibility is confirmed. The schema is designed to allow a compatible iOS client to use the same session and RLS;
+  app integration and real-device notification behavior are not yet verified.
