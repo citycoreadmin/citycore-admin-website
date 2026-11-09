@@ -1,6 +1,7 @@
 -- READ-ONLY pre-install gate for the website STAGING project. Run in the staging SQL Editor BEFORE the support migration.
--- Result: one row per check. Install only when every row has ok = true. Schema metadata only; no user data is returned.
--- Safe when support objects do not exist yet. Also usable after install (the "no conflicting objects" rows then report the v2 marker).
+-- Result: one row per check. Install only when EVERY row has ok = true. Schema metadata only; no user data is returned.
+-- Safe when support objects do not exist yet. Row 13 turns false once the v2 support system is installed, so a repeat
+-- install is stopped by this gate; rows 8-11 turn false for any support_* object, bucket or policy that is not v2.
 with m as (
   select coalesce(obj_description(to_regclass('public.support_tickets'), 'pg_class'), '') = 'citycore-support:v2' as v2_installed
 )
@@ -26,6 +27,7 @@ select * from (
   union all select 11, 'no support_objects_* storage policies yet (or v2 already installed)',
     (select v2_installed from m) or not exists (select 1 from pg_policies where schemaname='storage' and tablename='objects' and policyname like 'support\_objects\_%' escape '\')
   union all select 12, 'is_platform_admin() exists (app dependency, informational)', to_regprocedure('public.is_platform_admin()') is not null
+  union all select 13, 'support v2 NOT already installed (false = do not install again)', not (select v2_installed from m)
 ) c order by n;
 
 -- Informational: other policies on storage.objects (they combine with ours with OR; review any broad ones).

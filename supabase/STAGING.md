@@ -26,10 +26,17 @@ git-ignored `js/config.local.js`. No service-role key ever goes in the repo or b
 - `node --test tests/js/` — secrets scan, i18n parity, auth-callback check, mime allowlist parity, demo-backend isolation and role tests.
 These use a Supabase **emulation**; they do not prove real Supabase Auth/Storage/Realtime behaviour. Step 5 below does.
 
+## Recorded staging finding: `public."Citicore admin website"`
+Read-only checks by the owner: RLS enabled, no estimate (`approximate_rows = -1`), exact count 0 rows, columns `id bigint` and
+`created_at timestamptz`, with its primary-key index and id sequence. Origin unknown (likely a dashboard-created placeholder).
+It does not match `support_%`, is not referenced by the migration or the website, and is **left untouched**: do not drop, alter or
+grant on it. With RLS on and no policies it is already inaccessible to `anon`/`authenticated`.
+
 ## Installation order (owner, staging project only)
 1. **Identity.** Dashboard → Project Settings → General: compare the project reference with `EXPECTED_PROJECT_REF` and confirm it is
    *different* from the reference in the iOS app's release configuration (compare references only; never share keys).
 2. **Read-only gate.** Run `supabase/tests/05_preinstall_preflight.sql`. Install only if every `ok` is `true`.
+   Row 13 is `true` only while the v2 support system is NOT installed; `false` there means it is already installed, so do not install again.
    If any is `false`, stop and share the result row (not data); do not drop or alter anything to "make it pass".
    Optionally run `supabase/tests/04_support_readonly_inventory.sql` for the full inventory.
 3. **Back up** staging (Database → Backups, or a dump) if it holds anything you care about.
