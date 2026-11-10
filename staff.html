@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>CityCore Admin | Support Dashboard</title>
+  <link rel="icon" type="image/png" href="citycore-logo.png">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>try{var s=localStorage.getItem("cc_theme");document.documentElement.dataset.theme=s||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}catch(e){}</script>
+  <script src="js/config.js"></script>
+  <script>if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) document.write('<script src="js/config.local.js"><\/script>');</script>
+</head>
+<body class="staff-body">
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="./"><img src="citycore-logo.png" alt=""><span>CityCore Admin</span></a>
+    <strong data-i18n="s_title">Support Dashboard</strong>
+    <div class="nav-tools">
+      <select class="select" data-lang-select aria-label="Language"></select>
+      <button class="icon-btn" data-theme-toggle aria-label="Toggle theme">◐</button>
+    </div>
+  </nav>
+</header>
+<main class="wrap" id="app" aria-live="polite"></main>
+<script type="module" src="js/staff.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 700" preserveAspectRatio="xMidYMax slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a0414"/>
+      <stop offset=".55" stop-color="#3b1480"/>
+      <stop offset="1" stop-color="#b05cff"/>
+    </linearGradient>
+    <linearGradient id="far" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a1d96"/><stop offset="1" stop-color="#1a0836"/>
+    </linearGradient>
+    <linearGradient id="near" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b0a38"/><stop offset="1" stop-color="#05020b"/>
+    </linearGradient>
+    <pattern id="win" width="14" height="18" patternUnits="userSpaceOnUse">
+      <rect x="3" y="4" width="6" height="8" fill="#ffe9a8" opacity=".85"/>
+    </pattern>
+    <pattern id="win2" width="18" height="22" patternUnits="userSpaceOnUse">
+      <rect x="4" y="5" width="7" height="10" fill="#f3d9ff" opacity=".7"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="700" fill="url(#sky)"/>
+  <g fill="#fff" opacity=".8">
+    <circle cx="120" cy="80" r="1.6"/><circle cx="340" cy="140" r="1.2"/><circle cx="560" cy="60" r="1.8"/>
+    <circle cx="820" cy="110" r="1.2"/><circle cx="1040" cy="50" r="1.6"/><circle cx="1280" cy="130" r="1.4"/>
+    <circle cx="1480" cy="70" r="1.8"/><circle cx="700" cy="190" r="1"/><circle cx="1180" cy="210" r="1"/>
+  </g>
+  <circle cx="1240" cy="190" r="56" fill="#f6e8ff" opacity=".9"/>
+  <g fill="url(#far)">
+    <rect x="0" y="360" width="90" height="340"/><rect x="100" y="300" width="70" height="400"/>
+    <rect x="180" y="380" width="110" height="320"/><rect x="300" y="280" width="80" height="420"/>
+    <rect x="390" y="340" width="120" height="360"/><rect x="520" y="250" width="70" height="450"/>
+    <rect x="600" y="330" width="100" height="370"/><rect x="710" y="290" width="90" height="410"/>
+    <rect x="810" y="370" width="120" height="330"/><rect x="940" y="270" width="80" height="430"/>
+    <rect x="1030" y="340" width="110" height="360"/><rect x="1150" y="300" width="70" height="400"/>
+    <rect x="1230" y="360" width="120" height="340"/><rect x="1360" y="280" width="90" height="420"/>
+    <rect x="1460" y="350" width="140" height="350"/>
+  </g>
+  <g fill="url(#near)">
+    <rect x="-10" y="470" width="160" height="230"/><rect x="160" y="420" width="120" height="280"/>
+    <rect x="290" y="490" width="150" height="210"/><rect x="450" y="400" width="110" height="300"/>
+    <polygon points="570,700 570,380 620,330 670,380 670,700"/>
+    <rect x="680" y="460" width="170" height="240"/><rect x="860" y="410" width="120" height="290"/>
+    <rect x="990" y="480" width="150" height="220"/><rect x="1150" y="390" width="130" height="310"/>
+    <rect x="1290" y="470" width="150" height="230"/><rect x="1450" y="430" width="160" height="270"/>
+  </g>
+  <g>
+    <rect x="-10" y="470" width="160" height="230" fill="url(#win)"/>
+    <rect x="160" y="420" width="120" height="280" fill="url(#win2)"/>
+    <rect x="450" y="400" width="110" height="300" fill="url(#win)"/>
+    <rect x="860" y="410" width="120" height="290" fill="url(#win2)"/>
+    <rect x="1150" y="390" width="130" height="310" fill="url(#win)"/>
+    <rect x="1450" y="430" width="160" height="270" fill="url(#win2)"/>
+    <rect x="680" y="460" width="170" height="240" fill="url(#win2)"/>
+  </g>
+  <rect y="650" width="1600" height="50" fill="#05020b"/>
+  <rect y="672" width="1600" height="4" fill="#7c3aed" opacity=".7"/>
+</svg>
