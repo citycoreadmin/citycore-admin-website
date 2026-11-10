@@ -59,7 +59,7 @@ select t.assert(not exists (select 1 from pg_proc p where p.proname in ('support
 select t.assert(not exists (select 1 from information_schema.tables where table_schema='public' and table_name like 'support\_%' and exists (select 1 from information_schema.role_table_grants g where g.table_name=tables.table_name and g.table_schema='public' and g.grantee in ('anon','PUBLIC'))), 'anon has no table grants on support tables');
 select t.assert(not has_table_privilege('authenticated','public.support_tickets','insert') and not has_table_privilege('authenticated','public.support_tickets','delete') and not has_table_privilege('authenticated','public.support_audit_log','select'), 'no client INSERT/DELETE on tickets, no direct audit read');
 select t.assert((select not public and file_size_limit = 52428800 and 'video/mp4' = any(allowed_mime_types) and not ('image/svg+xml' = any(allowed_mime_types)) from storage.buckets where id='support-attachments'), 'bucket private, 50MB, explicit mime list without SVG');
-select t.assert(not exists (select 1 from pg_policies where schemaname='storage' and tablename='objects' and policyname like 'support\_objects\_%' and cmd in ('UPDATE','ALL')), 'no UPDATE/ALL storage policy for support objects');
+select t.assert(not exists (select 1 from pg_policies where schemaname='storage' and tablename='objects' and policyname like 'support\_objects\_%' and permissive='PERMISSIVE' and cmd in ('UPDATE','ALL')), 'no permissive UPDATE/ALL storage policy for support objects');
 
 -- ---------- anonymous
 select t.as_user(null);
@@ -252,5 +252,17 @@ begin
 end $$;
 
 -- ---------- idempotent re-run of nothing else; final summary
+-- ---------- a broad pre-existing storage policy must NOT open the support bucket (restrictive guards)
+select t.su();
+create policy zz_broad on storage.objects for all to authenticated using (true) with check (true);
+select t.as_user(:'U2');
+select t.assert((select count(*) from storage.objects where bucket_id='support-attachments') = 0, 'broad policy: u2 still cannot read u1 support objects');
+select t.expect_fail(format($f$insert into storage.objects(bucket_id,name,metadata) values ('support-attachments',%L,'{}')$f$, :'t1' || '/' || :'m1' || '/evil2.png'), 'row-level security|violates');
+select t.expect_affected(format($f$update storage.objects set name=name where name like %L$f$, :'t1' || '/%'), 0);
+select t.expect_affected(format($f$delete from storage.objects where name like %L$f$, :'t1' || '/%'), 0);
+select t.expect_affected($$insert into storage.objects(bucket_id,name,metadata) values ('other-bucket','anything','{}')$$, 1);
+select t.assert((select count(*) from storage.objects where bucket_id='other-bucket') = 1, 'broad policy: other buckets unaffected');
+select t.su();
+drop policy zz_broad on storage.objects;
 select t.su();
 select 'ALL ASSERTIONS PASSED' as result;

@@ -564,6 +564,25 @@ create policy support_objects_delete on storage.objects for delete to authentica
   using (bucket_id = 'support-attachments' and owner_id = auth.uid()::text and public.support_object_unreferenced(name));
 -- No UPDATE policy: stored objects cannot be overwritten or renamed by clients.
 
+-- RESTRICTIVE guards: policies are OR-ed, so any broader pre-existing or future policy on storage.objects could open this
+-- bucket. Restrictive policies are AND-ed with every permissive one, so nothing can grant access to support-attachments
+-- except the rules above. They do not change access to any other bucket (condition is true for them).
+drop policy if exists support_objects_guard_select on storage.objects;
+create policy support_objects_guard_select on storage.objects as restrictive for select to authenticated
+  using (bucket_id <> 'support-attachments' or public.support_can_read_object(name));
+drop policy if exists support_objects_guard_insert on storage.objects;
+create policy support_objects_guard_insert on storage.objects as restrictive for insert to authenticated
+  with check (bucket_id <> 'support-attachments' or public.support_can_upload(name));
+drop policy if exists support_objects_guard_update on storage.objects;
+create policy support_objects_guard_update on storage.objects as restrictive for update to authenticated
+  using (bucket_id <> 'support-attachments') with check (bucket_id <> 'support-attachments');
+drop policy if exists support_objects_guard_delete on storage.objects;
+create policy support_objects_guard_delete on storage.objects as restrictive for delete to authenticated
+  using (bucket_id <> 'support-attachments' or (owner_id = auth.uid()::text and public.support_object_unreferenced(name)));
+drop policy if exists support_objects_guard_anon on storage.objects;
+create policy support_objects_guard_anon on storage.objects as restrictive for all to anon
+  using (bucket_id <> 'support-attachments') with check (bucket_id <> 'support-attachments');
+
 -- ------------------------------------------------------------------ realtime
 do $$
 declare tbl text;

@@ -13,6 +13,7 @@ git-ignored `js/config.local.js`. No service-role key ever goes in the repo or b
   Path must match `ticket_id` / `message_id`; mime allowlist excludes SVG; 50 MB cap; max 5 per message.
 - The client removes uploaded objects if any attachment fails. `support_orphan_objects()` (founder, read-only) reports leftovers.
 - Forgeable `support.internal` setting removed; internal updates are recognised by trigger depth.
+- Restrictive storage guards (AND-ed with all other policies) stop any other storage policy from opening the support bucket.
 - Explicit grants: table/column-level grants only, `anon` and `PUBLIC` have nothing; trigger/internal functions are not executable by clients.
 - Rate limits: 5 new tickets/hour, 20 open tickets, 30 messages/10 min per user.
 - `support_set_role_permissions` validates role (admin_1..5) and payload (five known boolean keys). Founder only.
@@ -32,30 +33,40 @@ Read-only checks by the owner: RLS enabled, no estimate (`approximate_rows = -1`
 It does not match `support_%`, is not referenced by the migration or the website, and is **left untouched**: do not drop, alter or
 grant on it. With RLS on and no policies it is already inaccessible to `anon`/`authenticated`.
 
-## Installation order (owner, staging project only)
-1. **Identity.** Dashboard → Project Settings → General: compare the project reference with `EXPECTED_PROJECT_REF` and confirm it is
-   *different* from the reference in the iOS app's release configuration (compare references only; never share keys).
-2. **Read-only gate.** Run `supabase/tests/05_preinstall_preflight.sql`. Install only if every `ok` is `true`.
-   Row 13 is `true` only while the v2 support system is NOT installed; `false` there means it is already installed, so do not install again.
-   If any is `false`, stop and share the result row (not data); do not drop or alter anything to "make it pass".
-   Optionally run `supabase/tests/04_support_readonly_inventory.sql` for the full inventory.
-3. **Back up** staging (Database → Backups, or a dump) if it holds anything you care about.
-4. **Install.** Paste `supabase/migrations/20261105000000_support_system.sql` into the SQL Editor and run it once. It is one
-   transaction; an error rolls everything back. Expected: "Success. No rows returned."
-5. **Verify on real Supabase** (synthetic accounts only: founder, an `admin_1`, two normal users):
-   - Re-run `04_support_readonly_inventory.sql`; confirm RLS on, bucket private, no `anon` grants.
-   - **Storage metadata check (unverified assumption):** the attachment trigger compares the row's `mime_type`/`size_bytes` with
-     `storage.objects.metadata->>'mimetype'` / `'size'`. Upload one image from the widget; if saving the attachment fails with
-     "does not match the stored object", report it and do not retry blindly — the trigger needs adjusting, not the data.
-   - Run the manual checklist below.
-6. **Edge Function / Auth URLs** (staging only): deploy `username-sign-in`, add the exact local origin to Auth redirect URLs.
-   Keep `support-reply-email` disabled.
-7. Production, public hosting and deployment each require separate explicit approval.
+## Final staging installation procedure (owner runs each step; stop at the first problem)
+Target project reference: **kzwivydbwjewmtaxgiul** (matches `EXPECTED_PROJECT_REF` in `js/config.local.js`).
 
-## Rollback (staging)
-Only if step 4 succeeded and you want to remove it (staging, synthetic data only): drop the `support_*` tables, functions and the
-`support_objects_*` storage policies, then empty and delete the `support-attachments` bucket from the Storage UI. Ask for the exact
-statements first; do not run ad-hoc drops.
+0. **Identity.** In the dashboard, check the project reference in the URL (`/project/kzwivydbwjewmtaxgiul`) and the project name
+   `citycore-admin-staging`. It must differ from the reference in the iOS app's release configuration (compare references only).
+1. **Preflight (done once: 13/13 true).** Re-run `tests/05b_preinstall_checks_only.sql` immediately before installing.
+2. **Review existing Storage policies.** Run (its own query):
+   `select policyname, permissive, cmd, roles, qual, with_check from pg_policies where schemaname='storage' and tablename='objects';`
+   Send me the result. v2 adds RESTRICTIVE guards that AND with every other policy, so no existing policy can open `support-attachments`.
+   Other policies still matter for other buckets (look for `true` or a missing `bucket_id` condition) but do not block this install.
+3. **Privilege pre-check (read-only).**
+   `select current_user, (select rolbypassrls from pg_roles where rolname = current_user) as bypass_rls, has_table_privilege(current_user,'storage.objects','select') as can_read_objects;`
+   Expect `can_read_objects = true` (the attachment checks run as this role).
+4. **Backup.** Dashboard -> Database -> Backups: confirm a recent backup exists (Pro plan) or take one (or `supabase db dump` with your own
+   DB password, never shared). Without backups: the install only ADDS support objects (no existing table is altered) and
+   `rollback_staging_support_v2.sql` removes them. Staging holds no production data.
+5. **Install.** SQL Editor -> new query -> paste `migrations/20261105000000_support_system.sql` -> Run once. The editor may show a
+   "destructive operation" confirmation because the script has `drop policy/trigger if exists`; they only target support objects.
+   Expected: "Success. No rows returned." Any error rolls the whole transaction back; send me the message and do not retry blindly.
+6. **Post-install checks.** Run `tests/06_postinstall_checks_only.sql`: all 15 rows must be `true`. Re-run `05b`: only row 13 should now be `false`.
+7. **Storage metadata check.** With two synthetic users, upload one image from the widget on `localhost`, then run
+   `select name, owner_id, metadata from storage.objects where bucket_id='support-attachments' order by created_at desc limit 3;`
+   Expect `metadata` to contain `mimetype` and `size` matching the file, and `owner_id` = the uploader. If saving the attachment fails with
+   "does not match the stored object", stop and report; the trigger needs adjusting.
+8. Run the **manual checklist** below with synthetic accounts (founder, `admin_1`, two normal users). Grant platform roles only via your existing process.
+9. **Edge Function / Auth URLs** (staging only): deploy `username-sign-in`; add the exact local origin to Auth redirect URLs. Keep `support-reply-email` disabled.
+10. Production, public hosting and deployment each require separate explicit approval.
+
+## Rollback (staging only)
+Run `supabase/rollback_staging_support_v2.sql` (refuses unless the v2 marker exists; one transaction). It drops only support_* tables and
+functions, the sequence, the `support_objects_*` policies and the Realtime entries, and deletes support data. Then empty and delete the
+`support-attachments` bucket in Dashboard -> Storage (Supabase blocks direct SQL deletes on storage tables). It never touches `profiles`,
+`platform_administrators`, `audit_logs`, `notifications` or `"Citicore admin website"`. Afterwards `05b` is 13/13 true again.
+Verified locally: rollback, then reinstall succeeds.
 
 ## Manual checklist on real staging
 - [ ] Sign in with email, with username (Edge Function), with Google; password reset returns to the site.
