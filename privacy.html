@@ -8,66 +8,64 @@
   <link rel="icon" type="image/png" href="citycore-logo.png">
   <link rel="stylesheet" href="css/styles.css">
   <script>try{var s=localStorage.getItem("cc_theme");document.documentElement.dataset.theme=s||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}catch(e){}</script>
-  <title>Privacy Policy - CityCore Admin</title>
+  <title data-i18n="page_privacy_title">Privacy Policy - CityCore Admin</title>
 </head>
 <body>
-  <a class="skip" href="#privacy">Skip to content</a>
+  <a class="skip" href="#privacy" data-i18n="skip_content">Skip to content</a>
   <header class="site-header">
     <nav class="nav">
       <a class="brand" href="./"><img src="citycore-logo.png" alt=""><span>CityCore Admin</span></a>
-      <a href="./">Help Center</a>
-      <button class="icon-btn" type="button" data-theme-toggle aria-label="Toggle theme">◐</button>
+      <a href="./" data-i18n="nav_help">Help Center</a>
+      <div class="nav-tools">
+        <label class="sr-only" for="langSel" data-i18n="language">Language</label>
+        <select id="langSel" class="select" data-lang-select></select>
+        <button class="icon-btn" type="button" data-theme-toggle data-i18n-aria="theme" aria-label="Toggle theme">◐</button>
+      </div>
     </nav>
   </header>
   <main class="wrap privacy-policy" id="privacy">
-  <h1>Privacy Policy</h1>
-  <p><strong>Last updated: November 12, 2026</strong></p>
+  <h1 data-i18n="privacy">Privacy Policy</h1>
+  <p><strong data-i18n="policy_updated">Last updated: November 12, 2026</strong></p>
 
-  <p>
+  <p data-i18n="policy_intro">
     CityCore Admin is operated by WOOBENS STUDIO. This page distinguishes
     the static CityCore Admin website from the CityCore Admin iOS application.
   </p>
-  <p>
+  <p data-i18n="policy_website_intro">
     The website provides Help Center pages and does not request account or
     payment information. It has no contact form or support messaging.
   </p>
 
-  <h2>This Website</h2>
-  <p>
+  <h2 data-i18n="policy_website">This Website</h2>
+  <p data-i18n="policy_website_data">
     The website stores your selected language, theme, and platform in this
     browser's local storage. You can remove these preferences by clearing this
     website's stored data in your browser. The hosting provider's handling of
     technical request information has not been confirmed by the operator.
   </p>
 
-  <h2>iOS Application</h2>
+  <h2 data-i18n="policy_ios">iOS Application</h2>
   <p>
-    The <a href="https://apps.apple.com/us/app/citycore-admin/id6816577256">App Store
-    privacy information</a> for CityCore Admin indicates that Name, Email
-    Address, and Photos or Videos may be collected, linked to users, and used
-    for App Functionality.
+    <span data-i18n="policy_app_before">The </span><a href="https://apps.apple.com/us/app/citycore-admin/id6816577256" data-i18n="policy_app_link">App Store privacy information</a><span data-i18n="policy_app_after"> for CityCore Admin indicates that Name, Email Address, and Photos or Videos may be collected, linked to users, and used for App Functionality.</span>
   </p>
-  <p>
+  <p data-i18n="policy_app_unknown">
     WOOBENS STUDIO has not yet confirmed a complete account of the published
     app's data collection and use, sharing, security, retention, deletion, or
     practices concerning children. The App Store disclosures do not establish
     all of these practices.
   </p>
 
-  <h2>Contact Us</h2>
+  <h2 data-i18n="policy_contact">Contact Us</h2>
   <p>
-    For privacy questions or to request deletion of your account or data,
-    contact WOOBENS STUDIO at
-    <a href="mailto:citycoreadmin@gmail.com">citycoreadmin@gmail.com</a>.
-    A request is not an automatic deletion, and no processing timeframe is
-    promised.
+    <span data-i18n="policy_contact_before">For privacy questions or to request deletion of your account or data, contact WOOBENS STUDIO at </span><a href="mailto:citycoreadmin@gmail.com">citycoreadmin@gmail.com</a><span data-i18n="policy_contact_after">. A request is not an automatic deletion, and no processing timeframe is promised.</span>
   </p>
 
-  <p>&copy; 2026 Woobens Studio. All rights reserved.</p>
+  <p data-i18n="policy_copyright">&copy; 2026 Woobens Studio. All rights reserved.</p>
   </main>
   <script type="module">
-    import { initTheme } from "./js/ui.js";
+    import { initTheme, initLangSelects } from "./js/ui.js";
     initTheme();
+    initLangSelects();
   </script>
 </body>
 </html>

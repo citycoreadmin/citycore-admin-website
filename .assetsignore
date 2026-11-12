@@ -19,3 +19,9 @@
 !/js/home.js
 !/js/i18n.js
 !/js/ui.js
+!/js/languages.js
+!/js/locales/
+/js/locales/*
+!/js/locales/en.js
+!/js/locales/fr.js
+!/js/locales/ht.js

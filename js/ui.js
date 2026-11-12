@@ -1,4 +1,4 @@
-import { LANGS, getLang, setLang, applyI18n } from "./i18n.js";
+import { LANGS, getLang, setLang, applyI18n, t } from "./i18n.js";
 
 // Tiny DOM builder. Text is always set via textContent/text nodes (no innerHTML) to prevent XSS.
 export function h(tag, attrs = {}, ...kids) {
@@ -26,10 +26,21 @@ export function initTheme() {
 }
 
 export function initLangSelects() {
-  document.querySelectorAll("[data-lang-select]").forEach(sel => {
-    sel.replaceChildren(...LANGS.map(l => h("option", { value: l.code }, `${l.flag} ${l.label}`)));
-    sel.value = getLang();
-    sel.addEventListener("change", () => setLang(sel.value));
-  });
+  const selects = [...document.querySelectorAll("[data-lang-select]")];
+  function draw() {
+    selects.forEach(sel => {
+      const available = h("optgroup", { label: t("language_available") });
+      const unavailable = h("optgroup", { label: t("language_unavailable"), disabled: true });
+      LANGS.forEach(language => {
+        const group = language.complete ? available : unavailable;
+        group.append(h("option", { value: language.code }, `${language.flag} ${language.label}`));
+      });
+      sel.replaceChildren(available, unavailable);
+      sel.value = getLang();
+    });
+  }
+  selects.forEach(sel => sel.addEventListener("change", () => setLang(sel.value)));
+  window.addEventListener("cc:lang", draw);
+  draw();
   applyI18n();
 }

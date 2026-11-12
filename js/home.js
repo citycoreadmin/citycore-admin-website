@@ -1,4 +1,4 @@
-import { t, getLang, PLATFORMS, applyI18n } from "./i18n.js";
+import { t, articleTranslation, PLATFORMS, applyI18n } from "./i18n.js";
 import { ARTICLES, HELP_CATEGORIES } from "./articles.js";
 import { h, initTheme, initLangSelects } from "./ui.js";
 
@@ -17,9 +17,9 @@ function drawPlatforms() {
 platformSel.addEventListener("change", () => { state.platform = platformSel.value; localStorage.setItem("cc_platform", state.platform); render(); });
 
 const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-const tr = a => a.tr[getLang()] || a.tr.en;
+const tr = a => articleTranslation(a.id);
 const forPlatform = a => state.platform === "all" || !a.platforms.length || a.platforms.includes(state.platform);
-const articleText = a => norm([a.kw, ...["en", getLang()].flatMap(l => [a.tr[l].title, ...a.tr[l].steps])].join(" "));
+const articleText = a => norm([a.kw, tr(a).title, ...tr(a).steps].join(" "));
 
 function matches(a) {
   if (!forPlatform(a)) return false;
@@ -62,7 +62,7 @@ function openArticle(a) {
   $("artTitle").textContent = tr(a).title;
   $("artImg").hidden = !a.img; if (a.img) $("artImg").src = a.img;
   $("artSteps").replaceChildren(...tr(a).steps.map(s => h("li", {}, s)));
-  dlg.showModal();
+  if (!dlg.open) dlg.showModal();
 }
 $("artClose").addEventListener("click", () => { dlg.close(); openId = null; });
 dlg.addEventListener("click", e => { if (e.target === dlg) { dlg.close(); openId = null; } });

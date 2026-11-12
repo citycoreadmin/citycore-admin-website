@@ -59,7 +59,7 @@ img { max-width: 100%; }
 .wrap { max-width: 1200px; margin: auto; padding: 36px 20px; }
 .wrap h2 { margin-bottom: 18px; font-size: 1.6rem; }
 .cat-grid, .art-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
-.cat-card, .art-card { text-align: left; font: inherit; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; cursor: pointer; display: flex; flex-direction: column; gap: 6px; transition: transform .2s, box-shadow .2s, border-color .2s; animation: rise .5s ease both; }
+.cat-card, .art-card { text-align: start; font: inherit; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; cursor: pointer; display: flex; flex-direction: column; gap: 6px; transition: transform .2s, box-shadow .2s, border-color .2s; animation: rise .5s ease both; }
 .cat-card:hover, .art-card:hover { transform: translateY(-4px); border-color: var(--p2); box-shadow: var(--shadow); }
 .cat-ico { font-size: 1.8rem; }
 .art-card img, .art-ph { width: 100%; height: 170px; object-fit: cover; object-position: top; border-radius: 10px; margin-bottom: 6px; background: var(--bg2); }
@@ -72,14 +72,14 @@ img { max-width: 100%; }
 .privacy-policy h1 { margin-bottom: 8px; }
 .privacy-policy h2 { margin: 28px 0 8px; }
 .privacy-policy p, .privacy-policy ul { margin: 12px 0; }
-.privacy-policy ul { padding-left: 24px; }
+.privacy-policy ul { padding-inline-start: 24px; }
 
 /* dialog */
 .dialog { border: 1px solid var(--border); border-radius: 20px; background: var(--card); color: var(--text); width: min(680px, 94vw); max-height: 90vh; overflow: auto; padding: 22px; margin: auto; box-shadow: var(--shadow); }
 .dialog::backdrop { background: rgba(8, 4, 15, .65); backdrop-filter: blur(3px); }
 .dialog-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
 .dialog-img { border-radius: 12px; margin-bottom: 14px; max-height: 60vh; object-fit: contain; display: block; margin-inline: auto; }
-.steps { padding-left: 22px; display: grid; gap: 8px; }
+.steps { padding-inline-start: 22px; display: grid; gap: 8px; }
 
 /* support widget */
 .fab { position: fixed; right: 20px; bottom: 20px; z-index: 90; width: 62px; height: 62px; border-radius: 50%; border: 0; cursor: pointer; background: linear-gradient(135deg, var(--p), var(--p2)); color: #fff; font-size: 1.6rem; box-shadow: 0 10px 30px rgba(124, 58, 237, .55); transition: transform .2s; }
