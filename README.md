@@ -1,2 +1,15 @@
-# citycore-admin-website
-Official website and support center for CityCore Admin
+# CityCore Admin public website
+
+The public website is a static Help Center with article search, language selection (English, French and Haitian Creole),
+light/dark themes, and the CityCore Admin privacy policy.
+
+Support ticket messaging and the staff dashboard are intentionally not included in this public release. The support
+system will be enabled only after the separate Supabase staging security and functional tests pass.
+
+Cloudflare Workers serves `privacy.html` at the canonical `/privacy` URL and redirects `/privacy.html` to it using
+`auto-trailing-slash` HTML handling. Test both direct URLs in a Workers preview before publication.
+
+Run locally with `python3 -m http.server 8123` and open `http://localhost:8123`. This simple server does not emulate
+Cloudflare's extensionless HTML routing; open `/privacy.html` directly for local policy checks.
+GitHub Pages is also configured to publish `main` at `/` for `citycoreadmin.com`; its routing must be verified
+separately. Confirm Cloudflare production settings before publication.
