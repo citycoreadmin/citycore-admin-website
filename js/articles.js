@@ -76,9 +76,9 @@ export const ARTICLES = [
     id: "privacy-security", cat: "privacy", img: "", platforms: [],
     kw: "privacy security data delete account two factor devices",
     tr: {
-      en: { title: "Keeping your account secure", steps: ["Use a strong, unique password.", "Do not share your password with anyone.", "This website cannot currently accept privacy or account deletion requests."] },
-      fr: { title: "Sécuriser votre compte", steps: ["Utilisez un mot de passe fort et unique.", "Ne communiquez votre mot de passe à personne.", "Ce site ne peut pas recevoir actuellement de demandes relatives à la confidentialité ou à la suppression d'un compte."] },
-      ht: { title: "Sekirize kont ou", steps: ["Itilize yon modpas solid ki diferan de lòt modpas ou yo.", "Pa bay pèsonn modpas ou.", "Sit sa a pa ka resevwa demann sou vi prive oswa sou efase kont pou kounye a."] }
+      en: { title: "Keeping your account secure", steps: ["Use a strong, unique password.", "Do not share your password with anyone.", "For privacy questions or account/data deletion requests, see the Privacy Policy link at the bottom of this page."] },
+      fr: { title: "Sécuriser votre compte", steps: ["Utilisez un mot de passe fort et unique.", "Ne communiquez votre mot de passe à personne.", "Pour toute question sur la confidentialité ou toute demande de suppression de compte ou de données, consultez le lien Politique de confidentialité en bas de cette page."] },
+      ht: { title: "Sekirize kont ou", steps: ["Itilize yon modpas solid ki diferan de lòt modpas ou yo.", "Pa bay pèsonn modpas ou.", "Pou kesyon sou vi prive oswa demann pou efase kont oswa done, gade lyen Politik konfidansyalite ki anba paj sa a."] }
     }
   },
   {
