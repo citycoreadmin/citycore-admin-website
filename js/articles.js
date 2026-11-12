@@ -51,7 +51,7 @@ export const ARTICLES = [
     tr: {
       en: { title: "I can't log in", steps: ["Check your email address and password for typos.", "Use the password reset option on the sign-in screen.", "Make sure the app is up to date.", "If the problem continues, review the Contact Support information in this Help Center."] },
       fr: { title: "Je n'arrive pas à me connecter", steps: ["Vérifiez votre e-mail et votre mot de passe.", "Utilisez la réinitialisation du mot de passe.", "Vérifiez que l'application est à jour.", "Si le problème persiste, consultez les informations de contact dans ce centre d'aide."] },
-      ht: { title: "Mwen pa ka konekte", steps: ["Verifye imèl ak modpas ou pou fòt.", "Itilize opsyon reyinisyalize modpas la.", "Asire aplikasyon an ajou.", "Si pwoblèm nan kontinye, gade enfòmasyon pou kontakte sipò nan Sant Èd sa a."] }
+      ht: { title: "Mwen pa ka konekte", steps: ["Verifye imèl ak modpas ou pou fòt.", "Itilize opsyon reyinisyalize modpas la.", "Asire w aplikasyon an ajou.", "Si pwoblèm nan pèsiste, gade kijan pou kontakte ekip sipò a nan Sant Èd la."] }
     }
   },
   {
