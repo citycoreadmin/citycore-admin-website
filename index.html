@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="google-site-verification" content="n--XszD1D0eT2RAv5fXx8zQ-PGSljuWTeq1ZpitfzKU" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CityCore Admin | Help Center</title>
+  <title data-i18n="page_home_title">CityCore Admin | Help Center</title>
   <meta name="description" content="Official CityCore Admin Help Center. Find setup, account, admin panel and troubleshooting guides.">
   <link rel="canonical" href="https://citycoreadmin.com/">
   <meta property="og:type" content="website">
@@ -20,7 +20,7 @@
   <script>try{var s=localStorage.getItem("cc_theme");document.documentElement.dataset.theme=s||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}catch(e){}</script>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main" data-i18n="skip_content">Skip to content</a>
 
 <header class="site-header">
   <nav class="nav">
@@ -44,7 +44,7 @@
     <h1 data-i18n="hero_title">Hi, how can we help you?</h1>
     <form class="search" id="searchForm" role="search">
       <span class="search-icon" aria-hidden="true">⌕</span>
-      <input id="searchInput" type="search" autocomplete="off" data-i18n-ph="search_ph" placeholder="Search for articles" aria-label="Search for articles">
+      <input id="searchInput" type="search" autocomplete="off" data-i18n-ph="search_ph" data-i18n-aria="search_ph" placeholder="Search for articles" aria-label="Search for articles">
       <button type="submit" class="btn btn-primary" data-i18n="search_btn">Search</button>
     </form>
     <div class="platform-row">
@@ -80,7 +80,7 @@
 </footer>
 
 <dialog id="artDialog" class="dialog" aria-labelledby="artTitle">
-  <div class="dialog-head"><h2 id="artTitle"></h2><button class="icon-btn" id="artClose" aria-label="Close">✕</button></div>
+  <div class="dialog-head"><h2 id="artTitle"></h2><button class="icon-btn" id="artClose" aria-label="Close" data-i18n-aria="close">✕</button></div>
   <img id="artImg" alt="" class="dialog-img" hidden>
   <ol id="artSteps" class="steps"></ol>
 </dialog>
