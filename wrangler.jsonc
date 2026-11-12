@@ -2,7 +2,8 @@
   "name": "citycore-admin-website",
   "compatibility_date": "2026-11-09",
   "assets": {
-    "directory": "."
+    "directory": ".",
+    "html_handling": "auto-trailing-slash"
   },
   "previews": {}
 }
