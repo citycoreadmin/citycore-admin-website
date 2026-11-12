@@ -31,9 +31,9 @@ export const ARTICLES = [
     id: "account-settings", cat: "account_login", img: "settings.png", platforms: ["ios", "ipados", "android"],
     kw: "settings account privacy security devices notifications language appearance logout log out",
     tr: {
-      en: { title: "Account settings", steps: ["Tap Profile in the bottom navigation.", "Open Settings.", "Account holds your account information.", "Data & Privacy, Security and Devices protect your account.", "Preferences contains Notifications, Language and Appearance.", "Account Actions contains the Log Out options."] },
-      fr: { title: "Paramètres du compte", steps: ["Touchez Profile dans la navigation du bas.", "Ouvrez Settings.", "Account : informations du compte.", "Data & Privacy, Security et Devices protègent votre compte.", "Preferences : notifications, langue et apparence.", "Account Actions : options de déconnexion."] },
-      ht: { title: "Paramèt kont", steps: ["Peze Profile nan navigasyon anba a.", "Louvri Settings.", "Account genyen enfòmasyon kont ou.", "Data & Privacy, Security ak Devices pwoteje kont ou.", "Preferences genyen notifikasyon, lang ak aparans.", "Account Actions genyen opsyon dekoneksyon yo."] }
+      en: { title: "Account settings", steps: ["Tap Profile in the bottom navigation and open Settings.", "Available settings may vary by app version.", "Use Log Out to sign out of your account."] },
+      fr: { title: "Paramètres du compte", steps: ["Touchez Profile dans la navigation du bas, puis ouvrez Settings.", "Les paramètres disponibles peuvent varier selon la version de l'application.", "Utilisez Log Out pour vous déconnecter."] },
+      ht: { title: "Paramèt kont", steps: ["Peze Profile nan meni ki anba a, epi louvri Settings.", "Paramèt ki disponib yo ka chanje selon vèsyon aplikasyon an.", "Itilize Log Out pou dekonekte w."] }
     }
   },
   {
@@ -49,9 +49,9 @@ export const ARTICLES = [
     id: "login-problems", cat: "account_login", img: "", platforms: [],
     kw: "login sign in password reset locked email verify",
     tr: {
-      en: { title: "I can't log in", steps: ["Check your email address and password for typos.", "Use the password reset option on the sign-in screen.", "Make sure the app is up to date.", "If the problem continues, review the Contact Support information in this Help Center."] },
-      fr: { title: "Je n'arrive pas à me connecter", steps: ["Vérifiez votre e-mail et votre mot de passe.", "Utilisez la réinitialisation du mot de passe.", "Vérifiez que l'application est à jour.", "Si le problème persiste, consultez les informations de contact dans ce centre d'aide."] },
-      ht: { title: "Mwen pa ka konekte", steps: ["Verifye imèl ak modpas ou pou fòt.", "Itilize opsyon reyinisyalize modpas la.", "Asire w aplikasyon an ajou.", "Si pwoblèm nan pèsiste, gade kijan pou kontakte ekip sipò a nan Sant Èd la."] }
+      en: { title: "I can't log in", steps: ["Check your email address and password for typos.", "Use the password reset option on the sign-in screen.", "Make sure the app is up to date.", "Support messaging is not currently available on this website."] },
+      fr: { title: "Je n'arrive pas à me connecter", steps: ["Vérifiez votre e-mail et votre mot de passe.", "Utilisez la réinitialisation du mot de passe.", "Vérifiez que l'application est à jour.", "La messagerie d'assistance n'est pas disponible actuellement sur ce site."] },
+      ht: { title: "Mwen pa ka konekte", steps: ["Verifye imèl ak modpas ou pou fòt.", "Itilize opsyon reyinisyalize modpas la.", "Asire w aplikasyon an ajou.", "Mesaj sipò pa disponib sou sit sa a kounye a."] }
     }
   },
   {
@@ -67,18 +67,18 @@ export const ARTICLES = [
     id: "app-crash", cat: "troubleshooting", img: "", platforms: [],
     kw: "crash bug freeze slow error not loading update reinstall",
     tr: {
-      en: { title: "The app crashes or won't load", steps: ["Force-close and reopen the app.", "Check your internet connection.", "Update to the latest version.", "Restart your device.", "Still broken? Report a bug and include a screenshot or video."] },
-      fr: { title: "L'application plante ou ne charge pas", steps: ["Fermez et rouvrez l'application.", "Vérifiez votre connexion internet.", "Mettez à jour l'application.", "Redémarrez votre appareil.", "Toujours en panne ? Signalez un bug avec une capture ou une vidéo."] },
-      ht: { title: "Aplikasyon an kraze oswa pa chaje", steps: ["Fèmen aplikasyon an epi rouvri l.", "Verifye koneksyon entènèt ou.", "Mete l ajou nan dènye vèsyon an.", "Rekòmanse aparèy ou.", "Toujou pa mache ? Rapòte yon bug epi mete yon foto oswa videyo."] }
+      en: { title: "The app crashes or won't load", steps: ["Force-close and reopen the app.", "Check your internet connection.", "Update to the latest version.", "Restart your device.", "This website cannot currently receive bug reports or attachments."] },
+      fr: { title: "L'application plante ou ne charge pas", steps: ["Fermez et rouvrez l'application.", "Vérifiez votre connexion internet.", "Mettez à jour l'application.", "Redémarrez votre appareil.", "Ce site ne peut pas recevoir de signalements de bugs ni de pièces jointes pour le moment."] },
+      ht: { title: "Aplikasyon an fèmen oswa pa chaje", steps: ["Fèmen aplikasyon an epi rouvri l.", "Verifye koneksyon entènèt ou.", "Mete aplikasyon an ajou.", "Rekòmanse aparèy ou a.", "Sit sa a pa ka resevwa rapò sou pwoblèm oswa fichye pou kounye a."] }
     }
   },
   {
     id: "privacy-security", cat: "privacy", img: "", platforms: [],
     kw: "privacy security data delete account two factor devices",
     tr: {
-      en: { title: "Keeping your account secure", steps: ["Use a strong, unique password.", "Review signed-in devices under Settings → Devices.", "Manage your data under Settings → Data & Privacy.", "Staff will never ask for your password."] },
-      fr: { title: "Sécuriser votre compte", steps: ["Utilisez un mot de passe fort et unique.", "Vérifiez vos appareils dans Settings → Devices.", "Gérez vos données dans Settings → Data & Privacy.", "Notre équipe ne vous demandera jamais votre mot de passe."] },
-      ht: { title: "Sekirize kont ou", steps: ["Itilize yon modpas solid ki inik.", "Revize aparèy ki konekte yo nan Settings → Devices.", "Jere done ou nan Settings → Data & Privacy.", "Anplwaye yo p ap janm mande modpas ou."] }
+      en: { title: "Keeping your account secure", steps: ["Use a strong, unique password.", "Do not share your password with anyone.", "This website cannot currently accept privacy or account deletion requests."] },
+      fr: { title: "Sécuriser votre compte", steps: ["Utilisez un mot de passe fort et unique.", "Ne communiquez votre mot de passe à personne.", "Ce site ne peut pas recevoir actuellement de demandes relatives à la confidentialité ou à la suppression d'un compte."] },
+      ht: { title: "Sekirize kont ou", steps: ["Itilize yon modpas solid ki diferan de lòt modpas ou yo.", "Pa bay pèsonn modpas ou.", "Sit sa a pa ka resevwa demann sou vi prive oswa sou efase kont pou kounye a."] }
     }
   },
   {
@@ -87,7 +87,7 @@ export const ARTICLES = [
     tr: {
       en: { title: "Support availability", steps: ["This website currently provides self-service Help Center articles only.", "Ticket messaging is being prepared and will be enabled after security and functional testing.", "Do not send account, password or payment details through this website."] },
       fr: { title: "Disponibilité de l'assistance", steps: ["Ce site propose actuellement uniquement des articles d'aide en libre-service.", "La messagerie par ticket est en préparation et sera activée après des tests de sécurité et de fonctionnement.", "N'envoyez pas d'informations de compte, de mot de passe ou de paiement sur ce site."] },
-      ht: { title: "Disponibilite sipò", steps: ["Sit sa a bay atik Sant Èd pou moun ede tèt yo sèlman.", "Mesaj ak tikè ap prepare epi n ap aktive l apre tès sekirite ak fonksyonalite.", "Pa voye enfòmasyon kont, modpas oswa peman sou sit sa a."] }
+      ht: { title: "Disponibilite sipò", steps: ["Pou kounye a, sit sa a bay atik Sant Èd pou ede w jwenn repons poukont ou.", "Sèvis mesaj sipò a ap prepare; li p ap disponib anvan tès sekirite ak fonksyonalite yo fini.", "Pa voye enfòmasyon sou kont ou, modpas ou oswa peman sou sit sa a."] }
     }
   }
 ];
