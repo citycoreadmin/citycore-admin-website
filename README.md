@@ -31,6 +31,7 @@ Creole should be prioritized for fluent-speaker review. All non-English Privacy 
 translations require operator and native-speaker review. These drafts were prepared from the English source and
 need linguistic review before completion. All 106 registry locales now have a module; only English is enabled.
 Locale data is in `js/locales/`. Run coverage checks with `node --test tests/localization.test.mjs`.
+See [LOCALIZATION_QA.md](LOCALIZATION_QA.md) for per-locale human review requirements and current QA findings.
 
 The language chooser is a searchable, keyboard-accessible dialog that identifies Complete, Review needed, and
 Coming soon locales. It is constrained to the viewport on mobile; unsupported Wales and Scotland subdivision
