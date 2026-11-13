@@ -1,12 +1,13 @@
 import { t, articleTranslation, PLATFORMS, applyI18n } from "./i18n.js";
 import { ARTICLES, HELP_CATEGORIES } from "./articles.js";
 import { h, initTheme, initLangSelects } from "./ui.js";
+import { readPreference, writePreference } from "./preferences.js";
 
 initTheme();
 initLangSelects();
 
 const $ = id => document.getElementById(id);
-const state = { q: "", cat: null, platform: localStorage.getItem("cc_platform") || "all" };
+const state = { q: "", cat: null, platform: readPreference("cc_platform") || "all" };
 if (!PLATFORMS.includes(state.platform)) state.platform = "all";
 
 const platformSel = $("platformSel");
@@ -14,7 +15,7 @@ function drawPlatforms() {
   platformSel.replaceChildren(...PLATFORMS.map(p => h("option", { value: p }, t("p_" + p))));
   platformSel.value = state.platform;
 }
-platformSel.addEventListener("change", () => { state.platform = platformSel.value; localStorage.setItem("cc_platform", state.platform); render(); });
+platformSel.addEventListener("change", () => { state.platform = platformSel.value; writePreference("cc_platform", state.platform); render(); });
 
 const norm = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 const tr = a => articleTranslation(a.id);

@@ -1,4 +1,5 @@
 import { LANGS, getLang, setLang, applyI18n, t } from "./i18n.js";
+import { readPreference, writePreference } from "./preferences.js";
 
 // Tiny DOM builder. Text is always set via textContent/text nodes (no innerHTML) to prevent XSS.
 export function h(tag, attrs = {}, ...kids) {
@@ -15,13 +16,13 @@ export function h(tag, attrs = {}, ...kids) {
 }
 
 export function initTheme() {
-  const saved = localStorage.getItem("cc_theme");
+  const saved = readPreference("cc_theme");
   const dark = saved ? saved === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
   document.documentElement.dataset.theme = dark ? "dark" : "light";
   document.querySelectorAll("[data-theme-toggle]").forEach(b => b.addEventListener("click", () => {
     const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
     document.documentElement.dataset.theme = next;
-    localStorage.setItem("cc_theme", next);
+    writePreference("cc_theme", next);
   }));
 }
 
@@ -34,7 +35,7 @@ export function initLangSelects() {
   });
   const empty = h("p", { class: "language-empty", "aria-live": "polite", hidden: true });
   const list = h("div", { class: "language-list" });
-  const dialog = h("dialog", { class: "language-dialog", "aria-labelledby": "languageDialogTitle" });
+  const dialog = h("dialog", { id: "languageDialog", class: "language-dialog", "aria-labelledby": "languageDialogTitle" });
   const title = h("h2", { id: "languageDialogTitle" });
   const close = h("button", { type: "button", class: "icon-btn", "aria-label": "", onclick: () => dialog.close() }, "×");
   const heading = h("div", { class: "language-dialog-head" }, title, close);
@@ -95,7 +96,7 @@ export function initLangSelects() {
           }
         });
         const row = h("label", {
-          class: `language-option${language.code === getLang() ? " is-selected" : ""}`,
+          class: `language-option${language.code === getLang() ? " is-selected" : ""}${language.complete ? "" : " is-unavailable"}`,
           "data-search": `${language.label} ${language.code}`.normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase()
         },

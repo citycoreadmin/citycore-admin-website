@@ -11,7 +11,10 @@ import chineseTraditional from "./locales/zh-Hant.js";
 import japanese from "./locales/ja.js";
 import korean from "./locales/ko.js";
 import russian from "./locales/ru.js";
+import hindi from "./locales/hi.js";
+import turkish from "./locales/tr.js";
 import { COMPLETE_LOCALES, LANGS, directionFor } from "./languages.js";
+import { readPreference, writePreference } from "./preferences.js";
 
 export { LANGS } from "./languages.js";
 export const CATEGORIES = ["account", "payment", "technical", "report_user", "feedback", "bug", "admin_panel", "other"];
@@ -23,9 +26,9 @@ const locales = {
   en: english, fr: french, ht: haitianCreole,
   es: spanish, pt: portuguese, de: german, it: italian, ar: arabic,
   "zh-Hans": chineseSimplified, "zh-Hant": chineseTraditional,
-  ja: japanese, ko: korean, ru: russian
+  ja: japanese, ko: korean, ru: russian, hi: hindi, tr: turkish
 };
-const saved = localStorage.getItem("cc_lang");
+const saved = readPreference("cc_lang");
 const preferred = (navigator.language || "en");
 const localeAlias = { "zh-CN": "zh-Hans", "zh-SG": "zh-Hans", "zh-TW": "zh-Hant", "zh-HK": "zh-Hant", "zh-MO": "zh-Hant" };
 const preferredLocale = locales[preferred] ? preferred : localeAlias[preferred] || preferred.split("-")[0];
@@ -46,7 +49,7 @@ export function articleTranslation(id) {
 export function setLang(code) {
   if (!isComplete(code)) throw new Error(`Unavailable language: ${code}`);
   lang = code;
-  localStorage.setItem("cc_lang", code);
+  writePreference("cc_lang", code);
   document.documentElement.lang = code;
   document.documentElement.dir = directionFor(code);
   applyI18n();
