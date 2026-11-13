@@ -8,6 +8,9 @@ system will be enabled only after the separate Supabase staging security and fun
 
 Cloudflare Workers serves `privacy.html` at the canonical `/privacy` URL and redirects `/privacy.html` to it using
 `auto-trailing-slash` HTML handling. Test both direct URLs in a Workers preview before publication.
+Workers publishes only the `.assetsignore` allowlist, including every runtime dependency of the public JavaScript.
+Keep new public modules in that allowlist. A simple HTTP server does not apply these exclusions and can hide
+deployment-only missing-asset errors; use the Workers preview for release checks.
 
 The language selector lists the union of the requested website languages and the iOS language selector. English is
 the only locale currently marked complete and enabled. French and Haitian Creole, plus initial translations for
@@ -21,6 +24,15 @@ coverage checks with `node --test tests/localization.test.mjs`.
 The language chooser is a searchable, keyboard-accessible dialog that identifies Complete, Review needed, and
 Coming soon locales. It is constrained to the viewport on mobile; unsupported Wales and Scotland subdivision
 flags fall back to a globe while keeping the native language names visible.
+
+If browser storage is denied or full, public controls continue to work for the current page and log a warning.
+No unavailable translation is enabled by this fallback.
+
+Run unit checks with `npm ci && npm test`. For repeatable touch-enabled WebKit checks at 320, 375, 390, and 430px,
+install the test browser with `npx playwright install --with-deps webkit`, start a local Workers preview with
+`npx wrangler dev --local --port 8124`, and run `npm run test:mobile`. This checks normal, denied, and quota-limited
+storage, asset loading, language approval restrictions, search, categories, navigation, theme, and `/privacy` routing.
+Set `PREVIEW_URL` to run the same checks against a hosted branch preview instead.
 
 Run locally with `python3 -m http.server 8123` and open `http://localhost:8123`. This simple server does not emulate
 Cloudflare's extensionless HTML routing; open `/privacy.html` directly for local policy checks.

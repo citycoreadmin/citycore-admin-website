@@ -180,7 +180,16 @@ img { max-width: 100%; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 
 @media (max-width: 860px) { .split { grid-template-columns: 1fr; } .detail { position: static; } .nav-links { display: none; } }
+@media (max-width: 860px) {
+  .public-page .nav-links { display: flex; width: 100%; order: 3; justify-content: center; flex-wrap: wrap; gap: 14px; }
+  .public-page section[id] { scroll-margin-top: 170px; }
+}
 @media (max-width: 520px) {
+  .public-page .nav-tools { width: 100%; }
+  .public-page .language-trigger { flex: 1; max-width: none; min-height: 44px; }
+  .public-page .nav-tools .icon-btn { flex: none; width: 44px; height: 44px; }
+  .public-page .platform-row { flex-direction: column; align-items: stretch; text-align: start; }
+  .public-page .platform-row .select { width: 100%; min-height: 44px; }
   .wp { right: 0; bottom: 0; width: 100vw; height: 100dvh; border-radius: 0; }
   .fab { right: 14px; bottom: 14px; }
   .fab.is-open { display: none; }

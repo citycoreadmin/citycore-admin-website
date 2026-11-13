@@ -1,3 +1,4 @@
 js/config.local.js
 citycore-local-preview.zip
 .wrangler/
+node_modules/
