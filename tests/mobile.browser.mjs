@@ -64,10 +64,14 @@ test("public mobile controls work with normal, denied, and quota-limited storage
             assert.ok(bounds.y >= 0 && bounds.y + bounds.height <= 667);
             assert.equal(await dialog.locator("input[type=radio]").count(), 106);
             assert.deepEqual(await dialog.locator("input[type=radio]:enabled").evaluateAll(nodes => nodes.map(n => n.value)), ["en"]);
-            assert.equal(await dialog.locator(".status-review input:disabled").count(), 14);
-            assert.equal(await dialog.locator(".status-unavailable input:disabled").count(), 91);
+            assert.equal(await dialog.locator(".status-review input:disabled").count(), 21);
+            assert.equal(await dialog.locator(".status-unavailable input:disabled").count(), 84);
             await page.locator("#languageSearch").fill("es-419");
             assert.equal(await dialog.locator(".language-option:visible").count(), 1);
+            assert.equal(await dialog.locator("input[value=es-419]").isDisabled(), true);
+            await page.locator("#languageSearch").fill("Nederlands");
+            assert.equal(await dialog.locator(".language-option:visible").count(), 1);
+            assert.equal(await dialog.locator("input[value=nl]").isDisabled(), true);
             await page.locator("#languageSearch").fill("English");
             await dialog.locator("input[value=en]").tap();
             await dialog.getByRole("button", { name: "Close", exact: true }).tap();

@@ -16,6 +16,13 @@ import korean from "../js/locales/ko.js";
 import russian from "../js/locales/ru.js";
 import hindi from "../js/locales/hi.js";
 import turkish from "../js/locales/tr.js";
+import dutch from "../js/locales/nl.js";
+import polish from "../js/locales/pl.js";
+import ukrainian from "../js/locales/uk.js";
+import englishUS from "../js/locales/en-US.js";
+import englishGB from "../js/locales/en-GB.js";
+import spanishLatinAmerica from "../js/locales/es-419.js";
+import portugueseBrazil from "../js/locales/pt-BR.js";
 import { ARTICLES, HELP_CATEGORIES } from "../js/articles.js";
 import {
   LANGS, COMPLETE_LOCALES, REVIEW_LOCALES, PENDING_LOCALES, RTL_LOCALES, directionFor
@@ -25,9 +32,12 @@ const locales = {
   en: english, fr: french, ht: haitianCreole,
   es: spanish, pt: portuguese, de: german, it: italian, ar: arabic,
   "zh-Hans": chineseSimplified, "zh-Hant": chineseTraditional,
-  ja: japanese, ko: korean, ru: russian, hi: hindi, tr: turkish
+  ja: japanese, ko: korean, ru: russian, hi: hindi, tr: turkish,
+  nl: dutch, pl: polish, uk: ukrainian, "en-US": englishUS, "en-GB": englishGB,
+  "es-419": spanishLatinAmerica, "pt-BR": portugueseBrazil
 };
 const initialLocales = ["es", "pt", "de", "it", "ar", "zh-Hans", "zh-Hant", "ja", "ko", "ru", "hi", "tr"];
+const newDrafts = ["nl", "pl", "uk", "en-US", "en-GB", "es-419", "pt-BR"];
 const publicMessageKeys = [
   "skip_content", "close", "page_home_title", "page_privacy_title",
   "language_available", "language_complete", "language_review", "language_unavailable",
@@ -55,8 +65,8 @@ test("registry has unique codes, explicit coverage, and the requested RTL direct
   assert.deepEqual(LANGS.filter(language => language.complete).map(language => language.code), COMPLETE_LOCALES);
   assert.deepEqual(COMPLETE_LOCALES, ["en"]);
   assert.deepEqual(LANGS.filter(language => language.review).map(language => language.code), REVIEW_LOCALES);
-  assert.deepEqual(REVIEW_LOCALES, ["fr", "ht", ...initialLocales]);
-  assert.equal(PENDING_LOCALES.length, 91);
+  assert.deepEqual(REVIEW_LOCALES, ["fr", "ht", ...initialLocales, ...newDrafts]);
+  assert.equal(PENDING_LOCALES.length, 84);
   assert.deepEqual(
     LANGS.filter(language => !language.complete && !language.review).map(language => language.code),
     PENDING_LOCALES
@@ -150,7 +160,7 @@ test("locale files cover their required messages and all articles without empty 
     "only complete and review-needed locale modules are shipped"
   );
   for (const [code, locale] of Object.entries(locales)) {
-    const expectedKeys = ["en", "fr", "ht"].includes(code)
+    const expectedKeys = ["en", "fr", "ht", "en-US", "en-GB"].includes(code)
       ? Object.keys(english.messages).sort()
       : publicMessageKeys;
     assert.deepEqual(Object.keys(locale.messages).sort(), expectedKeys, code);
@@ -166,6 +176,35 @@ test("locale files cover their required messages and all articles without empty 
       assert.ok(translation.steps.every(step => step.trim()), `${code}:${article.id}`);
     }
     for (const category of HELP_CATEGORIES) assert.ok(locale.messages[`cat_${category}`], `${code}:${category}`);
+  }
+});
+
+test("regional drafts retain localized policy and article content", () => {
+  assert.equal(englishGB.messages.policy_updated, "Last updated: 12 November 2026");
+  assert.match(spanishLatinAmerica.articles.servers.steps[1], /Toca/);
+  assert.match(portugueseBrazil.messages.policy_website_data, /Você/);
+  assert.match(portugueseBrazil.articles["login-problems"].steps[0], /senha/);
+  for (const code of newDrafts) {
+    assert.ok(REVIEW_LOCALES.includes(code));
+    assert.ok(!COMPLETE_LOCALES.includes(code));
+  }
+});
+
+test("new non-English drafts do not use English sentences as placeholders", () => {
+  const sharedTerms = new Set(["p_ios", "p_ipados", "p_android", "p_web"]);
+  for (const code of ["nl", "pl", "uk", "es-419", "pt-BR"]) {
+    const locale = locales[code];
+    for (const key of publicMessageKeys) {
+      if (sharedTerms.has(key) || (code === "nl" && ["nav_home", "platform"].includes(key))) continue;
+      assert.notEqual(locale.messages[key], english.messages[key], `${code}:${key}`);
+    }
+    for (const [id, article] of Object.entries(locale.articles)) {
+      assert.notEqual(article.title, english.articles[id].title, `${code}:${id}:title`);
+      article.steps.forEach((step, index) => {
+        if (code === "nl" && id === "servers" && index === 0) return;
+        assert.notEqual(step, english.articles[id].steps[index], `${code}:${id}:${index}`);
+      });
+    }
   }
 });
 

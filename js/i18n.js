@@ -13,6 +13,13 @@ import korean from "./locales/ko.js";
 import russian from "./locales/ru.js";
 import hindi from "./locales/hi.js";
 import turkish from "./locales/tr.js";
+import dutch from "./locales/nl.js";
+import polish from "./locales/pl.js";
+import ukrainian from "./locales/uk.js";
+import englishUS from "./locales/en-US.js";
+import englishGB from "./locales/en-GB.js";
+import spanishLatinAmerica from "./locales/es-419.js";
+import portugueseBrazil from "./locales/pt-BR.js";
 import { COMPLETE_LOCALES, LANGS, directionFor } from "./languages.js";
 import { readPreference, writePreference } from "./preferences.js";
 
@@ -26,7 +33,9 @@ const locales = {
   en: english, fr: french, ht: haitianCreole,
   es: spanish, pt: portuguese, de: german, it: italian, ar: arabic,
   "zh-Hans": chineseSimplified, "zh-Hant": chineseTraditional,
-  ja: japanese, ko: korean, ru: russian, hi: hindi, tr: turkish
+  ja: japanese, ko: korean, ru: russian, hi: hindi, tr: turkish,
+  nl: dutch, pl: polish, uk: ukrainian, "en-US": englishUS, "en-GB": englishGB,
+  "es-419": spanishLatinAmerica, "pt-BR": portugueseBrazil
 };
 const saved = readPreference("cc_lang");
 const preferred = (navigator.language || "en");
