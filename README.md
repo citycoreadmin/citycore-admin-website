@@ -15,13 +15,14 @@ deployment-only missing-asset errors; use the Workers preview for release checks
 The language selector lists the union of the requested website languages and the iOS language selector. English is
 the only locale currently marked complete and enabled. French and Haitian Creole, plus initial translations for
 Spanish, Portuguese, German, Italian, Arabic, Simplified and Traditional Chinese, Japanese, Korean, Russian,
-Hindi, and Turkish, as well as Dutch, Polish, Ukrainian, Romanian, Swedish, Norwegian Bokmål, Danish, Catalan,
-Galician, Indonesian, Malay, US and UK English, Latin American Spanish, and Brazilian Portuguese, are marked Review needed
-(29 locales total) and disabled. The regional drafts build on their existing
+Hindi, and Turkish, as well as Dutch, Polish, Ukrainian, Romanian, Swedish, Norwegian Bokmål, Danish, Czech,
+Slovak, Serbian, Croatian, Bosnian, Catalan, Galician, Afrikaans, Swahili, Persian, Vietnamese, Indonesian,
+Malay, Filipino, US and UK English, Latin American Spanish, and Brazilian Portuguese, are marked Review needed
+(39 locales total) and disabled. The regional drafts build on their existing
 base-language translations; their regional wording also requires fluent-speaker review. French and Haitian
 Creole should be prioritized for fluent-speaker review. All non-English Privacy Policy
 translations require operator and native-speaker review. These initial translations were drafted from the English
-source and need fluent-speaker review before completion. The other 76 locales remain marked Coming soon and
+source and need fluent-speaker review before completion. The other 66 locales remain marked Coming soon and
 disabled until all public UI, Help Center articles, search, errors, and policy text are translated and reviewed.
 Locale data is in `js/locales/`. Run coverage checks with `node --test tests/localization.test.mjs`.
 

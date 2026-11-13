@@ -20,10 +20,20 @@ import romanian from "./locales/ro.js";
 import swedish from "./locales/sv.js";
 import norwegianBokmal from "./locales/nb.js";
 import danish from "./locales/da.js";
+import czech from "./locales/cs.js";
+import slovak from "./locales/sk.js";
+import serbian from "./locales/sr.js";
+import croatian from "./locales/hr.js";
+import bosnian from "./locales/bs.js";
 import catalan from "./locales/ca.js";
 import galician from "./locales/gl.js";
+import afrikaans from "./locales/af.js";
+import swahili from "./locales/sw.js";
+import persian from "./locales/fa.js";
+import vietnamese from "./locales/vi.js";
 import indonesian from "./locales/id.js";
 import malay from "./locales/ms.js";
+import filipino from "./locales/fil.js";
 import englishUS from "./locales/en-US.js";
 import englishGB from "./locales/en-GB.js";
 import spanishLatinAmerica from "./locales/es-419.js";
@@ -43,7 +53,9 @@ const locales = {
   "zh-Hans": chineseSimplified, "zh-Hant": chineseTraditional,
   ja: japanese, ko: korean, ru: russian, hi: hindi, tr: turkish,
   nl: dutch, pl: polish, uk: ukrainian, ro: romanian, sv: swedish, nb: norwegianBokmal, da: danish,
-  ca: catalan, gl: galician, id: indonesian, ms: malay,
+  cs: czech, sk: slovak, sr: serbian, hr: croatian, bs: bosnian,
+  ca: catalan, gl: galician, af: afrikaans, sw: swahili, fa: persian, vi: vietnamese,
+  id: indonesian, ms: malay, fil: filipino,
   "en-US": englishUS, "en-GB": englishGB,
   "es-419": spanishLatinAmerica, "pt-BR": portugueseBrazil
 };
