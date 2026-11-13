@@ -43,6 +43,18 @@ test("public mobile controls work with normal, denied, and quota-limited storage
             assert.equal(await page.locator("#platformSel option").count(), 5);
             assert.equal(await page.locator("html").getAttribute("lang"), "en");
             assert.equal(await page.evaluate(() => document.documentElement.scrollWidth), width);
+            const rtl = await page.evaluate(() => {
+              document.documentElement.dir = "rtl";
+              return {
+                overflow: document.documentElement.scrollWidth > innerWidth,
+                searchAlignment: getComputedStyle(document.querySelector("#searchInput")).textAlign,
+                policyAlignment: getComputedStyle(document.querySelector(".cta")).textAlign
+              };
+            });
+            assert.equal(rtl.overflow, false);
+            assert.equal(rtl.searchAlignment, "start");
+            assert.equal(rtl.policyAlignment, "center");
+            await page.evaluate(() => { document.documentElement.dir = "ltr"; });
 
             await page.locator("[data-lang-select]").tap();
             const dialog = page.locator("#languageDialog");
@@ -52,8 +64,8 @@ test("public mobile controls work with normal, denied, and quota-limited storage
             assert.ok(bounds.y >= 0 && bounds.y + bounds.height <= 667);
             assert.equal(await dialog.locator("input[type=radio]").count(), 106);
             assert.deepEqual(await dialog.locator("input[type=radio]:enabled").evaluateAll(nodes => nodes.map(n => n.value)), ["en"]);
-            assert.equal(await dialog.locator(".status-review input:disabled").count(), 12);
-            assert.equal(await dialog.locator(".status-unavailable input:disabled").count(), 93);
+            assert.equal(await dialog.locator(".status-review input:disabled").count(), 14);
+            assert.equal(await dialog.locator(".status-unavailable input:disabled").count(), 91);
             await page.locator("#languageSearch").fill("es-419");
             assert.equal(await dialog.locator(".language-option:visible").count(), 1);
             await page.locator("#languageSearch").fill("English");
@@ -87,6 +99,15 @@ test("public mobile controls work with normal, denied, and quota-limited storage
             await page.waitForURL(/\/privacy$/);
             assert.match(page.url(), /\/privacy$/);
             assert.equal(await page.locator(".privacy-policy h1").textContent(), "Privacy Policy");
+            const rtlPolicy = await page.evaluate(() => {
+              document.documentElement.dir = "rtl";
+              return {
+                overflow: document.documentElement.scrollWidth > innerWidth,
+                alignment: getComputedStyle(document.querySelector(".privacy-policy")).textAlign
+              };
+            });
+            assert.deepEqual(rtlPolicy, { overflow: false, alignment: "start" });
+            await page.evaluate(() => { document.documentElement.dir = "ltr"; });
             await page.locator("[data-lang-select]").tap();
             assert.deepEqual(await page.locator("#languageDialog input:enabled[type=radio]").evaluateAll(nodes => nodes.map(n => n.value)), ["en"]);
             await page.keyboard.press("Escape");

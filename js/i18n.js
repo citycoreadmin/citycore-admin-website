@@ -11,6 +11,8 @@ import chineseTraditional from "./locales/zh-Hant.js";
 import japanese from "./locales/ja.js";
 import korean from "./locales/ko.js";
 import russian from "./locales/ru.js";
+import hindi from "./locales/hi.js";
+import turkish from "./locales/tr.js";
 import { COMPLETE_LOCALES, LANGS, directionFor } from "./languages.js";
 import { readPreference, writePreference } from "./preferences.js";
 
@@ -24,7 +26,7 @@ const locales = {
   en: english, fr: french, ht: haitianCreole,
   es: spanish, pt: portuguese, de: german, it: italian, ar: arabic,
   "zh-Hans": chineseSimplified, "zh-Hant": chineseTraditional,
-  ja: japanese, ko: korean, ru: russian
+  ja: japanese, ko: korean, ru: russian, hi: hindi, tr: turkish
 };
 const saved = readPreference("cc_lang");
 const preferred = (navigator.language || "en");

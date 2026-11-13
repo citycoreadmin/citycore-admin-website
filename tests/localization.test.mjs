@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import english from "../js/locales/en.js";
 import french from "../js/locales/fr.js";
 import haitianCreole from "../js/locales/ht.js";
@@ -14,6 +14,8 @@ import chineseTraditional from "../js/locales/zh-Hant.js";
 import japanese from "../js/locales/ja.js";
 import korean from "../js/locales/ko.js";
 import russian from "../js/locales/ru.js";
+import hindi from "../js/locales/hi.js";
+import turkish from "../js/locales/tr.js";
 import { ARTICLES, HELP_CATEGORIES } from "../js/articles.js";
 import {
   LANGS, COMPLETE_LOCALES, REVIEW_LOCALES, PENDING_LOCALES, RTL_LOCALES, directionFor
@@ -23,9 +25,9 @@ const locales = {
   en: english, fr: french, ht: haitianCreole,
   es: spanish, pt: portuguese, de: german, it: italian, ar: arabic,
   "zh-Hans": chineseSimplified, "zh-Hant": chineseTraditional,
-  ja: japanese, ko: korean, ru: russian
+  ja: japanese, ko: korean, ru: russian, hi: hindi, tr: turkish
 };
-const initialLocales = ["es", "pt", "de", "it", "ar", "zh-Hans", "zh-Hant", "ja", "ko", "ru"];
+const initialLocales = ["es", "pt", "de", "it", "ar", "zh-Hans", "zh-Hant", "ja", "ko", "ru", "hi", "tr"];
 const publicMessageKeys = [
   "skip_content", "close", "page_home_title", "page_privacy_title",
   "language_available", "language_complete", "language_review", "language_unavailable",
@@ -54,7 +56,7 @@ test("registry has unique codes, explicit coverage, and the requested RTL direct
   assert.deepEqual(COMPLETE_LOCALES, ["en"]);
   assert.deepEqual(LANGS.filter(language => language.review).map(language => language.code), REVIEW_LOCALES);
   assert.deepEqual(REVIEW_LOCALES, ["fr", "ht", ...initialLocales]);
-  assert.equal(PENDING_LOCALES.length, 93);
+  assert.equal(PENDING_LOCALES.length, 91);
   assert.deepEqual(
     LANGS.filter(language => !language.complete && !language.review).map(language => language.code),
     PENDING_LOCALES
@@ -142,6 +144,11 @@ test("only complete locales can be selected, including when an unapproved locale
 });
 
 test("locale files cover their required messages and all articles without empty translations", () => {
+  assert.deepEqual(
+    Object.keys(locales).sort(),
+    [...COMPLETE_LOCALES, ...REVIEW_LOCALES].sort(),
+    "only complete and review-needed locale modules are shipped"
+  );
   for (const [code, locale] of Object.entries(locales)) {
     const expectedKeys = ["en", "fr", "ht"].includes(code)
       ? Object.keys(english.messages).sort()
@@ -160,6 +167,14 @@ test("locale files cover their required messages and all articles without empty 
     }
     for (const category of HELP_CATEGORIES) assert.ok(locale.messages[`cat_${category}`], `${code}:${category}`);
   }
+});
+
+test("no Coming soon locale module is published as an unreviewed translation", async () => {
+  const files = new Set((await readdir(new URL("../js/locales/", import.meta.url)))
+    .filter(file => file.endsWith(".js"))
+    .map(file => file.slice(0, -3)));
+  assert.deepEqual([...files].sort(), [...COMPLETE_LOCALES, ...REVIEW_LOCALES].sort());
+  for (const code of PENDING_LOCALES) assert.equal(files.has(code), false, code);
 });
 
 test("HTML localization keys exist and both pages retain language and privacy navigation", async () => {
