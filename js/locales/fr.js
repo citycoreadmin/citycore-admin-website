@@ -20,10 +20,10 @@ export default {
     "policy_app_link": "informations de confidentialité de l'App Store",
     "policy_app_before": "Les ",
     "policy_app_after": " pour CityCore Admin indiquent que le nom, l'adresse e-mail et les photos ou vidéos peuvent être collectés, liés aux utilisateurs et utilisés pour le fonctionnement de l'application.",
-    "policy_app_unknown": "WOOBENS STUDIO n'a pas encore confirmé un compte rendu complet de la collecte et de l'utilisation des données, du partage, de la sécurité, de la conservation, de la suppression ou des pratiques concernant les enfants dans l'application publiée. Les informations de l'App Store ne permettent pas d'établir toutes ces pratiques.",
+    "policy_app_unknown": "WOOBENS STUDIO n'a pas encore confirmé de manière exhaustive comment l'application publiée collecte et utilise les données, les partage, les protège, les conserve ou les supprime, ni les pratiques qu'elle applique concernant les enfants. Les informations de l'App Store ne permettent pas d'établir toutes ces pratiques.",
     "policy_contact": "Nous contacter",
     "policy_contact_before": "Pour toute question sur la confidentialité ou pour demander la suppression de votre compte ou de vos données, contactez WOOBENS STUDIO à ",
-    "policy_contact_after": ". Une demande n'entraîne pas de suppression automatique et aucun délai de traitement n'est promis.",
+    "policy_contact_after": ". Une demande n'entraîne pas de suppression automatique et aucun délai de traitement n'est garanti.",
     "policy_copyright": "© 2026 Woobens Studio. Tous droits réservés.",
     "nav_home": "Accueil",
     "nav_help": "Centre d'aide",
@@ -56,7 +56,7 @@ export default {
     "cat_privacy": "Confidentialité et sécurité",
     "cat_contact": "Disponibilité de l'assistance",
     "contact_status_title": "La messagerie d'assistance n'est pas encore disponible sur ce site.",
-    "contact_status_body": "Le centre d'aide propose des conseils en libre-service. La messagerie par ticket sera activée après les tests de sécurité et de fonctionnement. N'envoyez pas d'informations de compte ou de paiement sur ce site.",
+    "contact_status_body": "Le centre d'aide propose des conseils en libre-service. La messagerie d'assistance par ticket sera activée après la réussite des tests de sécurité et de fonctionnement. N'envoyez pas d'informations de compte ou de paiement sur ce site.",
     "footer": "© 2026 CityCore Admin. Tous droits réservés.",
     "privacy": "Politique de confidentialité",
     "unavailable": "L'assistance est temporairement indisponible.",
@@ -177,54 +177,54 @@ export default {
       "title": "Trouver et créer des panneaux d'administration",
       "steps": [
         "Ouvrez CityCore Admin.",
-        "Touchez Servers dans la navigation du bas.",
-        "Vos panneaux existants apparaissent sous YOUR ADMIN PANELS.",
-        "Pour en créer un, touchez + Create Admin Panel."
+        "Touchez « Servers » dans la barre de navigation inférieure.",
+        "Vos panneaux d'administration existants apparaissent sous « YOUR ADMIN PANELS ».",
+        "Pour créer un nouveau panneau, touchez « + Create Admin Panel »."
       ]
     },
     "panel-settings": {
       "title": "Aperçu des paramètres du panneau",
       "steps": [
-        "Ouvrez le panneau à gérer.",
-        "Ouvrez Panel Settings.",
-        "Members & Staff : gérer membres et équipe.",
-        "Moderation : sanctions et modération.",
-        "Server Management : autorisations, journaux d'audit, notifications et invitations."
+        "Ouvrez le panneau d'administration que vous souhaitez gérer.",
+        "Ouvrez « Panel Settings ».",
+        "Utilisez « Members & Staff » pour gérer les membres et le personnel.",
+        "Utilisez « Moderation » pour configurer les sanctions et la modération.",
+        "Utilisez « Server Management » pour gérer les autorisations, les journaux d'audit, les notifications et les invitations."
       ]
     },
     "roles": {
       "title": "Créer et attribuer des rôles",
       "steps": [
-        "Ouvrez votre panneau.",
-        "Allez dans Panel Settings.",
-        "Touchez Roles & Permissions.",
-        "Create Role pour créer un rôle.",
-        "Assign Role pour l'attribuer à un membre.",
-        "Les rôles existants figurent sous ROLE HIERARCHY."
+        "Ouvrez votre panneau d'administration.",
+        "Allez dans « Panel Settings ».",
+        "Touchez « Roles & Permissions ».",
+        "Utilisez « Create Role » pour créer un rôle.",
+        "Utilisez « Assign Role » pour attribuer un rôle à un membre.",
+        "Les rôles existants figurent sous « ROLE HIERARCHY »."
       ]
     },
     "account-settings": {
       "title": "Paramètres du compte",
       "steps": [
-        "Touchez Profile dans la navigation du bas, puis ouvrez Settings.",
+        "Touchez « Profile » dans la barre de navigation inférieure, puis ouvrez « Settings ».",
         "Les paramètres disponibles peuvent varier selon la version de l'application.",
-        "Utilisez Log Out pour vous déconnecter."
+        "Utilisez « Log Out » pour vous déconnecter."
       ]
     },
     "get-started": {
       "title": "Bienvenue sur CityCore Admin",
       "steps": [
         "Installez CityCore Admin et créez votre compte.",
-        "Ouvrez l'onglet Servers pour voir ou créer un panneau.",
+        "Ouvrez l'onglet « Servers » pour afficher ou créer un panneau d'administration.",
         "Invitez votre équipe et configurez les rôles.",
-        "Utilisez Panel Settings pour configurer la modération."
+        "Utilisez « Panel Settings » pour configurer la modération."
       ]
     },
     "login-problems": {
       "title": "Je n'arrive pas à me connecter",
       "steps": [
         "Vérifiez votre e-mail et votre mot de passe.",
-        "Utilisez la réinitialisation du mot de passe.",
+        "Sur l'écran de connexion, utilisez l'option de réinitialisation du mot de passe.",
         "Vérifiez que l'application est à jour.",
         "La messagerie d'assistance n'est pas disponible actuellement sur ce site."
       ]
@@ -232,8 +232,8 @@ export default {
     "invite-members": {
       "title": "Inviter des personnes dans votre panneau",
       "steps": [
-        "Ouvrez votre panneau puis Panel Settings.",
-        "Ouvrez Server Management, puis Invitations.",
+        "Ouvrez votre panneau d'administration, puis « Panel Settings ».",
+        "Ouvrez « Server Management », puis « Invitations ».",
         "Créez une invitation et partagez-la.",
         "Révoquez-la à tout moment depuis le même écran."
       ]
@@ -245,7 +245,7 @@ export default {
         "Vérifiez votre connexion internet.",
         "Mettez à jour l'application.",
         "Redémarrez votre appareil.",
-        "Ce site ne peut pas recevoir de signalements de bugs ni de pièces jointes pour le moment."
+        "Ce site ne peut pas recevoir de signalements de bogues ni de pièces jointes pour le moment."
       ]
     },
     "privacy-security": {
@@ -260,7 +260,7 @@ export default {
       "title": "Disponibilité de l'assistance",
       "steps": [
         "Ce site propose actuellement uniquement des articles d'aide en libre-service.",
-        "La messagerie par ticket est en préparation et sera activée après des tests de sécurité et de fonctionnement.",
+        "La messagerie d'assistance par ticket est en préparation et sera activée après la réussite des tests de sécurité et de fonctionnement.",
         "N'envoyez pas d'informations de compte, de mot de passe ou de paiement sur ce site."
       ]
     }

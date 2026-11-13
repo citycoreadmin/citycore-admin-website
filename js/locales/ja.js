@@ -55,7 +55,7 @@ export default {
     cat_contact: "サポートの利用状況",
     contact_status_title: "このウェブサイトでは、サポートメッセージ機能はまだ利用できません。",
     contact_status_body: "ヘルプセンターではセルフサービスの案内を提供しています。チケットでのメッセージ機能は、安全性と機能のテストが完了してから有効になります。このウェブサイトからアカウント情報や支払い情報を送信しないでください。",
-    footer: "© 2026 CityCore Admin. All rights reserved.",
+    footer: "© 2026 CityCore Admin. 無断複製・転載を禁じます。",
     privacy: "プライバシーポリシー"
   },
   articles: {

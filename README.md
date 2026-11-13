@@ -15,11 +15,23 @@ deployment-only missing-asset errors; use the Workers preview for release checks
 The language selector lists the union of the requested website languages and the iOS language selector. English is
 the only locale currently marked complete and enabled. French and Haitian Creole, plus initial translations for
 Spanish, Portuguese, German, Italian, Arabic, Simplified and Traditional Chinese, Japanese, Korean, Russian,
-Hindi, and Turkish, are marked Review needed (14 locales total) and disabled. All non-English Privacy Policy
-translations require operator and native-speaker review. These initial translations were drafted from the English
-source and need fluent-speaker review before completion. The other 91 locales remain marked Coming soon and
-disabled until all public UI, Help Center articles, search, errors, and policy text are translated and reviewed.
+Hindi, Bengali, Urdu, and Turkish, as well as Dutch, Polish, Ukrainian, Romanian, Greek, Swedish, Norwegian Bokmål,
+Danish, Finnish, Icelandic, Slovenian, Lithuanian, Latvian, Czech, Slovak, Hungarian, Bulgarian, Serbian, Croatian, Bosnian,
+Albanian, Macedonian, Estonian, Irish, Welsh, Scottish Gaelic, Maltese, Basque, Amharic, Somali, Yoruba, Igbo, Hausa,
+Zulu, Xhosa, Malagasy, Kinyarwanda, Shona, Sesotho, Pashto, Kurmanji, Armenian, Georgian, Azerbaijani, Kazakh, Uzbek,
+Mongolian, Nepali, Sinhala, Tamil, Telugu, Kannada, Malayalam, Marathi, Gujarati, Punjabi, Odia, Burmese, Khmer,
+Lao, Māori, Belarusian, Samoan, Tongan, Fijian, Quechua, Aymara, Guarani, Nahuatl,
+Tigrinya, Kirundi, Wolof, Tajik, and Kyrgyz,
+Catalan, Galician, Afrikaans, Swahili, Persian, Hebrew, Thai,
+Vietnamese, Indonesian,
+Malay, Filipino, US and UK English, Latin American Spanish, and Brazilian Portuguese, are marked Review needed
+(105 locales total) and disabled. The regional drafts build on their existing
+base-language translations; their regional wording also requires fluent-speaker review. French and Haitian
+Creole should be prioritized for fluent-speaker review. All non-English Privacy Policy
+translations require operator and native-speaker review. These drafts were prepared from the English source and
+need linguistic review before completion. All 106 registry locales now have a module; only English is enabled.
 Locale data is in `js/locales/`. Run coverage checks with `node --test tests/localization.test.mjs`.
+See [LOCALIZATION_QA.md](LOCALIZATION_QA.md) for per-locale human review requirements and current QA findings.
 
 The language chooser is a searchable, keyboard-accessible dialog that identifies Complete, Review needed, and
 Coming soon locales. It is constrained to the viewport on mobile; unsupported Wales and Scotland subdivision

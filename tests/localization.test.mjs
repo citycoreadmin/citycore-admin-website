@@ -15,7 +15,98 @@ import japanese from "../js/locales/ja.js";
 import korean from "../js/locales/ko.js";
 import russian from "../js/locales/ru.js";
 import hindi from "../js/locales/hi.js";
+import bengali from "../js/locales/bn.js";
+import urdu from "../js/locales/ur.js";
 import turkish from "../js/locales/tr.js";
+import dutch from "../js/locales/nl.js";
+import polish from "../js/locales/pl.js";
+import ukrainian from "../js/locales/uk.js";
+import romanian from "../js/locales/ro.js";
+import greek from "../js/locales/el.js";
+import swedish from "../js/locales/sv.js";
+import norwegianBokmal from "../js/locales/nb.js";
+import danish from "../js/locales/da.js";
+import finnish from "../js/locales/fi.js";
+import icelandic from "../js/locales/is.js";
+import czech from "../js/locales/cs.js";
+import slovak from "../js/locales/sk.js";
+import slovenian from "../js/locales/sl.js";
+import lithuanian from "../js/locales/lt.js";
+import latvian from "../js/locales/lv.js";
+import hungarian from "../js/locales/hu.js";
+import bulgarian from "../js/locales/bg.js";
+import serbian from "../js/locales/sr.js";
+import croatian from "../js/locales/hr.js";
+import bosnian from "../js/locales/bs.js";
+import albanian from "../js/locales/sq.js";
+import macedonian from "../js/locales/mk.js";
+import estonian from "../js/locales/et.js";
+import irish from "../js/locales/ga.js";
+import welsh from "../js/locales/cy.js";
+import scottishGaelic from "../js/locales/gd.js";
+import maltese from "../js/locales/mt.js";
+import basque from "../js/locales/eu.js";
+import amharic from "../js/locales/am.js";
+import somali from "../js/locales/so.js";
+import yoruba from "../js/locales/yo.js";
+import igbo from "../js/locales/ig.js";
+import hausa from "../js/locales/ha.js";
+import zulu from "../js/locales/zu.js";
+import xhosa from "../js/locales/xh.js";
+import malagasy from "../js/locales/mg.js";
+import kinyarwanda from "../js/locales/rw.js";
+import shona from "../js/locales/sn.js";
+import sesotho from "../js/locales/st.js";
+import pashto from "../js/locales/ps.js";
+import kurmanji from "../js/locales/kmr.js";
+import armenian from "../js/locales/hy.js";
+import georgian from "../js/locales/ka.js";
+import azerbaijani from "../js/locales/az.js";
+import kazakh from "../js/locales/kk.js";
+import uzbek from "../js/locales/uz.js";
+import mongolian from "../js/locales/mn.js";
+import nepali from "../js/locales/ne.js";
+import sinhala from "../js/locales/si.js";
+import tamil from "../js/locales/ta.js";
+import telugu from "../js/locales/te.js";
+import kannada from "../js/locales/kn.js";
+import malayalam from "../js/locales/ml.js";
+import marathi from "../js/locales/mr.js";
+import gujarati from "../js/locales/gu.js";
+import punjabi from "../js/locales/pa.js";
+import odia from "../js/locales/or.js";
+import burmese from "../js/locales/my.js";
+import khmer from "../js/locales/km.js";
+import lao from "../js/locales/lo.js";
+import maori from "../js/locales/mi.js";
+import samoan from "../js/locales/sm.js";
+import tongan from "../js/locales/to.js";
+import fijian from "../js/locales/fj.js";
+import quechua from "../js/locales/qu.js";
+import aymara from "../js/locales/ay.js";
+import guarani from "../js/locales/gn.js";
+import nahuatl from "../js/locales/nah.js";
+import belarusian from "../js/locales/be.js";
+import tigrinya from "../js/locales/ti.js";
+import kirundi from "../js/locales/rn.js";
+import wolof from "../js/locales/wo.js";
+import tajik from "../js/locales/tg.js";
+import kyrgyz from "../js/locales/ky.js";
+import catalan from "../js/locales/ca.js";
+import galician from "../js/locales/gl.js";
+import afrikaans from "../js/locales/af.js";
+import swahili from "../js/locales/sw.js";
+import persian from "../js/locales/fa.js";
+import hebrew from "../js/locales/he.js";
+import thai from "../js/locales/th.js";
+import vietnamese from "../js/locales/vi.js";
+import indonesian from "../js/locales/id.js";
+import malay from "../js/locales/ms.js";
+import filipino from "../js/locales/fil.js";
+import englishUS from "../js/locales/en-US.js";
+import englishGB from "../js/locales/en-GB.js";
+import spanishLatinAmerica from "../js/locales/es-419.js";
+import portugueseBrazil from "../js/locales/pt-BR.js";
 import { ARTICLES, HELP_CATEGORIES } from "../js/articles.js";
 import {
   LANGS, COMPLETE_LOCALES, REVIEW_LOCALES, PENDING_LOCALES, RTL_LOCALES, directionFor
@@ -25,9 +116,30 @@ const locales = {
   en: english, fr: french, ht: haitianCreole,
   es: spanish, pt: portuguese, de: german, it: italian, ar: arabic,
   "zh-Hans": chineseSimplified, "zh-Hant": chineseTraditional,
-  ja: japanese, ko: korean, ru: russian, hi: hindi, tr: turkish
+  ja: japanese, ko: korean, ru: russian, hi: hindi, bn: bengali, ur: urdu, tr: turkish,
+  nl: dutch, pl: polish, uk: ukrainian, ro: romanian, el: greek, sv: swedish, nb: norwegianBokmal, da: danish, fi: finnish,
+  is: icelandic, sl: slovenian, lt: lithuanian, lv: latvian,
+  cs: czech, sk: slovak, hu: hungarian, bg: bulgarian, sr: serbian, hr: croatian, bs: bosnian,
+  sq: albanian, mk: macedonian, et: estonian, ga: irish, cy: welsh, gd: scottishGaelic, mt: maltese, eu: basque, am: amharic,
+  so: somali, yo: yoruba, ig: igbo, ha: hausa, zu: zulu, xh: xhosa, mg: malagasy, rw: kinyarwanda, sn: shona, st: sesotho,
+  ps: pashto, kmr: kurmanji, hy: armenian, ka: georgian, az: azerbaijani, kk: kazakh, uz: uzbek, mn: mongolian, ne: nepali, si: sinhala,
+  ta: tamil, te: telugu, kn: kannada, ml: malayalam, mr: marathi, gu: gujarati, pa: punjabi, or: odia, my: burmese, km: khmer,
+  lo: lao, mi: maori, sm: samoan, to: tongan, fj: fijian, qu: quechua, ay: aymara, gn: guarani, nah: nahuatl, be: belarusian,
+  ti: tigrinya, rn: kirundi, wo: wolof, tg: tajik, ky: kyrgyz,
+  ca: catalan, gl: galician, af: afrikaans, sw: swahili, fa: persian, he: hebrew, th: thai, vi: vietnamese,
+  id: indonesian, ms: malay, fil: filipino,
+  "en-US": englishUS, "en-GB": englishGB,
+  "es-419": spanishLatinAmerica, "pt-BR": portugueseBrazil
 };
 const initialLocales = ["es", "pt", "de", "it", "ar", "zh-Hans", "zh-Hant", "ja", "ko", "ru", "hi", "tr"];
+const newDrafts = ["nl", "pl", "uk", "ro", "sv", "nb", "da", "cs", "sk", "sr", "hr", "bs", "ca", "gl", "af", "sw", "fa", "vi", "id", "ms", "fil", "en-US", "en-GB", "es-419", "pt-BR"];
+const batchDrafts = ["bn", "ur", "el", "bg", "he", "fi", "hu", "sq", "mk", "et", "th"];
+const newBatch = ["is", "sl", "lt", "lv", "ga", "cy", "gd", "mt", "eu", "am"];
+const currentBatch = ["so", "yo", "ig", "ha", "zu", "xh", "mg", "rw", "sn", "st"];
+const nextBatch = ["ps", "kmr", "hy", "ka", "az", "kk", "uz", "mn", "ne", "si"];
+const southAsiaBatch = ["ta", "te", "kn", "ml", "mr", "gu", "pa", "or", "my", "km"];
+const pacificBatch = ["lo", "mi", "be", "sm", "to", "fj", "qu", "ay", "gn", "nah"];
+const finalBatch = ["ti", "rn", "wo", "tg", "ky"];
 const publicMessageKeys = [
   "skip_content", "close", "page_home_title", "page_privacy_title",
   "language_available", "language_complete", "language_review", "language_unavailable",
@@ -55,8 +167,8 @@ test("registry has unique codes, explicit coverage, and the requested RTL direct
   assert.deepEqual(LANGS.filter(language => language.complete).map(language => language.code), COMPLETE_LOCALES);
   assert.deepEqual(COMPLETE_LOCALES, ["en"]);
   assert.deepEqual(LANGS.filter(language => language.review).map(language => language.code), REVIEW_LOCALES);
-  assert.deepEqual(REVIEW_LOCALES, ["fr", "ht", ...initialLocales]);
-  assert.equal(PENDING_LOCALES.length, 91);
+  assert.deepEqual(new Set(REVIEW_LOCALES), new Set(["fr", "ht", ...initialLocales, ...newDrafts, ...batchDrafts, ...newBatch, ...currentBatch, ...nextBatch, ...southAsiaBatch, ...pacificBatch, ...finalBatch]));
+  assert.equal(PENDING_LOCALES.length, 0);
   assert.deepEqual(
     LANGS.filter(language => !language.complete && !language.review).map(language => language.code),
     PENDING_LOCALES
@@ -150,7 +262,7 @@ test("locale files cover their required messages and all articles without empty 
     "only complete and review-needed locale modules are shipped"
   );
   for (const [code, locale] of Object.entries(locales)) {
-    const expectedKeys = ["en", "fr", "ht"].includes(code)
+    const expectedKeys = ["en", "fr", "ht", "en-US", "en-GB"].includes(code)
       ? Object.keys(english.messages).sort()
       : publicMessageKeys;
     assert.deepEqual(Object.keys(locale.messages).sort(), expectedKeys, code);
@@ -166,6 +278,40 @@ test("locale files cover their required messages and all articles without empty 
       assert.ok(translation.steps.every(step => step.trim()), `${code}:${article.id}`);
     }
     for (const category of HELP_CATEGORIES) assert.ok(locale.messages[`cat_${category}`], `${code}:${category}`);
+  }
+});
+
+test("regional drafts retain localized policy and article content", () => {
+  assert.equal(englishGB.messages.policy_updated, "Last updated: 12 November 2026");
+  assert.match(spanishLatinAmerica.articles.servers.steps[1], /Toca/);
+  assert.match(portugueseBrazil.messages.policy_website_data, /Você/);
+  assert.match(portugueseBrazil.articles["login-problems"].steps[0], /senha/);
+  assert.notEqual(locales.ja.messages.footer, english.messages.footer);
+  for (const code of [...newDrafts, ...batchDrafts, ...newBatch, ...currentBatch, ...nextBatch, ...southAsiaBatch, ...pacificBatch, ...finalBatch]) {
+    assert.ok(REVIEW_LOCALES.includes(code));
+    assert.ok(!COMPLETE_LOCALES.includes(code));
+  }
+});
+
+test("new non-English drafts do not use English sentences as placeholders", () => {
+  const sharedTerms = new Set(["p_ios", "p_ipados", "p_android", "p_web"]);
+  for (const code of ["nl", "pl", "uk", "ro", "sv", "nb", "da", "cs", "sk", "sr", "hr", "bs", "ca", "gl", "af", "sw", "fa", "vi", "id", "ms", "fil", "es-419", "pt-BR", ...batchDrafts, ...newBatch, ...currentBatch, ...nextBatch, ...southAsiaBatch, ...pacificBatch, ...finalBatch]) {
+    const locale = locales[code];
+    for (const key of publicMessageKeys) {
+      if (sharedTerms.has(key) || (code === "nl" && ["nav_home", "platform"].includes(key)) ||
+          (code === "sv" && key === "nav_support") ||
+          (code === "da" && ["nav_support", "platform"].includes(key)) ||
+          (code === "ca" && ["articles", "article_count"].includes(key)) ||
+          (["af", "hu", "id", "ms"].includes(code) && key === "platform")) continue;
+      assert.notEqual(locale.messages[key], english.messages[key], `${code}:${key}`);
+    }
+    for (const [id, article] of Object.entries(locale.articles)) {
+      assert.notEqual(article.title, english.articles[id].title, `${code}:${id}:title`);
+      article.steps.forEach((step, index) => {
+        if (code === "nl" && id === "servers" && index === 0) return;
+        assert.notEqual(step, english.articles[id].steps[index], `${code}:${id}:${index}`);
+      });
+    }
   }
 });
 

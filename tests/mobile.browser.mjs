@@ -64,10 +64,20 @@ test("public mobile controls work with normal, denied, and quota-limited storage
             assert.ok(bounds.y >= 0 && bounds.y + bounds.height <= 667);
             assert.equal(await dialog.locator("input[type=radio]").count(), 106);
             assert.deepEqual(await dialog.locator("input[type=radio]:enabled").evaluateAll(nodes => nodes.map(n => n.value)), ["en"]);
-            assert.equal(await dialog.locator(".status-review input:disabled").count(), 14);
-            assert.equal(await dialog.locator(".status-unavailable input:disabled").count(), 91);
+            assert.equal(await dialog.locator(".status-review input:disabled").count(), 105);
+            assert.equal(await dialog.locator(".status-unavailable input:disabled").count(), 0);
             await page.locator("#languageSearch").fill("es-419");
             assert.equal(await dialog.locator(".language-option:visible").count(), 1);
+            assert.equal(await dialog.locator("input[value=es-419]").isDisabled(), true);
+            await page.locator("#languageSearch").fill("Nederlands");
+            assert.equal(await dialog.locator(".language-option:visible").count(), 1);
+            assert.equal(await dialog.locator("input[value=nl]").isDisabled(), true);
+            for (const code of ["sv", "ro", "id", "fa", "vi", "cs", "sr", "bn", "ur", "he", "fi", "th", "is", "sl", "lt", "lv", "ga", "cy", "gd", "mt", "eu", "am", "so", "yo", "ig", "ha", "zu", "xh", "mg", "rw", "sn", "st", "ps", "kmr", "hy", "ka", "az", "kk", "uz", "mn", "ne", "si", "ta", "te", "kn", "ml", "mr", "gu", "pa", "or", "my", "km", "lo", "mi", "be", "sm", "to", "fj", "qu", "ay", "gn", "nah", "ti", "rn", "wo", "tg", "ky"]) {
+              await page.locator("#languageSearch").fill(code);
+              const row = dialog.locator(`.language-option:visible input[value="${code}"]`);
+              assert.equal(await row.count(), 1);
+              assert.equal(await row.isDisabled(), true);
+            }
             await page.locator("#languageSearch").fill("English");
             await dialog.locator("input[value=en]").tap();
             await dialog.getByRole("button", { name: "Close", exact: true }).tap();
@@ -108,6 +118,26 @@ test("public mobile controls work with normal, denied, and quota-limited storage
             });
             assert.deepEqual(rtlPolicy, { overflow: false, alignment: "start" });
             await page.evaluate(() => { document.documentElement.dir = "ltr"; });
+            for (const code of ["ur", "he", "ps"]) {
+              const draftLayout = await page.evaluate(async localeCode => {
+                const { default: draft } = await import(`/js/locales/${localeCode}.js`);
+                const nodes = [...document.querySelectorAll(".privacy-policy [data-i18n]")];
+                const original = nodes.map(node => node.textContent);
+                for (const node of nodes) node.textContent = draft.messages[node.dataset.i18n];
+                document.documentElement.dir = "rtl";
+                const result = {
+                  overflow: document.documentElement.scrollWidth > innerWidth,
+                  direction: getComputedStyle(document.querySelector(".privacy-policy")).direction,
+                  title: document.querySelector(".privacy-policy h1").textContent
+                };
+                nodes.forEach((node, index) => { node.textContent = original[index]; });
+                document.documentElement.dir = "ltr";
+                return { ...result, expectedTitle: draft.messages.privacy };
+              }, code);
+              assert.equal(draftLayout.overflow, false, `${code} policy must fit`);
+              assert.equal(draftLayout.direction, "rtl");
+              assert.equal(draftLayout.title, draftLayout.expectedTitle);
+            }
             await page.locator("[data-lang-select]").tap();
             assert.deepEqual(await page.locator("#languageDialog input:enabled[type=radio]").evaluateAll(nodes => nodes.map(n => n.value)), ["en"]);
             await page.keyboard.press("Escape");
