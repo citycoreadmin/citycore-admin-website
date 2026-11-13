@@ -47,6 +47,16 @@ import scottishGaelic from "../js/locales/gd.js";
 import maltese from "../js/locales/mt.js";
 import basque from "../js/locales/eu.js";
 import amharic from "../js/locales/am.js";
+import somali from "../js/locales/so.js";
+import yoruba from "../js/locales/yo.js";
+import igbo from "../js/locales/ig.js";
+import hausa from "../js/locales/ha.js";
+import zulu from "../js/locales/zu.js";
+import xhosa from "../js/locales/xh.js";
+import malagasy from "../js/locales/mg.js";
+import kinyarwanda from "../js/locales/rw.js";
+import shona from "../js/locales/sn.js";
+import sesotho from "../js/locales/st.js";
 import catalan from "../js/locales/ca.js";
 import galician from "../js/locales/gl.js";
 import afrikaans from "../js/locales/af.js";
@@ -76,6 +86,7 @@ const locales = {
   is: icelandic, sl: slovenian, lt: lithuanian, lv: latvian,
   cs: czech, sk: slovak, hu: hungarian, bg: bulgarian, sr: serbian, hr: croatian, bs: bosnian,
   sq: albanian, mk: macedonian, et: estonian, ga: irish, cy: welsh, gd: scottishGaelic, mt: maltese, eu: basque, am: amharic,
+  so: somali, yo: yoruba, ig: igbo, ha: hausa, zu: zulu, xh: xhosa, mg: malagasy, rw: kinyarwanda, sn: shona, st: sesotho,
   ca: catalan, gl: galician, af: afrikaans, sw: swahili, fa: persian, he: hebrew, th: thai, vi: vietnamese,
   id: indonesian, ms: malay, fil: filipino,
   "en-US": englishUS, "en-GB": englishGB,
@@ -85,6 +96,7 @@ const initialLocales = ["es", "pt", "de", "it", "ar", "zh-Hans", "zh-Hant", "ja"
 const newDrafts = ["nl", "pl", "uk", "ro", "sv", "nb", "da", "cs", "sk", "sr", "hr", "bs", "ca", "gl", "af", "sw", "fa", "vi", "id", "ms", "fil", "en-US", "en-GB", "es-419", "pt-BR"];
 const batchDrafts = ["bn", "ur", "el", "bg", "he", "fi", "hu", "sq", "mk", "et", "th"];
 const newBatch = ["is", "sl", "lt", "lv", "ga", "cy", "gd", "mt", "eu", "am"];
+const currentBatch = ["so", "yo", "ig", "ha", "zu", "xh", "mg", "rw", "sn", "st"];
 const publicMessageKeys = [
   "skip_content", "close", "page_home_title", "page_privacy_title",
   "language_available", "language_complete", "language_review", "language_unavailable",
@@ -112,8 +124,8 @@ test("registry has unique codes, explicit coverage, and the requested RTL direct
   assert.deepEqual(LANGS.filter(language => language.complete).map(language => language.code), COMPLETE_LOCALES);
   assert.deepEqual(COMPLETE_LOCALES, ["en"]);
   assert.deepEqual(LANGS.filter(language => language.review).map(language => language.code), REVIEW_LOCALES);
-  assert.deepEqual(new Set(REVIEW_LOCALES), new Set(["fr", "ht", ...initialLocales, ...newDrafts, ...batchDrafts, ...newBatch]));
-  assert.equal(PENDING_LOCALES.length, 45);
+  assert.deepEqual(new Set(REVIEW_LOCALES), new Set(["fr", "ht", ...initialLocales, ...newDrafts, ...batchDrafts, ...newBatch, ...currentBatch]));
+  assert.equal(PENDING_LOCALES.length, 35);
   assert.deepEqual(
     LANGS.filter(language => !language.complete && !language.review).map(language => language.code),
     PENDING_LOCALES
@@ -231,7 +243,7 @@ test("regional drafts retain localized policy and article content", () => {
   assert.match(spanishLatinAmerica.articles.servers.steps[1], /Toca/);
   assert.match(portugueseBrazil.messages.policy_website_data, /Você/);
   assert.match(portugueseBrazil.articles["login-problems"].steps[0], /senha/);
-  for (const code of [...newDrafts, ...batchDrafts, ...newBatch]) {
+  for (const code of [...newDrafts, ...batchDrafts, ...newBatch, ...currentBatch]) {
     assert.ok(REVIEW_LOCALES.includes(code));
     assert.ok(!COMPLETE_LOCALES.includes(code));
   }
@@ -239,7 +251,7 @@ test("regional drafts retain localized policy and article content", () => {
 
 test("new non-English drafts do not use English sentences as placeholders", () => {
   const sharedTerms = new Set(["p_ios", "p_ipados", "p_android", "p_web"]);
-  for (const code of ["nl", "pl", "uk", "ro", "sv", "nb", "da", "cs", "sk", "sr", "hr", "bs", "ca", "gl", "af", "sw", "fa", "vi", "id", "ms", "fil", "es-419", "pt-BR", ...batchDrafts, ...newBatch]) {
+  for (const code of ["nl", "pl", "uk", "ro", "sv", "nb", "da", "cs", "sk", "sr", "hr", "bs", "ca", "gl", "af", "sw", "fa", "vi", "id", "ms", "fil", "es-419", "pt-BR", ...batchDrafts, ...newBatch, ...currentBatch]) {
     const locale = locales[code];
     for (const key of publicMessageKeys) {
       if (sharedTerms.has(key) || (code === "nl" && ["nav_home", "platform"].includes(key)) ||

@@ -44,6 +44,16 @@ import scottishGaelic from "./locales/gd.js";
 import maltese from "./locales/mt.js";
 import basque from "./locales/eu.js";
 import amharic from "./locales/am.js";
+import somali from "./locales/so.js";
+import yoruba from "./locales/yo.js";
+import igbo from "./locales/ig.js";
+import hausa from "./locales/ha.js";
+import zulu from "./locales/zu.js";
+import xhosa from "./locales/xh.js";
+import malagasy from "./locales/mg.js";
+import kinyarwanda from "./locales/rw.js";
+import shona from "./locales/sn.js";
+import sesotho from "./locales/st.js";
 import catalan from "./locales/ca.js";
 import galician from "./locales/gl.js";
 import afrikaans from "./locales/af.js";
@@ -76,6 +86,7 @@ const locales = {
   nl: dutch, pl: polish, uk: ukrainian, ro: romanian, el: greek, sv: swedish, nb: norwegianBokmal, da: danish, fi: finnish,
   is: icelandic, sl: slovenian, lt: lithuanian, lv: latvian, cs: czech, sk: slovak, hu: hungarian, bg: bulgarian, sr: serbian, hr: croatian, bs: bosnian,
   sq: albanian, mk: macedonian, et: estonian, ga: irish, cy: welsh, gd: scottishGaelic, mt: maltese, eu: basque, am: amharic,
+  so: somali, yo: yoruba, ig: igbo, ha: hausa, zu: zulu, xh: xhosa, mg: malagasy, rw: kinyarwanda, sn: shona, st: sesotho,
   ca: catalan, gl: galician, af: afrikaans, sw: swahili, fa: persian, he: hebrew, th: thai, vi: vietnamese,
   id: indonesian, ms: malay, fil: filipino,
   "en-US": englishUS, "en-GB": englishGB,
