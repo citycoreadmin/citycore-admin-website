@@ -9,7 +9,7 @@
 - The registry contains 106 locales and all 106 have a module: English is complete/enabled, while the other 105 are review-needed/disabled.
 - All 105 review-needed modules are AI-generated drafts; this includes 103 non-English locales and the English (US) and English (UK) regional variants. No fluent-speaker review or operator approval is recorded.
 - Automated checks found no missing locale modules, required public message values, article IDs/steps, or placeholder mismatches.
-- An exact-source comparison flagged one likely untranslated public value: Japanese (`ja`) `messages.footer` is still “© 2026 CityCore Admin. All rights reserved.” This needs Japanese copyediting and approval.
+- The Japanese (`ja`) footer was an exact English carryover. It is now a Japanese draft consistent with the Japanese copyright wording elsewhere in the module; native copyediting and approval are still required.
 - Haitian Creole (`ht`) and French (`fr`) are the first human-review priorities. Potential wording and punctuation concerns are listed below; they are flags for a fluent reviewer, not definitive corrections.
 - The 103 non-English Privacy Policies need both operator approval and fluent-speaker review. The English (US) and English (UK) variants also need operator and regional-copy review. Do not enable any locale until its required reviews are documented.
 
@@ -30,31 +30,49 @@ Each code below is a separate locale requiring the following before approval:
 
 ### Haitian Creole (`ht`)
 
-- The module has all required public strings, article content, and matching placeholders.
-- A fluent copyeditor should assess punctuation spacing in phrases such as “Bonjou, ki jan nou ka ede w ?”, “Bonjou !”, and “Kisa ou bezwen èd pou li ?”.
-- “Tablo bò sipò” (`s_title`) and “Make tout tankou li” (`mark_read`) may be unnatural or unclear in context; verify and correct as the reviewer judges appropriate.
-- Review consistency and appropriateness of product/interface terms such as “Panèl Admin”, “tikè”, and “bug”.
-- The full Privacy Policy needs native-speaker review and separate operator approval.
+- Corrected public copy includes punctuation spacing in the greeting, consistent “konfidansyalite” terminology, revised privacy wording, more natural category/status labels, and clearer article instructions. English interface labels remain unchanged and are now distinguished typographically.
+- The `{mb}` placeholder and all locale keys are preserved.
+- `s_title` (“Tablo bò sipò”) and `mark_read` (“Make tout tankou li”) remain unresolved. They belong to support/dashboard messaging rather than the public website and were not changed in this pass; review them in a separately authorized support-localization task if those strings are in use.
+- The full Privacy Policy still requires native-speaker review and separate operator approval.
 
 ### French (`fr`)
 
-- The module has all required public strings, article content, and matching placeholders. No full public message or article step matched its English source exactly, aside from legitimate shared French vocabulary and product/interface labels.
-- Review consistency of support terminology (“assistance”, “support”, and “ticket”) and ensure the English control names quoted in article instructions match the shipped interface.
-- The full Privacy Policy needs fluent-speaker review and separate operator approval; the policy must not be approved solely because its placeholders and structure pass.
+- Corrected the App Store privacy disclosure wording, the no-processing-time guarantee, and public assistance terminology. Article instructions now use consistent French phrasing and distinguish exact English interface labels; “bogues” replaces the English “bugs” in the public troubleshooting article.
+- The `{mb}` placeholder and all locale keys are preserved.
+- Fluent review must confirm the assistance/ticket terminology and that quoted English control names match the shipped interface.
+- The full Privacy Policy still requires fluent-speaker review and separate operator approval; do not approve it based only on structural checks.
 
 ### Other machine-generated drafts
 
-- Japanese (`ja`): the exact-source scan found the English footer quoted above. Replace it with an approved Japanese rendering before enabling `ja`.
+- Japanese (`ja`): replaced the exact English footer carryover with `© 2026 CityCore Admin. 無断複製・転載を禁じます。` as a draft. A native Japanese reviewer must confirm that this rendering is appropriate before enabling `ja`.
 - Other exact matches found by the scan include shared product terms, common software labels, and valid cognates (for example platform/support labels). These are not automatically treated as errors, but reviewers should confirm that each is natural and intentional in its locale.
 - The English (US) and English (UK) modules are regional variants, not translations into another language; review their regional wording and policy presentation separately.
 - No spelling, grammar, idiom, or legal-policy claim is marked “passed” for any locale without a fluent speaker and operator review.
 
+## Corrections made in this pass
+
+- `ht` public messages: refined `skip_content`, language-selector labels, Privacy Policy wording (`policy_intro`, `policy_website_intro`, `policy_website_data`, `policy_app_link`, `policy_app_after`, `policy_app_unknown`, `policy_contact_before`, `policy_contact_after`), the homepage greeting, search/platform/category labels, and contact-status copy. Removed the space before `?` in the homepage greeting and used “konfidansyalite” consistently for privacy references.
+- `ht` Help Center: edited the title/instructions in `servers`, `panel-settings`, `roles`, `account-settings`, `get-started`, `invite-members`, and `app-crash`; clarified the password-reset step, privacy link wording, and `contact` article. All ten public article IDs were reviewed.
+- `fr` public messages: revised `policy_app_unknown` and `policy_contact_after`, and standardized public support status wording as “messagerie d'assistance par ticket”.
+- `fr` Help Center: edited interface-label presentation and wording in `servers`, `panel-settings`, `roles`, `account-settings`, `get-started`, `login-problems`, `invite-members`, `app-crash`, and `contact`; changed “bugs” to “bogues”. All ten public article IDs were reviewed.
+- `ja`: replaced `messages.footer` English text with `© 2026 CityCore Admin. 無断複製・転載を禁じます。` as an unapproved draft and added a regression assertion.
+- Retained all keys, article IDs/step counts, and placeholder names, including `{mb}`. No locale status or enabled-language list was changed.
+- No locale status or enabled-language list was changed. The edits are still AI-assisted drafts and are not approvals.
+
+## Unresolved questions for reviewers
+
+- A Haitian Creole speaker should review the corrected public wording, decide on the preferred terms for interface concepts, and assess the legal-policy text. Support/dashboard-only `s_title`, `mark_read`, and other non-public support/auth/staff strings in the locale module were not edited; they remain outside this public-site correction pass.
+- A French speaker should confirm the revised legal prose, register, assistance/ticket terminology, and all quoted UI labels against the shipped interface.
+- A Japanese speaker should approve the new footer wording.
+- The operator must confirm that each localized Privacy Policy accurately reflects the live website and App Store disclosures. No legal or factual claims have been independently confirmed by this copyedit.
+- The French `privacy-security` article and unmodified public labels were reviewed and left as drafted where no correction was made; native approval is still required.
+
 ## Technical verification
 
-- `npm test`: 11 tests passed. This checks registry coverage, required public message keys, article structure, placeholder parity, disabled-locale gating, privacy/navigation markup, RTL direction rules, and storage behavior.
+- `npm test`: 11 tests passed after these corrections. This checks registry coverage, required public message keys, article structure, placeholder parity, disabled-locale gating, the Japanese footer regression, privacy/navigation markup, RTL direction rules, and storage behavior.
 - `npm run test:mobile`: all 12 WebKit viewport/storage combinations passed at 320, 375, 390, and 430 px.
 - The mobile suite checks mobile overflow and RTL policy layout and renders RTL policy drafts from Urdu (`ur`), Hebrew (`he`), and Pashto (`ps`) at each viewport. These locales remain disabled in the product.
-- A Workers preview returned HTTP 200 for all 106 locale module assets; the excluded test asset returned 404. The existing `.assetsignore` locale allow rule is present.
+- A Workers preview returned HTTP 200 for all 106 locale module assets and `/privacy`; the excluded test asset returned 404. The existing `.assetsignore` locale allow rule is present.
 
 These are technical and AI-assisted triage results only. They are not a substitute for fluent-speaker copyediting or operator/privacy approval.
 

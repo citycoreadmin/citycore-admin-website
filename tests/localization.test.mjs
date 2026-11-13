@@ -286,6 +286,7 @@ test("regional drafts retain localized policy and article content", () => {
   assert.match(spanishLatinAmerica.articles.servers.steps[1], /Toca/);
   assert.match(portugueseBrazil.messages.policy_website_data, /Você/);
   assert.match(portugueseBrazil.articles["login-problems"].steps[0], /senha/);
+  assert.notEqual(locales.ja.messages.footer, english.messages.footer);
   for (const code of [...newDrafts, ...batchDrafts, ...newBatch, ...currentBatch, ...nextBatch, ...southAsiaBatch, ...pacificBatch, ...finalBatch]) {
     assert.ok(REVIEW_LOCALES.includes(code));
     assert.ok(!COMPLETE_LOCALES.includes(code));

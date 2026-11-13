@@ -1,46 +1,46 @@
 export default {
   "messages": {
-    "skip_content": "Ale dirèkteman nan kontni an",
+    "skip_content": "Ale dirèkteman nan kontni prensipal la",
     "close": "Fèmen",
     "page_home_title": "CityCore Admin | Sant Èd",
     "page_privacy_title": "Politik konfidansyalite - CityCore Admin",
-    "language_available": "Lang ki disponib",
+    "language_available": "Lang ki disponib yo",
     "language_complete": "Konplè",
     "language_review": "Bezwen revizyon",
     "language_unavailable": "Ap disponib talè",
     "language_choose": "Chwazi yon lang",
-    "language_search": "Chèche lang",
-    "language_no_results": "Pa gen lang ki koresponn ak rechèch ou a.",
+    "language_search": "Chèche lang yo",
+    "language_no_results": "Pa gen okenn lang ki koresponn ak rechèch ou a.",
     "policy_updated": "Dènye mizajou: 12 novanm 2026",
-    "policy_intro": "WOOBENS STUDIO se operatè CityCore Admin. Paj sa a fè diferans ant sit entènèt estatik CityCore Admin nan ak aplikasyon CityCore Admin pou iOS la.",
-    "policy_website_intro": "Sit la gen paj Sant Èd epi li pa mande enfòmasyon sou kont oswa peman. Li pa gen fòm kontak ni sèvis mesaj sipò.",
+    "policy_intro": "WOOBENS STUDIO ap jere CityCore Admin. Paj sa a fè diferans ant sit entènèt piblik CityCore Admin ki estatik la ak aplikasyon CityCore Admin pou iOS la.",
+    "policy_website_intro": "Sit entènèt sa a bay aksè ak paj Sant Èd la; li pa mande enfòmasyon sou kont oswa peman. Li pa gen fòm kontak ni sèvis mesaj sipò.",
     "policy_website": "Sit entènèt sa a",
-    "policy_website_data": "Sit la anrejistre lang, tèm ak platfòm ou chwazi yo nan depo lokal navigatè sa a. Ou ka retire preferans sa yo lè ou efase done sit sa a nan navigatè ou. Operatè a poko konfime kijan founisè ebèjman an trete enfòmasyon teknik sou demann yo.",
+    "policy_website_data": "Sit entènèt la anrejistre lang, tèm ak platfòm ou chwazi yo nan depo lokal navigatè sa a. Ou ka retire preferans sa yo lè w efase done sit entènèt la nan navigatè w la. Operatè a poko konfime kijan founisè ebèjman an trete enfòmasyon teknik ki gen rapò ak demann yo.",
     "policy_ios": "Aplikasyon iOS la",
-    "policy_app_link": "enfòmasyon sou vi prive nan App Store la",
+    "policy_app_link": "enfòmasyon sou konfidansyalite nan App Store la",
     "policy_app_before": "",
-    "policy_app_after": " pou CityCore Admin endike yo ka kolekte non, adrès imèl, ak foto oswa videyo, lye yo ak itilizatè yo epi itilize yo pou fonksyònman aplikasyon an.",
-    "policy_app_unknown": "WOOBENS STUDIO poko konfime tout detay sou koleksyon ak itilizasyon done, pataj, sekirite, konsèvasyon, efasman oswa pratik konsènan timoun nan aplikasyon ki pibliye a. Enfòmasyon nan App Store la pa etabli tout pratik sa yo.",
+    "policy_app_after": " pou CityCore Admin endike yo ka kolekte non, adrès imèl, foto oswa videyo, asosye yo ak itilizatè yo, epi sèvi ak yo pou fonksyonalite aplikasyon an.",
+    "policy_app_unknown": "WOOBENS STUDIO poko konfime tout detay sou fason aplikasyon ki pibliye a kolekte epi itilize done yo, pataje yo, pwoteje yo, konsève yo oswa efase yo, ni sou pratik ki konsène timoun. Enfòmasyon ki nan App Store la pa bay tout detay sou pratik sa yo.",
     "policy_contact": "Kontakte nou",
-    "policy_contact_before": "Pou kesyon sou vi prive oswa pou mande efasman kont ou oswa done ou, kontakte WOOBENS STUDIO nan ",
-    "policy_contact_after": ". Yon demann pa efase done otomatikman, epi nou pa pwomèt okenn delè pou trete li.",
+    "policy_contact_before": "Pou kesyon sou konfidansyalite oswa pou mande pou yo efase kont ou oswa done ou, kontakte WOOBENS STUDIO nan ",
+    "policy_contact_after": ". Yon demann pa vle di done yo ap efase otomatikman, epi pa gen okenn delè tretman ki pwomèt.",
     "policy_copyright": "© 2026 Woobens Studio. Tout dwa rezève.",
     "nav_home": "Akèy",
     "nav_help": "Sant Èd",
     "nav_support": "Sipò",
     "nav_staff": "Ekip",
-    "hero_title": "Bonjou, ki jan nou ka ede w ?",
-    "search_ph": "Chèche atik",
+    "hero_title": "Bonjou, ki jan nou ka ede w?",
+    "search_ph": "Chèche atik yo",
     "search_btn": "Chèche",
     "platform": "Platfòm",
     "p_all": "Tout platfòm",
     "p_ios": "iOS",
     "p_ipados": "iPadOS",
     "p_android": "Android",
-    "p_web": "Wèb",
+    "p_web": "Sit entènèt",
     "language": "Lang",
     "theme": "Chanje tèm",
-    "help_cats": "Navige pa kategori",
+    "help_cats": "Gade kategori yo",
     "articles": "Atik",
     "results": "Rezilta rechèch",
     "no_results": "Nou pa jwenn okenn atik. Eseye lòt mo.",
@@ -49,14 +49,14 @@ export default {
     "article_count": "atik",
     "cat_getting_started": "Kòmanse",
     "cat_account_login": "Kont ak koneksyon",
-    "cat_admin_panels": "Panèl Admin",
+    "cat_admin_panels": "Panno administrasyon",
     "cat_roles": "Wòl ak pèmisyon",
     "cat_invitations": "Envitasyon",
     "cat_troubleshooting": "Rezoud pwoblèm",
     "cat_privacy": "Konfidansyalite ak sekirite",
     "cat_contact": "Disponibilite sipò",
-    "contact_status_title": "Mesaj sipò poko disponib sou sit sa a.",
-    "contact_status_body": "Sant Èd la gen atik pou ede w jwenn repons poukont ou. Sèvis mesaj sipò a ap prepare; li p ap disponib anvan tès sekirite ak fonksyonalite yo fini. Pa voye enfòmasyon sou kont ou oswa peman sou sit sa a.",
+    "contact_status_title": "Mesaj sipò yo poko disponib sou sit entènèt sa a.",
+    "contact_status_body": "Sant Èd la bay konsèy pou ede w jwenn repons poukont ou. Sèvis mesaj sipò a ap prepare epi li ap disponib apre tès sekirite ak fonksyònman yo fin fèt. Pa voye enfòmasyon sou kont ou oswa peman atravè sit entènèt sa a.",
     "footer": "© 2026 CityCore Admin. Tout dwa rezève.",
     "privacy": "Politik konfidansyalite",
     "unavailable": "Sipò a pa disponib pou kounye a.",
@@ -174,76 +174,76 @@ export default {
   },
   "articles": {
     "servers": {
-      "title": "Jwenn ak kreye Panèl Admin",
+      "title": "Jwenn epi kreye panno administrasyon",
       "steps": [
         "Louvri CityCore Admin.",
-        "Peze Servers nan navigasyon anba a.",
-        "Panèl Admin ou yo parèt anba YOUR ADMIN PANELS.",
-        "Pou kreye yon nouvo, peze + Create Admin Panel."
+        "Peze «Servers» nan ba navigasyon ki anba ekran an.",
+        "Panno administrasyon ou deja genyen yo parèt anba «YOUR ADMIN PANELS».",
+        "Pou kreye yon nouvo panèl, peze «+ Create Admin Panel»."
       ]
     },
     "panel-settings": {
-      "title": "Apèsi paramèt panèl la",
+      "title": "Apèsi sou paramèt panèl la",
       "steps": [
-        "Louvri Panèl Admin ou vle jere a.",
-        "Louvri Panel Settings.",
-        "Members & Staff : jere manm ak anplwaye.",
-        "Moderation : sanksyon ak moderasyon.",
-        "Server Management : pèmisyon, jounal odit, notifikasyon ak envitasyon."
+        "Louvri panèl administrasyon ou vle jere a.",
+        "Louvri «Panel Settings».",
+        "Itilize «Members & Staff» pou jere manm ak anplwaye.",
+        "Itilize «Moderation» pou mete sanksyon ak moderasyon an plas.",
+        "Itilize «Server Management» pou jere pèmisyon, jounal odit, notifikasyon ak envitasyon."
       ]
     },
     "roles": {
-      "title": "Kreye ak bay wòl",
+      "title": "Kreye epi bay wòl",
       "steps": [
-        "Louvri Panèl Admin ou.",
-        "Ale nan Panel Settings.",
-        "Peze Roles & Permissions.",
-        "Itilize Create Role pou kreye yon wòl.",
-        "Itilize Assign Role pou bay yon manm yon wòl.",
-        "Wòl ki egziste yo parèt anba ROLE HIERARCHY."
+        "Louvri panèl administrasyon ou.",
+        "Ale nan «Panel Settings».",
+        "Peze «Roles & Permissions».",
+        "Itilize «Create Role» pou kreye yon wòl.",
+        "Itilize «Assign Role» pou bay yon manm yon wòl.",
+        "Wòl ki deja egziste yo parèt anba «ROLE HIERARCHY»."
       ]
     },
     "account-settings": {
-      "title": "Paramèt kont",
+      "title": "Paramèt kont ou",
       "steps": [
-        "Peze Profile nan meni ki anba a, epi louvri Settings.",
+        "Peze «Profile» nan ba navigasyon ki anba ekran an, epi louvri «Settings».",
         "Paramèt ki disponib yo ka chanje selon vèsyon aplikasyon an.",
-        "Itilize Log Out pou dekonekte w."
+        "Itilize «Log Out» pou dekonekte w."
       ]
     },
     "get-started": {
-      "title": "Byenveni nan CityCore Admin",
+      "title": "Byenveni sou CityCore Admin",
       "steps": [
         "Enstale CityCore Admin epi kreye kont ou.",
-        "Louvri onglè Servers pou wè oswa kreye yon panèl.",
+        "Ale nan seksyon «Servers» pou wè oswa kreye yon panèl administrasyon.",
         "Envite anplwaye ou yo epi mete wòl yo.",
-        "Itilize Panel Settings pou konfigire moderasyon."
+        "Itilize «Panel Settings» pou konfigire moderasyon."
       ]
     },
     "login-problems": {
       "title": "Mwen pa ka konekte",
       "steps": [
-        "Verifye imèl ak modpas ou pou fòt.",
-        "Itilize opsyon reyinisyalize modpas la.",
+        "Verifye si adrès imèl ou ak modpas ou gen erè.",
+        "Sou ekran koneksyon an, itilize opsyon pou reyinisyalize modpas la.",
         "Asire w aplikasyon an ajou.",
         "Mesaj sipò pa disponib sou sit sa a kounye a."
       ]
     },
     "invite-members": {
-      "title": "Envite moun nan panèl ou",
+      "title": "Envite moun nan panèl administrasyon ou",
       "steps": [
-        "Louvri panèl ou epi ale nan Panel Settings.",
-        "Louvri Server Management, answit Invitations.",
+        "Louvri panèl administrasyon ou epi ale nan «Panel Settings».",
+        "Louvri «Server Management», answit «Invitations».",
         "Kreye yon envitasyon epi pataje l.",
         "Ou ka anile l nenpòt kilè sou menm ekran an."
       ]
     },
     "app-crash": {
-      "title": "Aplikasyon an fèmen oswa pa chaje",
+      "title": "Aplikasyon an fèmen oswa li pa chaje",
       "steps": [
-        "Fèmen aplikasyon an epi rouvri l.",
+        "Fòse aplikasyon an fèmen, epi louvri l ankò.",
         "Verifye koneksyon entènèt ou.",
-        "Mete aplikasyon an ajou.",
+        "Mete aplikasyon an ajou ak dènye vèsyon an.",
         "Rekòmanse aparèy ou a.",
         "Sit sa a pa ka resevwa rapò sou pwoblèm oswa fichye pou kounye a."
       ]
@@ -253,15 +253,15 @@ export default {
       "steps": [
         "Itilize yon modpas solid ki diferan de lòt modpas ou yo.",
         "Pa bay pèsonn modpas ou.",
-        "Pou kesyon sou vi prive oswa demann pou efase kont oswa done, gade lyen Politik konfidansyalite ki anba paj sa a."
+        "Pou kesyon sou konfidansyalite oswa demann pou efase kont ou oswa done ou, gade lyen Politik konfidansyalite ki anba paj sa a."
       ]
     },
     "contact": {
       "title": "Disponibilite sipò",
       "steps": [
-        "Pou kounye a, sit sa a bay atik Sant Èd pou ede w jwenn repons poukont ou.",
-        "Sèvis mesaj sipò a ap prepare; li p ap disponib anvan tès sekirite ak fonksyonalite yo fini.",
-        "Pa voye enfòmasyon sou kont ou, modpas ou oswa peman sou sit sa a."
+        "Pou kounye a, sit entènèt sa a bay sèlman atik Sant Èd pou ede w jwenn repons poukont ou.",
+        "Sèvis mesaj sipò a ap prepare epi li ap disponib apre tès sekirite ak fonksyònman yo fin fèt.",
+        "Pa voye enfòmasyon sou kont ou, modpas ou oswa peman atravè sit entènèt sa a."
       ]
     }
   }
