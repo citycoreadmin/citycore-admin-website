@@ -55,7 +55,7 @@ export function applyI18n(root = document) {
   root.querySelectorAll("[data-i18n]").forEach(n => { n.textContent = t(n.dataset.i18n); });
   root.querySelectorAll("[data-i18n-ph]").forEach(n => { n.placeholder = t(n.dataset.i18nPh); });
   root.querySelectorAll("[data-i18n-aria]").forEach(n => { n.setAttribute("aria-label", t(n.dataset.i18nAria)); });
-  root.querySelectorAll("[data-lang-select]").forEach(sel => { sel.value = lang; });
+  root.querySelectorAll("[data-lang-select]").forEach(sel => { sel.dataset.language = lang; });
 }
 export function fmtDate(iso) {
   return new Date(iso).toLocaleString(lang === "ht" ? "fr" : lang, { dateStyle: "medium", timeStyle: "short" });

@@ -28,7 +28,8 @@ const locales = {
 const initialLocales = ["es", "pt", "de", "it", "ar", "zh-Hans", "zh-Hant", "ja", "ko", "ru"];
 const publicMessageKeys = [
   "skip_content", "close", "page_home_title", "page_privacy_title",
-  "language_available", "language_review", "language_unavailable",
+  "language_available", "language_complete", "language_review", "language_unavailable",
+  "language_choose", "language_search", "language_no_results",
   "policy_updated", "policy_intro", "policy_website_intro", "policy_website",
   "policy_website_data", "policy_ios", "policy_app_link", "policy_app_before",
   "policy_app_after", "policy_app_unknown", "policy_contact", "policy_contact_before",
@@ -63,6 +64,21 @@ test("registry has unique codes, explicit coverage, and the requested RTL direct
     assert.equal(directionFor(code), "rtl");
   }
   assert.equal(directionFor("en"), "ltr");
+});
+
+test("representative flags are preserved, including subdivision flags and regional Spanish", () => {
+  const flagFor = code => LANGS.find(language => language.code === code).flag;
+  const expected = {
+    sw: "🇹🇿", am: "🇪🇹", so: "🇸🇴", yo: "🇳🇬", ig: "🇳🇬", ha: "🇳🇬",
+    zu: "🇿🇦", xh: "🇿🇦", mg: "🇲🇬", rw: "🇷🇼", sn: "🇿🇼", st: "🇱🇸",
+    ta: "🇮🇳", te: "🇮🇳", kn: "🇮🇳", ml: "🇮🇳", mr: "🇮🇳", gu: "🇮🇳",
+    pa: "🇮🇳", or: "🇮🇳", "es-419": "🌎"
+  };
+  for (const [code, flag] of Object.entries(expected)) assert.equal(flagFor(code), flag, code);
+  const subdivisionFlag = code =>
+    `🏴${[...code].map(letter => String.fromCodePoint(0xE0000 + letter.codePointAt(0))).join("")}${String.fromCodePoint(0xE007F)}`;
+  assert.equal(flagFor("cy"), subdivisionFlag("gbwls"));
+  assert.equal(flagFor("gd"), subdivisionFlag("gbsct"));
 });
 
 test("reviewed and pending locales are never represented as complete", () => {
@@ -157,6 +173,8 @@ test("HTML localization keys exist and both pages retain language and privacy na
   const homepage = await readFile("index.html", "utf8");
   const policy = await readFile("privacy.html", "utf8");
   assert.match(homepage, /href="\/privacy"/);
+  assert.match(homepage, /<button[^>]*data-lang-select[^>]*aria-haspopup="dialog"/);
+  assert.match(policy, /<button[^>]*data-lang-select[^>]*aria-haspopup="dialog"/);
   assert.match(policy, /href="https:\/\/citycoreadmin\.com\/privacy"/);
   assert.match(policy, /href="mailto:citycoreadmin@gmail\.com"/);
 });

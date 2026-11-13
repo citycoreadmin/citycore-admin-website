@@ -1,6 +1,6 @@
 # CityCore Admin public website
 
-The public website is a static Help Center with article search, language selection (English, French and Haitian Creole),
+The public website is a static Help Center with article search, language selection across the 106-locale registry,
 light/dark themes, and the CityCore Admin privacy policy.
 
 Support ticket messaging and the staff dashboard are intentionally not included in this public release. The support
@@ -17,6 +17,10 @@ native-speaker review. These initial translations were drafted from the English 
 review before completion. The other 93 locales remain unavailable until all public UI, Help Center articles,
 search, errors, and policy text are translated and reviewed. Locale data is in `js/locales/`. Run coverage checks
 with `node --test tests/localization.test.mjs`.
+
+The language chooser is a searchable, keyboard-accessible dialog that identifies Complete, Review needed, and
+Coming soon locales. It is constrained to the viewport on mobile; unsupported Wales and Scotland subdivision
+flags fall back to a globe while keeping the native language names visible.
 
 Run locally with `python3 -m http.server 8123` and open `http://localhost:8123`. This simple server does not emulate
 Cloudflare's extensionless HTML routing; open `/privacy.html` directly for local policy checks.
