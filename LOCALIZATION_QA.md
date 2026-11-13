@@ -52,9 +52,11 @@ Each code below is a separate locale requiring the following before approval:
 ## Corrections made in this pass
 
 - `ht` public messages: refined `skip_content`, language-selector labels, Privacy Policy wording (`policy_intro`, `policy_website_intro`, `policy_website_data`, `policy_app_link`, `policy_app_after`, `policy_app_unknown`, `policy_contact_before`, `policy_contact_after`), the homepage greeting, search/platform/category labels, and contact-status copy. Removed the space before `?` in the homepage greeting and used “konfidansyalite” consistently for privacy references.
+- Follow-up Haitian Creole terminology requests were applied: `Panno administrasyon` → `Panèl administrasyon` (including the related article heading and sentence), `Chanje tèm` → `Chanje aparans`, `Gade kategori yo` → `Eksplore kategori yo`, `Disponibilite sipò` → `Kilè sipò disponib`, the language-search empty state was revised, and the app-crash instruction now says `Fèmen aplikasyon an nèt`.
 - `ht` Help Center: edited the title/instructions in `servers`, `panel-settings`, `roles`, `account-settings`, `get-started`, `invite-members`, and `app-crash`; clarified the password-reset step, privacy link wording, and `contact` article. All ten public article IDs were reviewed.
 - `fr` public messages: revised `policy_app_unknown` and `policy_contact_after`, and standardized public support status wording as “messagerie d'assistance par ticket”.
 - `fr` Help Center: edited interface-label presentation and wording in `servers`, `panel-settings`, `roles`, `account-settings`, `get-started`, `login-problems`, `invite-members`, `app-crash`, and `contact`; changed “bugs” to “bogues”. All ten public article IDs were reviewed.
+- French terminology follow-up found public assistance wording consistent (`Assistance`, `messagerie d'assistance`, `messagerie d'assistance par ticket`). The 15 English control labels in article instructions remain exact and are quoted; no French text change was needed for this check.
 - `ja`: replaced `messages.footer` English text with `© 2026 CityCore Admin. 無断複製・転載を禁じます。` as an unapproved draft and added a regression assertion.
 - Retained all keys, article IDs/step counts, and placeholder names, including `{mb}`. No locale status or enabled-language list was changed.
 - No locale status or enabled-language list was changed. The edits are still AI-assisted drafts and are not approvals.
@@ -66,6 +68,7 @@ Each code below is a separate locale requiring the following before approval:
 - A Japanese speaker should approve the new footer wording.
 - The operator must confirm that each localized Privacy Policy accurately reflects the live website and App Store disclosures. No legal or factual claims have been independently confirmed by this copyedit.
 - The French `privacy-security` article and unmodified public labels were reviewed and left as drafted where no correction was made; native approval is still required.
+- Haitian Creole speakers should confirm whether the newly requested “Panèl administrasyon” form and the other requested UI phrasings are natural across regions. They should also resolve the separate non-public support/dashboard wording noted above.
 
 ## Technical verification
 

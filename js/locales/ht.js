@@ -10,7 +10,7 @@ export default {
     "language_unavailable": "Ap disponib talè",
     "language_choose": "Chwazi yon lang",
     "language_search": "Chèche lang yo",
-    "language_no_results": "Pa gen okenn lang ki koresponn ak rechèch ou a.",
+    "language_no_results": "Nou pa jwenn okenn lang pou rechèch sa a.",
     "policy_updated": "Dènye mizajou: 12 novanm 2026",
     "policy_intro": "WOOBENS STUDIO ap jere CityCore Admin. Paj sa a fè diferans ant sit entènèt piblik CityCore Admin ki estatik la ak aplikasyon CityCore Admin pou iOS la.",
     "policy_website_intro": "Sit entènèt sa a bay aksè ak paj Sant Èd la; li pa mande enfòmasyon sou kont oswa peman. Li pa gen fòm kontak ni sèvis mesaj sipò.",
@@ -39,8 +39,8 @@ export default {
     "p_android": "Android",
     "p_web": "Sit entènèt",
     "language": "Lang",
-    "theme": "Chanje tèm",
-    "help_cats": "Gade kategori yo",
+    "theme": "Chanje aparans",
+    "help_cats": "Eksplore kategori yo",
     "articles": "Atik",
     "results": "Rezilta rechèch",
     "no_results": "Nou pa jwenn okenn atik. Eseye lòt mo.",
@@ -49,12 +49,12 @@ export default {
     "article_count": "atik",
     "cat_getting_started": "Kòmanse",
     "cat_account_login": "Kont ak koneksyon",
-    "cat_admin_panels": "Panno administrasyon",
+    "cat_admin_panels": "Panèl administrasyon",
     "cat_roles": "Wòl ak pèmisyon",
     "cat_invitations": "Envitasyon",
     "cat_troubleshooting": "Rezoud pwoblèm",
     "cat_privacy": "Konfidansyalite ak sekirite",
-    "cat_contact": "Disponibilite sipò",
+    "cat_contact": "Kilè sipò disponib",
     "contact_status_title": "Mesaj sipò yo poko disponib sou sit entènèt sa a.",
     "contact_status_body": "Sant Èd la bay konsèy pou ede w jwenn repons poukont ou. Sèvis mesaj sipò a ap prepare epi li ap disponib apre tès sekirite ak fonksyònman yo fin fèt. Pa voye enfòmasyon sou kont ou oswa peman atravè sit entènèt sa a.",
     "footer": "© 2026 CityCore Admin. Tout dwa rezève.",
@@ -174,11 +174,11 @@ export default {
   },
   "articles": {
     "servers": {
-      "title": "Jwenn epi kreye panno administrasyon",
+      "title": "Jwenn epi kreye yon panèl administrasyon",
       "steps": [
         "Louvri CityCore Admin.",
         "Peze «Servers» nan ba navigasyon ki anba ekran an.",
-        "Panno administrasyon ou deja genyen yo parèt anba «YOUR ADMIN PANELS».",
+        "Panèl administrasyon ou yo parèt anba «YOUR ADMIN PANELS».",
         "Pou kreye yon nouvo panèl, peze «+ Create Admin Panel»."
       ]
     },
@@ -241,7 +241,7 @@ export default {
     "app-crash": {
       "title": "Aplikasyon an fèmen oswa li pa chaje",
       "steps": [
-        "Fòse aplikasyon an fèmen, epi louvri l ankò.",
+        "Fèmen aplikasyon an nèt, epi louvri l ankò.",
         "Verifye koneksyon entènèt ou.",
         "Mete aplikasyon an ajou ak dènye vèsyon an.",
         "Rekòmanse aparèy ou a.",
@@ -257,7 +257,7 @@ export default {
       ]
     },
     "contact": {
-      "title": "Disponibilite sipò",
+      "title": "Kilè sipò disponib",
       "steps": [
         "Pou kounye a, sit entènèt sa a bay sèlman atik Sant Èd pou ede w jwenn repons poukont ou.",
         "Sèvis mesaj sipò a ap prepare epi li ap disponib apre tès sekirite ak fonksyònman yo fin fèt.",
