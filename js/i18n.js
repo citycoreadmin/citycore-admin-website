@@ -12,24 +12,35 @@ import japanese from "./locales/ja.js";
 import korean from "./locales/ko.js";
 import russian from "./locales/ru.js";
 import hindi from "./locales/hi.js";
+import bengali from "./locales/bn.js";
+import urdu from "./locales/ur.js";
 import turkish from "./locales/tr.js";
 import dutch from "./locales/nl.js";
 import polish from "./locales/pl.js";
 import ukrainian from "./locales/uk.js";
 import romanian from "./locales/ro.js";
+import greek from "./locales/el.js";
 import swedish from "./locales/sv.js";
 import norwegianBokmal from "./locales/nb.js";
 import danish from "./locales/da.js";
+import finnish from "./locales/fi.js";
 import czech from "./locales/cs.js";
 import slovak from "./locales/sk.js";
+import hungarian from "./locales/hu.js";
+import bulgarian from "./locales/bg.js";
 import serbian from "./locales/sr.js";
 import croatian from "./locales/hr.js";
 import bosnian from "./locales/bs.js";
+import albanian from "./locales/sq.js";
+import macedonian from "./locales/mk.js";
+import estonian from "./locales/et.js";
 import catalan from "./locales/ca.js";
 import galician from "./locales/gl.js";
 import afrikaans from "./locales/af.js";
 import swahili from "./locales/sw.js";
 import persian from "./locales/fa.js";
+import hebrew from "./locales/he.js";
+import thai from "./locales/th.js";
 import vietnamese from "./locales/vi.js";
 import indonesian from "./locales/id.js";
 import malay from "./locales/ms.js";
@@ -51,10 +62,11 @@ const locales = {
   en: english, fr: french, ht: haitianCreole,
   es: spanish, pt: portuguese, de: german, it: italian, ar: arabic,
   "zh-Hans": chineseSimplified, "zh-Hant": chineseTraditional,
-  ja: japanese, ko: korean, ru: russian, hi: hindi, tr: turkish,
-  nl: dutch, pl: polish, uk: ukrainian, ro: romanian, sv: swedish, nb: norwegianBokmal, da: danish,
-  cs: czech, sk: slovak, sr: serbian, hr: croatian, bs: bosnian,
-  ca: catalan, gl: galician, af: afrikaans, sw: swahili, fa: persian, vi: vietnamese,
+  ja: japanese, ko: korean, ru: russian, hi: hindi, bn: bengali, ur: urdu, tr: turkish,
+  nl: dutch, pl: polish, uk: ukrainian, ro: romanian, el: greek, sv: swedish, nb: norwegianBokmal, da: danish, fi: finnish,
+  cs: czech, sk: slovak, hu: hungarian, bg: bulgarian, sr: serbian, hr: croatian, bs: bosnian,
+  sq: albanian, mk: macedonian, et: estonian,
+  ca: catalan, gl: galician, af: afrikaans, sw: swahili, fa: persian, he: hebrew, th: thai, vi: vietnamese,
   id: indonesian, ms: malay, fil: filipino,
   "en-US": englishUS, "en-GB": englishGB,
   "es-419": spanishLatinAmerica, "pt-BR": portugueseBrazil

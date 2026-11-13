@@ -15,24 +15,35 @@ import japanese from "../js/locales/ja.js";
 import korean from "../js/locales/ko.js";
 import russian from "../js/locales/ru.js";
 import hindi from "../js/locales/hi.js";
+import bengali from "../js/locales/bn.js";
+import urdu from "../js/locales/ur.js";
 import turkish from "../js/locales/tr.js";
 import dutch from "../js/locales/nl.js";
 import polish from "../js/locales/pl.js";
 import ukrainian from "../js/locales/uk.js";
 import romanian from "../js/locales/ro.js";
+import greek from "../js/locales/el.js";
 import swedish from "../js/locales/sv.js";
 import norwegianBokmal from "../js/locales/nb.js";
 import danish from "../js/locales/da.js";
+import finnish from "../js/locales/fi.js";
 import czech from "../js/locales/cs.js";
 import slovak from "../js/locales/sk.js";
+import hungarian from "../js/locales/hu.js";
+import bulgarian from "../js/locales/bg.js";
 import serbian from "../js/locales/sr.js";
 import croatian from "../js/locales/hr.js";
 import bosnian from "../js/locales/bs.js";
+import albanian from "../js/locales/sq.js";
+import macedonian from "../js/locales/mk.js";
+import estonian from "../js/locales/et.js";
 import catalan from "../js/locales/ca.js";
 import galician from "../js/locales/gl.js";
 import afrikaans from "../js/locales/af.js";
 import swahili from "../js/locales/sw.js";
 import persian from "../js/locales/fa.js";
+import hebrew from "../js/locales/he.js";
+import thai from "../js/locales/th.js";
 import vietnamese from "../js/locales/vi.js";
 import indonesian from "../js/locales/id.js";
 import malay from "../js/locales/ms.js";
@@ -50,16 +61,18 @@ const locales = {
   en: english, fr: french, ht: haitianCreole,
   es: spanish, pt: portuguese, de: german, it: italian, ar: arabic,
   "zh-Hans": chineseSimplified, "zh-Hant": chineseTraditional,
-  ja: japanese, ko: korean, ru: russian, hi: hindi, tr: turkish,
-  nl: dutch, pl: polish, uk: ukrainian, ro: romanian, sv: swedish, nb: norwegianBokmal, da: danish,
-  cs: czech, sk: slovak, sr: serbian, hr: croatian, bs: bosnian,
-  ca: catalan, gl: galician, af: afrikaans, sw: swahili, fa: persian, vi: vietnamese,
+  ja: japanese, ko: korean, ru: russian, hi: hindi, bn: bengali, ur: urdu, tr: turkish,
+  nl: dutch, pl: polish, uk: ukrainian, ro: romanian, el: greek, sv: swedish, nb: norwegianBokmal, da: danish, fi: finnish,
+  cs: czech, sk: slovak, hu: hungarian, bg: bulgarian, sr: serbian, hr: croatian, bs: bosnian,
+  sq: albanian, mk: macedonian, et: estonian,
+  ca: catalan, gl: galician, af: afrikaans, sw: swahili, fa: persian, he: hebrew, th: thai, vi: vietnamese,
   id: indonesian, ms: malay, fil: filipino,
   "en-US": englishUS, "en-GB": englishGB,
   "es-419": spanishLatinAmerica, "pt-BR": portugueseBrazil
 };
 const initialLocales = ["es", "pt", "de", "it", "ar", "zh-Hans", "zh-Hant", "ja", "ko", "ru", "hi", "tr"];
 const newDrafts = ["nl", "pl", "uk", "ro", "sv", "nb", "da", "cs", "sk", "sr", "hr", "bs", "ca", "gl", "af", "sw", "fa", "vi", "id", "ms", "fil", "en-US", "en-GB", "es-419", "pt-BR"];
+const batchDrafts = ["bn", "ur", "el", "bg", "he", "fi", "hu", "sq", "mk", "et", "th"];
 const publicMessageKeys = [
   "skip_content", "close", "page_home_title", "page_privacy_title",
   "language_available", "language_complete", "language_review", "language_unavailable",
@@ -87,8 +100,8 @@ test("registry has unique codes, explicit coverage, and the requested RTL direct
   assert.deepEqual(LANGS.filter(language => language.complete).map(language => language.code), COMPLETE_LOCALES);
   assert.deepEqual(COMPLETE_LOCALES, ["en"]);
   assert.deepEqual(LANGS.filter(language => language.review).map(language => language.code), REVIEW_LOCALES);
-  assert.deepEqual(REVIEW_LOCALES, ["fr", "ht", ...initialLocales, ...newDrafts]);
-  assert.equal(PENDING_LOCALES.length, 66);
+  assert.deepEqual(new Set(REVIEW_LOCALES), new Set(["fr", "ht", ...initialLocales, ...newDrafts, ...batchDrafts]));
+  assert.equal(PENDING_LOCALES.length, 55);
   assert.deepEqual(
     LANGS.filter(language => !language.complete && !language.review).map(language => language.code),
     PENDING_LOCALES
@@ -206,7 +219,7 @@ test("regional drafts retain localized policy and article content", () => {
   assert.match(spanishLatinAmerica.articles.servers.steps[1], /Toca/);
   assert.match(portugueseBrazil.messages.policy_website_data, /Você/);
   assert.match(portugueseBrazil.articles["login-problems"].steps[0], /senha/);
-  for (const code of newDrafts) {
+  for (const code of [...newDrafts, ...batchDrafts]) {
     assert.ok(REVIEW_LOCALES.includes(code));
     assert.ok(!COMPLETE_LOCALES.includes(code));
   }
@@ -214,14 +227,14 @@ test("regional drafts retain localized policy and article content", () => {
 
 test("new non-English drafts do not use English sentences as placeholders", () => {
   const sharedTerms = new Set(["p_ios", "p_ipados", "p_android", "p_web"]);
-  for (const code of ["nl", "pl", "uk", "ro", "sv", "nb", "da", "cs", "sk", "sr", "hr", "bs", "ca", "gl", "af", "sw", "fa", "vi", "id", "ms", "fil", "es-419", "pt-BR"]) {
+  for (const code of ["nl", "pl", "uk", "ro", "sv", "nb", "da", "cs", "sk", "sr", "hr", "bs", "ca", "gl", "af", "sw", "fa", "vi", "id", "ms", "fil", "es-419", "pt-BR", ...batchDrafts]) {
     const locale = locales[code];
     for (const key of publicMessageKeys) {
       if (sharedTerms.has(key) || (code === "nl" && ["nav_home", "platform"].includes(key)) ||
           (code === "sv" && key === "nav_support") ||
           (code === "da" && ["nav_support", "platform"].includes(key)) ||
           (code === "ca" && ["articles", "article_count"].includes(key)) ||
-          (["af", "id", "ms"].includes(code) && key === "platform")) continue;
+          (["af", "hu", "id", "ms"].includes(code) && key === "platform")) continue;
       assert.notEqual(locale.messages[key], english.messages[key], `${code}:${key}`);
     }
     for (const [id, article] of Object.entries(locale.articles)) {
