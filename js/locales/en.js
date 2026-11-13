@@ -5,6 +5,7 @@ export default {
     "page_home_title": "CityCore Admin | Help Center",
     "page_privacy_title": "Privacy Policy - CityCore Admin",
     "language_available": "Available languages",
+    "language_review": "Available — review needed",
     "language_unavailable": "Translations not yet available",
     "policy_updated": "Last updated: November 12, 2026",
     "policy_intro": "CityCore Admin is operated by WOOBENS STUDIO. This page distinguishes the static CityCore Admin website from the CityCore Admin iOS application.",

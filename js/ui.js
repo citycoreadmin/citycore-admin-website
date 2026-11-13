@@ -30,12 +30,13 @@ export function initLangSelects() {
   function draw() {
     selects.forEach(sel => {
       const available = h("optgroup", { label: t("language_available") });
+      const review = h("optgroup", { label: t("language_review") });
       const unavailable = h("optgroup", { label: t("language_unavailable"), disabled: true });
       LANGS.forEach(language => {
-        const group = language.complete ? available : unavailable;
+        const group = language.complete ? available : language.review ? review : unavailable;
         group.append(h("option", { value: language.code }, `${language.flag} ${language.label}`));
       });
-      sel.replaceChildren(available, unavailable);
+      sel.replaceChildren(available, review, unavailable);
       sel.value = getLang();
     });
   }

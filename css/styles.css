@@ -163,3 +163,8 @@ img { max-width: 100%; }
 .tbl-wrap { overflow-x: auto; }
 .tbl-wrap .tbl { min-width: 560px; }
 .tbl-wrap .tbl th, .tbl-wrap .tbl td { overflow-wrap: normal; }
+
+/* Public pages use logical alignment and keep the skip link on the reading edge. */
+[dir="rtl"] .skip:focus { left: auto; right: 8px; }
+[dir="rtl"] .search input { text-align: start; }
+[dir="rtl"] .privacy-policy { text-align: start; }

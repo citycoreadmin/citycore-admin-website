@@ -5,6 +5,7 @@ export default {
     "page_home_title": "CityCore Admin | Sant Èd",
     "page_privacy_title": "Politik konfidansyalite - CityCore Admin",
     "language_available": "Lang ki disponib",
+    "language_review": "Disponib — revizyon nesesè",
     "language_unavailable": "Tradiksyon ki poko disponib",
     "policy_updated": "Dènye mizajou: 12 novanm 2026",
     "policy_intro": "WOOBENS STUDIO se operatè CityCore Admin. Paj sa a fè diferans ant sit entènèt estatik CityCore Admin nan ak aplikasyon CityCore Admin pou iOS la.",
