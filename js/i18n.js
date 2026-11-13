@@ -11,7 +11,7 @@ import chineseTraditional from "./locales/zh-Hant.js";
 import japanese from "./locales/ja.js";
 import korean from "./locales/ko.js";
 import russian from "./locales/ru.js";
-import { LANGS, directionFor } from "./languages.js";
+import { COMPLETE_LOCALES, LANGS, directionFor } from "./languages.js";
 
 export { LANGS } from "./languages.js";
 export const CATEGORIES = ["account", "payment", "technical", "report_user", "feedback", "bug", "admin_panel", "other"];
@@ -29,7 +29,8 @@ const saved = localStorage.getItem("cc_lang");
 const preferred = (navigator.language || "en");
 const localeAlias = { "zh-CN": "zh-Hans", "zh-SG": "zh-Hans", "zh-TW": "zh-Hant", "zh-HK": "zh-Hant", "zh-MO": "zh-Hant" };
 const preferredLocale = locales[preferred] ? preferred : localeAlias[preferred] || preferred.split("-")[0];
-let lang = saved && locales[saved] ? saved : (locales[preferredLocale] ? preferredLocale : "en");
+const isComplete = code => COMPLETE_LOCALES.includes(code) && Object.hasOwn(locales, code);
+let lang = isComplete(saved) ? saved : (isComplete(preferredLocale) ? preferredLocale : "en");
 
 export const getLang = () => lang;
 export function t(key, vars = {}) {
@@ -43,7 +44,7 @@ export function articleTranslation(id) {
   return article;
 }
 export function setLang(code) {
-  if (!Object.hasOwn(locales, code)) throw new Error(`Unavailable language: ${code}`);
+  if (!isComplete(code)) throw new Error(`Unavailable language: ${code}`);
   lang = code;
   localStorage.setItem("cc_lang", code);
   document.documentElement.lang = code;

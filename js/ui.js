@@ -87,7 +87,7 @@ export function initLangSelects() {
         const radio = h("input", {
           type: "radio", name: "cc-language", value: language.code,
           checked: language.code === getLang(),
-          disabled: status === "unavailable",
+          disabled: !language.complete,
           onchange: () => {
             if (!radio.checked) return;
             setLang(language.code);

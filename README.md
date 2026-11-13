@@ -10,13 +10,13 @@ Cloudflare Workers serves `privacy.html` at the canonical `/privacy` URL and red
 `auto-trailing-slash` HTML handling. Test both direct URLs in a Workers preview before publication.
 
 The language selector lists the union of the requested website languages and the iOS language selector. English is
-the only locale currently marked complete. French and Haitian Creole, plus initial translations for Spanish,
-Portuguese, German, Italian, Arabic, Simplified and Traditional Chinese, Japanese, Korean, and Russian, remain
-selectable but are explicitly marked for review. All non-English Privacy Policy translations require operator and
+the only locale currently marked complete and enabled. French and Haitian Creole, plus initial translations for
+Spanish, Portuguese, German, Italian, Arabic, Simplified and Traditional Chinese, Japanese, Korean, and Russian,
+are marked Review needed and disabled. All non-English Privacy Policy translations require operator and
 native-speaker review. These initial translations were drafted from the English source and need fluent-speaker
-review before completion. The other 93 locales remain unavailable until all public UI, Help Center articles,
-search, errors, and policy text are translated and reviewed. Locale data is in `js/locales/`. Run coverage checks
-with `node --test tests/localization.test.mjs`.
+review before completion. The other 93 locales remain marked Coming soon and disabled until all public UI, Help
+Center articles, search, errors, and policy text are translated and reviewed. Locale data is in `js/locales/`. Run
+coverage checks with `node --test tests/localization.test.mjs`.
 
 The language chooser is a searchable, keyboard-accessible dialog that identifies Complete, Review needed, and
 Coming soon locales. It is constrained to the viewport on mobile; unsupported Wales and Scotland subdivision

@@ -94,7 +94,7 @@ test("reviewed and pending locales are never represented as complete", () => {
   }
 });
 
-test("initial review locales can be selected and return their own UI and article translations", async () => {
+test("only complete locales can be selected, including when an unapproved locale is saved or preferred", async () => {
   const globals = ["document", "localStorage", "navigator", "window", "CustomEvent"];
   const saved = new Map(globals.map(name => [name, Object.getOwnPropertyDescriptor(globalThis, name)]));
   const html = { lang: "", dir: "" };
@@ -104,11 +104,11 @@ test("initial review locales can be selected and return their own UI and article
   });
   Object.defineProperty(globalThis, "localStorage", {
     configurable: true,
-    value: { getItem: () => null, setItem: () => {} }
+    value: { getItem: () => "fr", setItem: () => {} }
   });
   Object.defineProperty(globalThis, "navigator", {
     configurable: true,
-    value: { language: "en" }
+    value: { language: "fr" }
   });
   Object.defineProperty(globalThis, "window", {
     configurable: true,
@@ -121,16 +121,18 @@ test("initial review locales can be selected and return their own UI and article
 
   try {
     const { getLang, setLang, t, articleTranslation } = await import("../js/i18n.js?locale-switch-test");
-    for (const code of initialLocales) {
-      setLang(code);
-      assert.equal(getLang(), code);
-      assert.equal(html.lang, code);
-      assert.equal(html.dir, directionFor(code));
-      assert.ok(t("hero_title"), `${code}:hero_title`);
-      assert.notEqual(t("hero_title"), english.messages.hero_title, `${code}:hero_title`);
-      assert.ok(articleTranslation("contact").title, `${code}:contact article`);
+    assert.equal(getLang(), "en");
+    assert.equal(html.lang, "en");
+    assert.equal(html.dir, "ltr");
+    assert.equal(t("hero_title"), english.messages.hero_title);
+    assert.ok(articleTranslation("contact").title);
+    assert.deepEqual(LANGS.filter(language => language.complete).map(language => language.code), ["en"]);
+    for (const code of [...REVIEW_LOCALES, ...PENDING_LOCALES]) {
+      assert.throws(() => setLang(code), new RegExp(`Unavailable language: ${code}`));
+      assert.equal(getLang(), "en", `${code} must not change the active locale`);
     }
-    assert.throws(() => setLang("hi"), /Unavailable language: hi/);
+    setLang("en");
+    assert.equal(getLang(), "en");
   } finally {
     for (const [name, descriptor] of saved) {
       if (descriptor) Object.defineProperty(globalThis, name, descriptor);
