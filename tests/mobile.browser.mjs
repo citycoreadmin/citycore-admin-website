@@ -64,15 +64,15 @@ test("public mobile controls work with normal, denied, and quota-limited storage
             assert.ok(bounds.y >= 0 && bounds.y + bounds.height <= 667);
             assert.equal(await dialog.locator("input[type=radio]").count(), 106);
             assert.deepEqual(await dialog.locator("input[type=radio]:enabled").evaluateAll(nodes => nodes.map(n => n.value)), ["en"]);
-            assert.equal(await dialog.locator(".status-review input:disabled").count(), 70);
-            assert.equal(await dialog.locator(".status-unavailable input:disabled").count(), 35);
+            assert.equal(await dialog.locator(".status-review input:disabled").count(), 80);
+            assert.equal(await dialog.locator(".status-unavailable input:disabled").count(), 25);
             await page.locator("#languageSearch").fill("es-419");
             assert.equal(await dialog.locator(".language-option:visible").count(), 1);
             assert.equal(await dialog.locator("input[value=es-419]").isDisabled(), true);
             await page.locator("#languageSearch").fill("Nederlands");
             assert.equal(await dialog.locator(".language-option:visible").count(), 1);
             assert.equal(await dialog.locator("input[value=nl]").isDisabled(), true);
-            for (const code of ["sv", "ro", "id", "fa", "vi", "cs", "sr", "bn", "ur", "he", "fi", "th", "is", "sl", "lt", "lv", "ga", "cy", "gd", "mt", "eu", "am", "so", "yo", "ig", "ha", "zu", "xh", "mg", "rw", "sn", "st"]) {
+            for (const code of ["sv", "ro", "id", "fa", "vi", "cs", "sr", "bn", "ur", "he", "fi", "th", "is", "sl", "lt", "lv", "ga", "cy", "gd", "mt", "eu", "am", "so", "yo", "ig", "ha", "zu", "xh", "mg", "rw", "sn", "st", "ps", "kmr", "hy", "ka", "az", "kk", "uz", "mn", "ne", "si"]) {
               await page.locator("#languageSearch").fill(code);
               const row = dialog.locator(`.language-option:visible input[value="${code}"]`);
               assert.equal(await row.count(), 1);
@@ -118,7 +118,7 @@ test("public mobile controls work with normal, denied, and quota-limited storage
             });
             assert.deepEqual(rtlPolicy, { overflow: false, alignment: "start" });
             await page.evaluate(() => { document.documentElement.dir = "ltr"; });
-            for (const code of ["ur", "he"]) {
+            for (const code of ["ur", "he", "ps"]) {
               const draftLayout = await page.evaluate(async localeCode => {
                 const { default: draft } = await import(`/js/locales/${localeCode}.js`);
                 const nodes = [...document.querySelectorAll(".privacy-policy [data-i18n]")];
