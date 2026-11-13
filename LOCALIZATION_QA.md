@@ -7,11 +7,11 @@
 ## Summary
 
 - The registry contains 106 locales and all 106 have a module: English is complete/enabled, while the other 105 are review-needed/disabled.
-- All 105 non-English modules are AI-generated drafts. No fluent-speaker review or operator approval is recorded.
+- All 105 review-needed modules are AI-generated drafts; this includes 103 non-English locales and the English (US) and English (UK) regional variants. No fluent-speaker review or operator approval is recorded.
 - Automated checks found no missing locale modules, required public message values, article IDs/steps, or placeholder mismatches.
 - An exact-source comparison flagged one likely untranslated public value: Japanese (`ja`) `messages.footer` is still “© 2026 CityCore Admin. All rights reserved.” This needs Japanese copyediting and approval.
 - Haitian Creole (`ht`) and French (`fr`) are the first human-review priorities. Potential wording and punctuation concerns are listed below; they are flags for a fluent reviewer, not definitive corrections.
-- Every non-English Privacy Policy needs both operator approval and fluent-speaker review. Do not enable any locale until its required reviews are documented.
+- The 103 non-English Privacy Policies need both operator approval and fluent-speaker review. The English (US) and English (UK) variants also need operator and regional-copy review. Do not enable any locale until its required reviews are documented.
 
 ## Per-locale review queue
 
