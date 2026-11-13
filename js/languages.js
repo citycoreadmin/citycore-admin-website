@@ -44,8 +44,8 @@ const definitions = [
 export const COMPLETE_LOCALES = ["en"];
 export const REVIEW_LOCALES = [
   "fr", "ht", "es", "pt", "de", "it", "ar", "zh-Hans", "zh-Hant", "ja", "ko", "ru", "hi", "bn", "ur", "tr",
-  "nl", "pl", "uk", "ro", "el", "sv", "nb", "da", "fi", "cs", "sk", "hu", "bg", "sr", "hr", "bs", "sq", "mk", "et",
-  "ca", "gl", "af", "sw", "fa", "he", "th", "vi", "id", "ms", "fil",
+  "nl", "pl", "uk", "ro", "el", "sv", "nb", "da", "fi", "is", "cs", "sk", "hu", "bg", "sr", "hr", "bs", "sl", "sq", "mk", "lt", "lv", "et",
+  "ga", "cy", "gd", "mt", "eu", "ca", "gl", "af", "sw", "am", "fa", "he", "th", "vi", "id", "ms", "fil",
   "en-US", "en-GB", "es-419", "pt-BR"
 ];
 export const PENDING_LOCALES = definitions

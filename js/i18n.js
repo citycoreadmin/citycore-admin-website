@@ -24,8 +24,12 @@ import swedish from "./locales/sv.js";
 import norwegianBokmal from "./locales/nb.js";
 import danish from "./locales/da.js";
 import finnish from "./locales/fi.js";
+import icelandic from "./locales/is.js";
 import czech from "./locales/cs.js";
 import slovak from "./locales/sk.js";
+import slovenian from "./locales/sl.js";
+import lithuanian from "./locales/lt.js";
+import latvian from "./locales/lv.js";
 import hungarian from "./locales/hu.js";
 import bulgarian from "./locales/bg.js";
 import serbian from "./locales/sr.js";
@@ -34,6 +38,12 @@ import bosnian from "./locales/bs.js";
 import albanian from "./locales/sq.js";
 import macedonian from "./locales/mk.js";
 import estonian from "./locales/et.js";
+import irish from "./locales/ga.js";
+import welsh from "./locales/cy.js";
+import scottishGaelic from "./locales/gd.js";
+import maltese from "./locales/mt.js";
+import basque from "./locales/eu.js";
+import amharic from "./locales/am.js";
 import catalan from "./locales/ca.js";
 import galician from "./locales/gl.js";
 import afrikaans from "./locales/af.js";
@@ -64,8 +74,8 @@ const locales = {
   "zh-Hans": chineseSimplified, "zh-Hant": chineseTraditional,
   ja: japanese, ko: korean, ru: russian, hi: hindi, bn: bengali, ur: urdu, tr: turkish,
   nl: dutch, pl: polish, uk: ukrainian, ro: romanian, el: greek, sv: swedish, nb: norwegianBokmal, da: danish, fi: finnish,
-  cs: czech, sk: slovak, hu: hungarian, bg: bulgarian, sr: serbian, hr: croatian, bs: bosnian,
-  sq: albanian, mk: macedonian, et: estonian,
+  is: icelandic, sl: slovenian, lt: lithuanian, lv: latvian, cs: czech, sk: slovak, hu: hungarian, bg: bulgarian, sr: serbian, hr: croatian, bs: bosnian,
+  sq: albanian, mk: macedonian, et: estonian, ga: irish, cy: welsh, gd: scottishGaelic, mt: maltese, eu: basque, am: amharic,
   ca: catalan, gl: galician, af: afrikaans, sw: swahili, fa: persian, he: hebrew, th: thai, vi: vietnamese,
   id: indonesian, ms: malay, fil: filipino,
   "en-US": englishUS, "en-GB": englishGB,
