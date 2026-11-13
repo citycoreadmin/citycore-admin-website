@@ -19,6 +19,14 @@ import turkish from "../js/locales/tr.js";
 import dutch from "../js/locales/nl.js";
 import polish from "../js/locales/pl.js";
 import ukrainian from "../js/locales/uk.js";
+import romanian from "../js/locales/ro.js";
+import swedish from "../js/locales/sv.js";
+import norwegianBokmal from "../js/locales/nb.js";
+import danish from "../js/locales/da.js";
+import catalan from "../js/locales/ca.js";
+import galician from "../js/locales/gl.js";
+import indonesian from "../js/locales/id.js";
+import malay from "../js/locales/ms.js";
 import englishUS from "../js/locales/en-US.js";
 import englishGB from "../js/locales/en-GB.js";
 import spanishLatinAmerica from "../js/locales/es-419.js";
@@ -33,11 +41,13 @@ const locales = {
   es: spanish, pt: portuguese, de: german, it: italian, ar: arabic,
   "zh-Hans": chineseSimplified, "zh-Hant": chineseTraditional,
   ja: japanese, ko: korean, ru: russian, hi: hindi, tr: turkish,
-  nl: dutch, pl: polish, uk: ukrainian, "en-US": englishUS, "en-GB": englishGB,
+  nl: dutch, pl: polish, uk: ukrainian, ro: romanian, sv: swedish, nb: norwegianBokmal, da: danish,
+  ca: catalan, gl: galician, id: indonesian, ms: malay,
+  "en-US": englishUS, "en-GB": englishGB,
   "es-419": spanishLatinAmerica, "pt-BR": portugueseBrazil
 };
 const initialLocales = ["es", "pt", "de", "it", "ar", "zh-Hans", "zh-Hant", "ja", "ko", "ru", "hi", "tr"];
-const newDrafts = ["nl", "pl", "uk", "en-US", "en-GB", "es-419", "pt-BR"];
+const newDrafts = ["nl", "pl", "uk", "ro", "sv", "nb", "da", "ca", "gl", "id", "ms", "en-US", "en-GB", "es-419", "pt-BR"];
 const publicMessageKeys = [
   "skip_content", "close", "page_home_title", "page_privacy_title",
   "language_available", "language_complete", "language_review", "language_unavailable",
@@ -66,7 +76,7 @@ test("registry has unique codes, explicit coverage, and the requested RTL direct
   assert.deepEqual(COMPLETE_LOCALES, ["en"]);
   assert.deepEqual(LANGS.filter(language => language.review).map(language => language.code), REVIEW_LOCALES);
   assert.deepEqual(REVIEW_LOCALES, ["fr", "ht", ...initialLocales, ...newDrafts]);
-  assert.equal(PENDING_LOCALES.length, 84);
+  assert.equal(PENDING_LOCALES.length, 76);
   assert.deepEqual(
     LANGS.filter(language => !language.complete && !language.review).map(language => language.code),
     PENDING_LOCALES
@@ -192,10 +202,14 @@ test("regional drafts retain localized policy and article content", () => {
 
 test("new non-English drafts do not use English sentences as placeholders", () => {
   const sharedTerms = new Set(["p_ios", "p_ipados", "p_android", "p_web"]);
-  for (const code of ["nl", "pl", "uk", "es-419", "pt-BR"]) {
+  for (const code of ["nl", "pl", "uk", "ro", "sv", "nb", "da", "ca", "gl", "id", "ms", "es-419", "pt-BR"]) {
     const locale = locales[code];
     for (const key of publicMessageKeys) {
-      if (sharedTerms.has(key) || (code === "nl" && ["nav_home", "platform"].includes(key))) continue;
+      if (sharedTerms.has(key) || (code === "nl" && ["nav_home", "platform"].includes(key)) ||
+          (code === "sv" && key === "nav_support") ||
+          (code === "da" && ["nav_support", "platform"].includes(key)) ||
+          (code === "ca" && ["articles", "article_count"].includes(key)) ||
+          (["id", "ms"].includes(code) && key === "platform")) continue;
       assert.notEqual(locale.messages[key], english.messages[key], `${code}:${key}`);
     }
     for (const [id, article] of Object.entries(locale.articles)) {

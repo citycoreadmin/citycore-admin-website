@@ -16,6 +16,14 @@ import turkish from "./locales/tr.js";
 import dutch from "./locales/nl.js";
 import polish from "./locales/pl.js";
 import ukrainian from "./locales/uk.js";
+import romanian from "./locales/ro.js";
+import swedish from "./locales/sv.js";
+import norwegianBokmal from "./locales/nb.js";
+import danish from "./locales/da.js";
+import catalan from "./locales/ca.js";
+import galician from "./locales/gl.js";
+import indonesian from "./locales/id.js";
+import malay from "./locales/ms.js";
 import englishUS from "./locales/en-US.js";
 import englishGB from "./locales/en-GB.js";
 import spanishLatinAmerica from "./locales/es-419.js";
@@ -34,7 +42,9 @@ const locales = {
   es: spanish, pt: portuguese, de: german, it: italian, ar: arabic,
   "zh-Hans": chineseSimplified, "zh-Hant": chineseTraditional,
   ja: japanese, ko: korean, ru: russian, hi: hindi, tr: turkish,
-  nl: dutch, pl: polish, uk: ukrainian, "en-US": englishUS, "en-GB": englishGB,
+  nl: dutch, pl: polish, uk: ukrainian, ro: romanian, sv: swedish, nb: norwegianBokmal, da: danish,
+  ca: catalan, gl: galician, id: indonesian, ms: malay,
+  "en-US": englishUS, "en-GB": englishGB,
   "es-419": spanishLatinAmerica, "pt-BR": portugueseBrazil
 };
 const saved = readPreference("cc_lang");
