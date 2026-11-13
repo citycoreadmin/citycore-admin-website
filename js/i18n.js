@@ -64,6 +64,16 @@ import uzbek from "./locales/uz.js";
 import mongolian from "./locales/mn.js";
 import nepali from "./locales/ne.js";
 import sinhala from "./locales/si.js";
+import tamil from "./locales/ta.js";
+import telugu from "./locales/te.js";
+import kannada from "./locales/kn.js";
+import malayalam from "./locales/ml.js";
+import marathi from "./locales/mr.js";
+import gujarati from "./locales/gu.js";
+import punjabi from "./locales/pa.js";
+import odia from "./locales/or.js";
+import burmese from "./locales/my.js";
+import khmer from "./locales/km.js";
 import catalan from "./locales/ca.js";
 import galician from "./locales/gl.js";
 import afrikaans from "./locales/af.js";
@@ -98,6 +108,7 @@ const locales = {
   sq: albanian, mk: macedonian, et: estonian, ga: irish, cy: welsh, gd: scottishGaelic, mt: maltese, eu: basque, am: amharic,
   so: somali, yo: yoruba, ig: igbo, ha: hausa, zu: zulu, xh: xhosa, mg: malagasy, rw: kinyarwanda, sn: shona, st: sesotho,
   ps: pashto, kmr: kurmanji, hy: armenian, ka: georgian, az: azerbaijani, kk: kazakh, uz: uzbek, mn: mongolian, ne: nepali, si: sinhala,
+  ta: tamil, te: telugu, kn: kannada, ml: malayalam, mr: marathi, gu: gujarati, pa: punjabi, or: odia, my: burmese, km: khmer,
   ca: catalan, gl: galician, af: afrikaans, sw: swahili, fa: persian, he: hebrew, th: thai, vi: vietnamese,
   id: indonesian, ms: malay, fil: filipino,
   "en-US": englishUS, "en-GB": englishGB,

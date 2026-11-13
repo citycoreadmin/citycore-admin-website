@@ -19,14 +19,15 @@ Hindi, Bengali, Urdu, and Turkish, as well as Dutch, Polish, Ukrainian, Romanian
 Danish, Finnish, Icelandic, Slovenian, Lithuanian, Latvian, Czech, Slovak, Hungarian, Bulgarian, Serbian, Croatian, Bosnian,
 Albanian, Macedonian, Estonian, Irish, Welsh, Scottish Gaelic, Maltese, Basque, Amharic, Somali, Yoruba, Igbo, Hausa,
 Zulu, Xhosa, Malagasy, Kinyarwanda, Shona, Sesotho, Pashto, Kurmanji, Armenian, Georgian, Azerbaijani, Kazakh, Uzbek,
-Mongolian, Nepali, Sinhala, Catalan, Galician, Afrikaans, Swahili, Persian, Hebrew, Thai,
+Mongolian, Nepali, Sinhala, Tamil, Telugu, Kannada, Malayalam, Marathi, Gujarati, Punjabi, Odia, Burmese, Khmer,
+Catalan, Galician, Afrikaans, Swahili, Persian, Hebrew, Thai,
 Vietnamese, Indonesian,
 Malay, Filipino, US and UK English, Latin American Spanish, and Brazilian Portuguese, are marked Review needed
-(80 locales total) and disabled. The regional drafts build on their existing
+(90 locales total) and disabled. The regional drafts build on their existing
 base-language translations; their regional wording also requires fluent-speaker review. French and Haitian
 Creole should be prioritized for fluent-speaker review. All non-English Privacy Policy
 translations require operator and native-speaker review. These initial translations were drafted from the English
-source and need fluent-speaker review before completion. The other 25 locales remain marked Coming soon and
+source and need fluent-speaker review before completion. The other 15 locales remain marked Coming soon and
 disabled until all public UI, Help Center articles, search, errors, and policy text are translated and reviewed.
 Locale data is in `js/locales/`. Run coverage checks with `node --test tests/localization.test.mjs`.
 
