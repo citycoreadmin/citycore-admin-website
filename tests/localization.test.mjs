@@ -87,6 +87,11 @@ import aymara from "../js/locales/ay.js";
 import guarani from "../js/locales/gn.js";
 import nahuatl from "../js/locales/nah.js";
 import belarusian from "../js/locales/be.js";
+import tigrinya from "../js/locales/ti.js";
+import kirundi from "../js/locales/rn.js";
+import wolof from "../js/locales/wo.js";
+import tajik from "../js/locales/tg.js";
+import kyrgyz from "../js/locales/ky.js";
 import catalan from "../js/locales/ca.js";
 import galician from "../js/locales/gl.js";
 import afrikaans from "../js/locales/af.js";
@@ -120,6 +125,7 @@ const locales = {
   ps: pashto, kmr: kurmanji, hy: armenian, ka: georgian, az: azerbaijani, kk: kazakh, uz: uzbek, mn: mongolian, ne: nepali, si: sinhala,
   ta: tamil, te: telugu, kn: kannada, ml: malayalam, mr: marathi, gu: gujarati, pa: punjabi, or: odia, my: burmese, km: khmer,
   lo: lao, mi: maori, sm: samoan, to: tongan, fj: fijian, qu: quechua, ay: aymara, gn: guarani, nah: nahuatl, be: belarusian,
+  ti: tigrinya, rn: kirundi, wo: wolof, tg: tajik, ky: kyrgyz,
   ca: catalan, gl: galician, af: afrikaans, sw: swahili, fa: persian, he: hebrew, th: thai, vi: vietnamese,
   id: indonesian, ms: malay, fil: filipino,
   "en-US": englishUS, "en-GB": englishGB,
@@ -133,6 +139,7 @@ const currentBatch = ["so", "yo", "ig", "ha", "zu", "xh", "mg", "rw", "sn", "st"
 const nextBatch = ["ps", "kmr", "hy", "ka", "az", "kk", "uz", "mn", "ne", "si"];
 const southAsiaBatch = ["ta", "te", "kn", "ml", "mr", "gu", "pa", "or", "my", "km"];
 const pacificBatch = ["lo", "mi", "be", "sm", "to", "fj", "qu", "ay", "gn", "nah"];
+const finalBatch = ["ti", "rn", "wo", "tg", "ky"];
 const publicMessageKeys = [
   "skip_content", "close", "page_home_title", "page_privacy_title",
   "language_available", "language_complete", "language_review", "language_unavailable",
@@ -160,8 +167,8 @@ test("registry has unique codes, explicit coverage, and the requested RTL direct
   assert.deepEqual(LANGS.filter(language => language.complete).map(language => language.code), COMPLETE_LOCALES);
   assert.deepEqual(COMPLETE_LOCALES, ["en"]);
   assert.deepEqual(LANGS.filter(language => language.review).map(language => language.code), REVIEW_LOCALES);
-  assert.deepEqual(new Set(REVIEW_LOCALES), new Set(["fr", "ht", ...initialLocales, ...newDrafts, ...batchDrafts, ...newBatch, ...currentBatch, ...nextBatch, ...southAsiaBatch, ...pacificBatch]));
-  assert.equal(PENDING_LOCALES.length, 5);
+  assert.deepEqual(new Set(REVIEW_LOCALES), new Set(["fr", "ht", ...initialLocales, ...newDrafts, ...batchDrafts, ...newBatch, ...currentBatch, ...nextBatch, ...southAsiaBatch, ...pacificBatch, ...finalBatch]));
+  assert.equal(PENDING_LOCALES.length, 0);
   assert.deepEqual(
     LANGS.filter(language => !language.complete && !language.review).map(language => language.code),
     PENDING_LOCALES
@@ -279,7 +286,7 @@ test("regional drafts retain localized policy and article content", () => {
   assert.match(spanishLatinAmerica.articles.servers.steps[1], /Toca/);
   assert.match(portugueseBrazil.messages.policy_website_data, /Você/);
   assert.match(portugueseBrazil.articles["login-problems"].steps[0], /senha/);
-  for (const code of [...newDrafts, ...batchDrafts, ...newBatch, ...currentBatch, ...nextBatch, ...southAsiaBatch, ...pacificBatch]) {
+  for (const code of [...newDrafts, ...batchDrafts, ...newBatch, ...currentBatch, ...nextBatch, ...southAsiaBatch, ...pacificBatch, ...finalBatch]) {
     assert.ok(REVIEW_LOCALES.includes(code));
     assert.ok(!COMPLETE_LOCALES.includes(code));
   }
@@ -287,7 +294,7 @@ test("regional drafts retain localized policy and article content", () => {
 
 test("new non-English drafts do not use English sentences as placeholders", () => {
   const sharedTerms = new Set(["p_ios", "p_ipados", "p_android", "p_web"]);
-  for (const code of ["nl", "pl", "uk", "ro", "sv", "nb", "da", "cs", "sk", "sr", "hr", "bs", "ca", "gl", "af", "sw", "fa", "vi", "id", "ms", "fil", "es-419", "pt-BR", ...batchDrafts, ...newBatch, ...currentBatch, ...nextBatch, ...southAsiaBatch, ...pacificBatch]) {
+  for (const code of ["nl", "pl", "uk", "ro", "sv", "nb", "da", "cs", "sk", "sr", "hr", "bs", "ca", "gl", "af", "sw", "fa", "vi", "id", "ms", "fil", "es-419", "pt-BR", ...batchDrafts, ...newBatch, ...currentBatch, ...nextBatch, ...southAsiaBatch, ...pacificBatch, ...finalBatch]) {
     const locale = locales[code];
     for (const key of publicMessageKeys) {
       if (sharedTerms.has(key) || (code === "nl" && ["nav_home", "platform"].includes(key)) ||

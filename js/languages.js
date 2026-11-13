@@ -46,7 +46,7 @@ export const REVIEW_LOCALES = [
   "fr", "ht", "es", "pt", "de", "it", "ar", "zh-Hans", "zh-Hant", "ja", "ko", "ru", "hi", "bn", "ur", "tr",
   "nl", "pl", "uk", "ro", "el", "sv", "nb", "da", "fi", "is", "cs", "sk", "hu", "bg", "sr", "hr", "bs", "sl", "sq", "mk", "lt", "lv", "et",
   "ga", "cy", "gd", "mt", "eu", "ca", "gl", "af", "sw", "am", "so", "yo", "ig", "ha", "zu", "xh", "mg", "rw", "sn", "st", "fa", "he", "ps", "kmr", "hy", "ka", "az", "kk", "uz", "mn", "ne", "si", "ta", "te", "kn", "ml", "mr", "gu", "pa", "or", "th", "vi", "id", "ms", "fil", "my", "km", "lo", "mi",
-  "en-US", "en-GB", "es-419", "pt-BR", "be", "sm", "to", "fj", "qu", "ay", "gn", "nah"
+  "en-US", "en-GB", "es-419", "pt-BR", "be", "ti", "rn", "wo", "tg", "ky", "sm", "to", "fj", "qu", "ay", "gn", "nah"
 ];
 export const PENDING_LOCALES = definitions
   .map(([code]) => code)

@@ -84,6 +84,11 @@ import aymara from "./locales/ay.js";
 import guarani from "./locales/gn.js";
 import nahuatl from "./locales/nah.js";
 import belarusian from "./locales/be.js";
+import tigrinya from "./locales/ti.js";
+import kirundi from "./locales/rn.js";
+import wolof from "./locales/wo.js";
+import tajik from "./locales/tg.js";
+import kyrgyz from "./locales/ky.js";
 import catalan from "./locales/ca.js";
 import galician from "./locales/gl.js";
 import afrikaans from "./locales/af.js";
@@ -120,6 +125,7 @@ const locales = {
   ps: pashto, kmr: kurmanji, hy: armenian, ka: georgian, az: azerbaijani, kk: kazakh, uz: uzbek, mn: mongolian, ne: nepali, si: sinhala,
   ta: tamil, te: telugu, kn: kannada, ml: malayalam, mr: marathi, gu: gujarati, pa: punjabi, or: odia, my: burmese, km: khmer,
   lo: lao, mi: maori, sm: samoan, to: tongan, fj: fijian, qu: quechua, ay: aymara, gn: guarani, nah: nahuatl, be: belarusian,
+  ti: tigrinya, rn: kirundi, wo: wolof, tg: tajik, ky: kyrgyz,
   ca: catalan, gl: galician, af: afrikaans, sw: swahili, fa: persian, he: hebrew, th: thai, vi: vietnamese,
   id: indonesian, ms: malay, fil: filipino,
   "en-US": englishUS, "en-GB": englishGB,
