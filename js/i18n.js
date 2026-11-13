@@ -1,6 +1,16 @@
 import english from "./locales/en.js";
 import french from "./locales/fr.js";
 import haitianCreole from "./locales/ht.js";
+import spanish from "./locales/es.js";
+import portuguese from "./locales/pt.js";
+import german from "./locales/de.js";
+import italian from "./locales/it.js";
+import arabic from "./locales/ar.js";
+import chineseSimplified from "./locales/zh-Hans.js";
+import chineseTraditional from "./locales/zh-Hant.js";
+import japanese from "./locales/ja.js";
+import korean from "./locales/ko.js";
+import russian from "./locales/ru.js";
 import { LANGS, directionFor } from "./languages.js";
 
 export { LANGS } from "./languages.js";
@@ -9,10 +19,17 @@ export const STATUSES = ["open", "pending", "in_progress", "resolved", "closed"]
 export const PRIORITIES = ["low", "normal", "high", "urgent"];
 export const PLATFORMS = ["all", "ios", "ipados", "android", "web"];
 
-const locales = { en: english, fr: french, ht: haitianCreole };
+const locales = {
+  en: english, fr: french, ht: haitianCreole,
+  es: spanish, pt: portuguese, de: german, it: italian, ar: arabic,
+  "zh-Hans": chineseSimplified, "zh-Hant": chineseTraditional,
+  ja: japanese, ko: korean, ru: russian
+};
 const saved = localStorage.getItem("cc_lang");
-const preferred = (navigator.language || "en").split("-")[0];
-let lang = saved && locales[saved] ? saved : (locales[preferred] ? preferred : "en");
+const preferred = (navigator.language || "en");
+const localeAlias = { "zh-CN": "zh-Hans", "zh-SG": "zh-Hans", "zh-TW": "zh-Hant", "zh-HK": "zh-Hant", "zh-MO": "zh-Hant" };
+const preferredLocale = locales[preferred] ? preferred : localeAlias[preferred] || preferred.split("-")[0];
+let lang = saved && locales[saved] ? saved : (locales[preferredLocale] ? preferredLocale : "en");
 
 export const getLang = () => lang;
 export function t(key, vars = {}) {

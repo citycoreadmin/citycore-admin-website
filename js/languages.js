@@ -40,7 +40,9 @@ const definitions = [
 ];
 
 export const COMPLETE_LOCALES = ["en"];
-export const REVIEW_LOCALES = ["fr", "ht"];
+export const REVIEW_LOCALES = [
+  "fr", "ht", "es", "pt", "de", "it", "ar", "zh-Hans", "zh-Hant", "ja", "ko", "ru"
+];
 export const PENDING_LOCALES = definitions
   .map(([code]) => code)
   .filter(code => !COMPLETE_LOCALES.includes(code) && !REVIEW_LOCALES.includes(code));
