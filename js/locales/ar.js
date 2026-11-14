@@ -47,6 +47,7 @@ export default {
     results: "نتائج البحث",
     no_results: "لم نعثر على مقالات. جرّب كلمات أخرى.",
     back: "رجوع",
+    all_cats: "كل الفئات",
     article_count: "مقالات",
     cat_getting_started: "البدء",
     cat_account_login: "الحساب وتسجيل الدخول",

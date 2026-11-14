@@ -47,6 +47,7 @@ export default {
     results: "検索結果",
     no_results: "記事が見つかりません。別の語句をお試しください。",
     back: "戻る",
+    all_cats: "すべてのカテゴリー",
     article_count: "件の記事",
     cat_getting_started: "はじめに",
     cat_account_login: "アカウントとログイン",

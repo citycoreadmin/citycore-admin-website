@@ -1,6 +1,6 @@
 # CityCore Admin localization QA report
 
-**Review date:** 2026-11-13  
+**Review date:** 2026-11-14  
 **Scope:** All 106 locale modules in `js/locales/` and the public website surfaces  
 **Disposition:** Technical checks passed; linguistic and policy approval remain outstanding. No locale was approved or enabled.
 
@@ -78,7 +78,66 @@ The nine translated modules remain unapproved drafts, not activation-ready local
 - Retained all keys, article IDs/step counts, and placeholder names, including `{mb}`. No locale status or enabled-language list was changed.
 - Added translated mobile menu, open-menu accessibility, and App Store download labels to the nine non-English target drafts; the localization test now requires these keys for those drafts.
 - Added Arabic to the mobile RTL policy-layout regression cases. No mobile navigation markup, styles, App Store destination, locale definitions, or asset rules were changed.
+- Added the source `all_cats` message to the seven priority drafts that lacked it (`es`, `pt`, `de`, `it`, `ar`, `zh-Hans`, `ja`). The key is currently unused by the public runtime; the localization test now requires it for all nine target drafts.
 - No locale status or enabled-language list was changed. The edits are still AI-assisted drafts and are not approvals.
+
+## First-nine side-by-side editorial review
+
+This review compared the public website message strings, accessibility/mobile-menu labels, Privacy Policy text, and all ten Help Center article titles and steps with `js/locales/en.js`. Auth, ticketing, support dashboard, and staff-only copy are excluded. Entries below are concrete source-to-draft findings for a fluent reviewer; they are not fluent-speaker approvals. Unlisted lines had no definite meaning mismatch identified by this pass, but still need language review before activation.
+
+| Locale | English source → current draft | Finding / proposed reviewer action |
+| --- | --- | --- |
+| Haitian Creole (`ht`) | `p_web`: “Web” → “Sit entènèt” (“website”); `articles.app-crash.title`: “The app crashes or won't load” → “Aplikasyon an fèmen oswa li pa chaje” (“the app closes or doesn't load”); `invite-members.steps[3]`: “Revoke an invitation” → “Ou ka anile l” (“you can cancel it”). | Priority 1. Confirm a platform label that means the Web platform, not just a website; restore the crash symptom in the article title; confirm whether “cancel” adequately describes revoking an already-created invitation. Also confirm `theme` (“Toggle theme” → “Chanje aparans”, “change appearance”) and `cat_contact` (“Support availability” → “Kilè sipò disponib”, phrased as a question) fit the UI and article-title context. |
+| French (`fr`) | `login-problems.steps[0]`: “Check your email address and password for typos.” → “Vérifiez votre e-mail et votre mot de passe.” | Priority 2. The draft omits the explicit typo check. Ask the reviewer whether to make that explicit (candidate: “Vérifiez votre adresse e-mail et votre mot de passe pour repérer les fautes de frappe.”). Confirm that quoted English app controls are still the shipped labels and that the ticket/support terminology is idiomatic in the intended region. |
+| Spanish (`es`) | Source key `all_cats`: “All categories”; previously absent → now “Todas las categorías”. | The key omission is corrected in the draft; the key is not currently rendered by the runtime. No definite semantic mismatch was identified in the other reviewed public strings or articles. |
+| Portuguese (`pt`) | `articles.app-crash.title`: “The app crashes or won't load” → “A aplicação bloqueia ou não carrega” (“the app blocks/freezes or doesn't load”). | Ask the reviewer whether “bloqueia” describes a crash in this product context or only a freeze; choose the standard local term for an app crash if needed. The missing `all_cats` key is now present as “Todas as categorias”. |
+| German (`de`) | `nav_support`: “Support” → “Support” (unchanged); source key `all_cats`: “All categories”; previously absent → now “Alle Kategorien”. | “Support” is a common German borrowing, not automatically an error; confirm it matches the site's chosen terminology. The missing key is corrected in the draft and is not currently rendered. |
+| Italian (`it`) | `nav_home`: “Home” → “Home” (unchanged); `articles.app-crash.title`: “The app crashes or won't load” → “L'app si blocca o non si carica” (“the app freezes/gets stuck or doesn't load”). | Confirm whether “Home” is the intended Italian navigation label or should be localized, and whether `si blocca` conveys a crash rather than a freeze. The missing `all_cats` key is now present as “Tutte le categorie”. |
+| Arabic (`ar`) | `nav_download_app_store`: “Download on the App Store” → “التنزيل من App Store” (a noun phrase, “download from App Store”). | Ask the Arabic reviewer whether the App Store control should use an imperative (“Download the app”) rather than the current noun phrase, and verify RTL punctuation/brand rendering in context. The missing `all_cats` key is now present as “كل الفئات”. |
+| Simplified Chinese (`zh-Hans`) | `articles.panel-settings.steps[3]`: “Use Moderation for sanction and moderation settings.” → “使用‘Moderation’配置处罚和内容管理。” (“configure sanctions and content management”). | “内容管理” can mean content management generally and may be broader than moderation; ask the reviewer whether “内容审核” or another established product term is more precise. The same concept appears in `get-started.steps[3]`. The missing `all_cats` key is now present as “所有分类”. |
+| Japanese (`ja`) | `articles.servers.title`: “Find and create Admin Panels” → “管理パネルの確認と作成” (“checking/viewing and creating admin panels”). | “確認” may suggest viewing/checking rather than finding. Ask the reviewer whether “管理パネルを見つけて作成する” better conveys the source. The missing `all_cats` key is now present as “すべてのカテゴリー”. |
+
+No candidate wording above was silently applied: the `all_cats` key coverage fix is in the drafts, while language-specific word-choice changes remain for the fluent reviewer to accept or replace. Reviewers should also verify all remaining strings and article steps, not only the examples in this table.
+
+## WOOBENS STUDIO Privacy Policy approval checklist
+
+### Facts verified from this repository's current public implementation
+
+- The public pages are a static Help Center and Privacy Policy. The homepage contains client-side article search and a support-availability notice, not an account/payment form or support-ticket submission form (`index.html`, `js/home.js`).
+- The site persists selected language, theme, and platform in browser `localStorage` (`cc_lang`, `cc_theme`, `cc_platform`); the preference code reads/writes those keys and continues for the page if browser storage is blocked or full (`js/i18n.js`, `js/ui.js`, `js/home.js`, `js/preferences.js`).
+- The mobile download button and policy link point to the CityCore Admin App Store URL recorded in `index.html` and `privacy.html`.
+- The English policy itself states that hosting-provider request-data handling has not been confirmed and that the operator has not confirmed the published app's complete data practices (`privacy.html`, English message keys `policy_website_data` and `policy_app_unknown`).
+
+These are code-inspection facts, not an independent audit of production traffic, hosting-provider behavior, the iOS app, or legal compliance.
+
+### Operator decisions and evidence required before policy approval
+
+- [ ] Confirm the legal identity and role of WOOBENS STUDIO as operator/controller, the correct contact address, and the jurisdictions served.
+- [ ] Confirm the live website storage behavior against the list above, including the purpose and lifetime of each preference, whether any additional storage or cookies are used, and whether any analytics, advertising, or third-party scripts are active.
+- [ ] Obtain Cloudflare/hosting-provider documentation or operator configuration evidence for request metadata (including IP addresses), logs, cookies, subprocessors, retention/deletion periods, and any cross-border processing. Do not treat these as absent merely because they are not implemented in the repository.
+- [ ] Open the current public App Store listing and compare its privacy labels with the policy sentence naming Name, Email Address, and Photos or Videos, including whether each data category is collected, linked, and used for App Functionality. Preserve a dated copy or review record. This review could not retrieve the listing independently.
+- [ ] Confirm the iOS app's actual collection and use, purposes, user linkage, sharing, tracking, permissions, SDKs/processors, security controls, retention, deletion (including backups), and practices involving children. The App Store label alone does not establish these facts.
+- [ ] Confirm the process for account/data deletion requests, identity checks, exclusions, actual processing time, and whether deletion reaches processors and backups. The current policy intentionally promises no automatic deletion or processing timeframe.
+- [ ] Confirm the policy's legal disclosures and rights for each intended jurisdiction, the effective/last-updated date, and whether any user categories or age restrictions need to be described.
+- [ ] Have an appropriately qualified operator/legal reviewer approve the English source policy and record the reviewer, date, and policy revision. Then have fluent reviewers check each localized policy for complete and equivalent meaning; translations do not themselves establish operator approval.
+
+**Verified facts:** only the code-level website behaviors listed above. **Unresolved claims:** operator identity/jurisdiction, production hosting/logging and storage behavior, current App Store labels, all iOS app data practices, deletion/retention/security/children, and legal sufficiency. No policy approval is recorded.
+
+## Exact remaining activation actions for the nine translations
+
+For each locale below, the locale-specific language reviewer must resolve the listed candidate wording and sign off the full public UI, mobile/accessibility labels, all ten Help Center articles, and complete Privacy Policy. Separately, WOOBENS STUDIO must complete the checklist above and approve that locale's policy. Record named reviewers, dates, policy revision, and corrections. Then rerun the localization and deployment checks on the final corrected text. Only after both approvals may the locale be moved from review-needed to complete/enabled and tested in the selector. No locale is enabled by this approval package.
+
+| Locale | Remaining locale-specific speaker review |
+| --- | --- |
+| `ht` | Resolve Web/platform, crash-title, revoke/cancel, theme, and contact-category wording above; review all other public copy and policy. |
+| `fr` | Restore or explicitly accept the omitted typo detail; verify terminology, quoted app controls, all public copy, and policy. |
+| `es` | Review all public copy and policy; confirm the newly supplied all-categories label. |
+| `pt` | Decide crash-versus-freeze wording; review all public copy and policy. |
+| `de` | Confirm “Support” terminology; review all public copy and policy. |
+| `it` | Confirm “Home” and crash-versus-freeze wording; review all public copy and policy. |
+| `ar` | Confirm imperative App Store button wording and rendered RTL copy; review all public copy and policy. |
+| `zh-Hans` | Resolve moderation terminology in both cited article steps; review all public copy and policy. |
+| `ja` | Resolve “find” versus “check/view” article title; review all public copy and policy. |
 
 ## Unresolved questions for reviewers
 

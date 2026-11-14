@@ -47,6 +47,7 @@ export default {
     results: "搜索结果",
     no_results: "未找到文章。请尝试其他关键词。",
     back: "返回",
+    all_cats: "所有分类",
     article_count: "篇文章",
     cat_getting_started: "入门指南",
     cat_account_login: "账户与登录",

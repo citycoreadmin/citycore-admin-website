@@ -47,6 +47,7 @@ export default {
     results: "Resultados da pesquisa",
     no_results: "Não foram encontrados artigos. Experimente outras palavras.",
     back: "Voltar",
+    all_cats: "Todas as categorias",
     article_count: "artigos",
     cat_getting_started: "Primeiros passos",
     cat_account_login: "Conta e início de sessão",
