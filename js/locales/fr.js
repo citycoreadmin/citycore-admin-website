@@ -226,7 +226,7 @@ export default {
     "login-problems": {
       "title": "Je n'arrive pas à me connecter",
       "steps": [
-        "Vérifiez votre e-mail et votre mot de passe.",
+        "Vérifiez votre adresse e-mail et votre mot de passe pour repérer les fautes de frappe.",
         "Sur l'écran de connexion, utilisez l'option de réinitialisation du mot de passe.",
         "Vérifiez que l'application est à jour.",
         "La messagerie d'assistance n'est pas disponible actuellement sur ce site."

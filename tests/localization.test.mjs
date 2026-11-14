@@ -306,6 +306,23 @@ test("regional drafts retain localized policy and article content", () => {
   }
 });
 
+test("priority wording corrections preserve meaning and keep locales disabled", () => {
+  assert.equal(haitianCreole.messages.p_web, "Web");
+  assert.match(haitianCreole.articles["app-crash"].title, /sispann fonksyone sanzatann/);
+  assert.match(haitianCreole.articles["invite-members"].steps[3], /anile envitasyon an/);
+  assert.match(french.articles["login-problems"].steps[0], /fautes de frappe/);
+  assert.match(portuguese.articles["app-crash"].title, /encerra inesperadamente/);
+  assert.match(italian.articles["app-crash"].title, /si chiude inaspettatamente/);
+  assert.match(arabic.messages.nav_download_app_store, /^حمّل تطبيق CityCore Admin من App Store$/);
+  assert.match(chineseSimplified.articles["panel-settings"].steps[3], /内容审核/);
+  assert.match(chineseSimplified.articles["get-started"].steps[3], /内容审核/);
+  assert.equal(japanese.articles.servers.title, "管理パネルを見つけて作成する");
+  for (const code of targetMobileDrafts) {
+    assert.ok(REVIEW_LOCALES.includes(code), `${code} must remain review-needed`);
+    assert.ok(!COMPLETE_LOCALES.includes(code), `${code} must remain disabled`);
+  }
+});
+
 test("new non-English drafts do not use English sentences as placeholders", () => {
   const sharedTerms = new Set(["p_ios", "p_ipados", "p_android", "p_web"]);
   for (const code of ["nl", "pl", "uk", "ro", "sv", "nb", "da", "cs", "sk", "sr", "hr", "bs", "ca", "gl", "af", "sw", "fa", "vi", "id", "ms", "fil", "es-419", "pt-BR", ...batchDrafts, ...newBatch, ...currentBatch, ...nextBatch, ...southAsiaBatch, ...pacificBatch, ...finalBatch]) {

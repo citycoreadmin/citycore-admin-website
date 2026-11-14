@@ -78,7 +78,7 @@ export default {
         "打开要管理的管理面板。",
         "打开“Panel Settings”。",
         "使用“Members & Staff”管理成员和工作人员。",
-        "使用“Moderation”配置处罚和内容管理。",
+        "使用“Moderation”配置处罚和内容审核。",
         "使用“Server Management”管理权限、审计日志、通知和邀请。"
       ]
     },
@@ -107,7 +107,7 @@ export default {
         "安装 CityCore Admin 并创建账户。",
         "打开“Servers”标签页以查看或创建管理面板。",
         "邀请工作人员并设置角色。",
-        "使用“Panel Settings”配置内容管理。"
+        "使用“Panel Settings”配置内容审核。"
       ]
     },
     "login-problems": {

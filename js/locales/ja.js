@@ -64,7 +64,7 @@ export default {
   },
   articles: {
     servers: {
-      title: "管理パネルの確認と作成",
+      title: "管理パネルを見つけて作成する",
       steps: [
         "CityCore Admin を開きます。",
         "下部のナビゲーションにある「Servers」をタップします。",

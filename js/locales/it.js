@@ -129,7 +129,7 @@ export default {
       ]
     },
     "app-crash": {
-      title: "L'app si blocca o non si carica",
+      title: "L'app si chiude inaspettatamente o non si carica",
       steps: [
         "Forza la chiusura dell'app e riaprila.",
         "Controlla la connessione a Internet.",

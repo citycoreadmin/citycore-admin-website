@@ -129,7 +129,7 @@ export default {
       ]
     },
     "app-crash": {
-      title: "A aplicação bloqueia ou não carrega",
+      title: "A aplicação encerra inesperadamente ou não carrega",
       steps: [
         "Force o fecho da aplicação e volte a abri-la.",
         "Verifique a ligação à Internet.",

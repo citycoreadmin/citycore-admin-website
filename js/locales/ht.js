@@ -40,7 +40,7 @@ export default {
     "p_ios": "iOS",
     "p_ipados": "iPadOS",
     "p_android": "Android",
-    "p_web": "Sit entènèt",
+    "p_web": "Web",
     "language": "Lang",
     "theme": "Chanje aparans",
     "help_cats": "Eksplore kategori yo",
@@ -238,11 +238,11 @@ export default {
         "Louvri panèl administrasyon ou epi ale nan «Panel Settings».",
         "Louvri «Server Management», answit «Invitations».",
         "Kreye yon envitasyon epi pataje l.",
-        "Ou ka anile l nenpòt kilè sou menm ekran an."
+        "Ou ka anile envitasyon an nenpòt ki lè sou menm ekran an."
       ]
     },
     "app-crash": {
-      "title": "Aplikasyon an fèmen oswa li pa chaje",
+      "title": "Aplikasyon an sispann fonksyone sanzatann oswa li pa chaje",
       "steps": [
         "Fèmen aplikasyon an nèt, epi louvri l ankò.",
         "Verifye koneksyon entènèt ou.",
