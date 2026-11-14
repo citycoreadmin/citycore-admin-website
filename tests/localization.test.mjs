@@ -271,7 +271,9 @@ test("locale files cover their required messages and all articles without empty 
     const expectedKeys = [
       ...baseKeys,
       ...mobileMenuKeys.filter(key => Object.hasOwn(locale.messages, key) || targetMobileDrafts.includes(code)),
-      ...targetAdditionalPublicKeys.filter(key => targetMobileDrafts.includes(code))
+      ...targetAdditionalPublicKeys.filter(key =>
+        !baseKeys.includes(key) && (Object.hasOwn(locale.messages, key) || targetMobileDrafts.includes(code))
+      )
     ].sort();
     assert.deepEqual(Object.keys(locale.messages).sort(), expectedKeys, code);
     for (const [key, value] of Object.entries(locale.messages)) {
