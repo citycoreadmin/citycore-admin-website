@@ -24,6 +24,23 @@ Each code below is a separate locale requiring the following before approval:
 **Priority 1 — Haitian Creole:** `ht`  
 **Priority 2 — French:** `fr`
 
+## First ten language status (updated 2026-11-14)
+
+| Language | Technical draft | Activation / approval status |
+| --- | --- | --- |
+| English (`en`) | Existing source locale remains complete and enabled. | No translation activation is needed. Operator confirmation of the English Privacy Policy's factual accuracy remains unrecorded. |
+| Haitian Creole (`ht`) | Public messages, articles, accessibility labels, and mobile navigation/App Store labels are present. | Disabled; fluent-speaker review of all public copy and operator approval of the Privacy Policy are outstanding. |
+| French (`fr`) | Public messages, articles, accessibility labels, and mobile navigation/App Store labels are present. | Disabled; fluent-speaker review of all public copy and operator approval of the Privacy Policy are outstanding. |
+| Spanish (`es`) | Public messages, articles, accessibility labels, and mobile navigation/App Store labels are present. | Disabled; fluent-speaker review of all public copy and operator approval of the Privacy Policy are outstanding. |
+| Portuguese (`pt`) | Public messages, articles, accessibility labels, and mobile navigation/App Store labels are present. | Disabled; fluent-speaker review of all public copy and operator approval of the Privacy Policy are outstanding. |
+| German (`de`) | Public messages, articles, accessibility labels, and mobile navigation/App Store labels are present. | Disabled; fluent-speaker review of all public copy and operator approval of the Privacy Policy are outstanding. |
+| Italian (`it`) | Public messages, articles, accessibility labels, and mobile navigation/App Store labels are present. | Disabled; fluent-speaker review of all public copy and operator approval of the Privacy Policy are outstanding. |
+| Arabic (`ar`) | Public messages, articles, accessibility labels, and mobile navigation/App Store labels are present; RTL layout has a mobile regression check. | Disabled; fluent-speaker review of all public copy and operator approval of the Privacy Policy are outstanding. |
+| Simplified Chinese (`zh-Hans`) | Public messages, articles, accessibility labels, and mobile navigation/App Store labels are present. | Disabled; fluent-speaker review of all public copy and operator approval of the Privacy Policy are outstanding. |
+| Japanese (`ja`) | Public messages, articles, accessibility labels, and mobile navigation/App Store labels are present. | Disabled; fluent-speaker review of all public copy and operator approval of the Privacy Policy are outstanding. |
+
+The nine translated modules remain unapproved drafts, not activation-ready locales. Before enabling any of them, a named fluent speaker must review and correct the entire public module, the operator must approve the corresponding Privacy Policy against actual data practices and App Store disclosures, and the corrected modules must pass the technical checks below. No new locale was enabled in this pass. English remains enabled as the source locale; its policy still needs operator factual confirmation before its accuracy can be represented as approved.
+
 **Remaining 103 locales, in registry order:** `es`, `pt`, `de`, `it`, `ar`, `zh-Hans`, `zh-Hant`, `ja`, `ko`, `ru`, `hi`, `bn`, `ur`, `tr`, `nl`, `pl`, `uk`, `ro`, `el`, `sv`, `nb`, `da`, `fi`, `is`, `cs`, `sk`, `hu`, `bg`, `sr`, `hr`, `bs`, `sl`, `sq`, `mk`, `lt`, `lv`, `et`, `ga`, `cy`, `gd`, `mt`, `eu`, `ca`, `gl`, `af`, `sw`, `am`, `so`, `yo`, `ig`, `ha`, `zu`, `xh`, `mg`, `rw`, `sn`, `st`, `fa`, `he`, `ps`, `kmr`, `hy`, `ka`, `az`, `kk`, `uz`, `mn`, `ne`, `si`, `ta`, `te`, `kn`, `ml`, `mr`, `gu`, `pa`, `or`, `th`, `vi`, `id`, `ms`, `fil`, `my`, `km`, `lo`, `mi`, `en-US`, `en-GB`, `es-419`, `pt-BR`, `be`, `ti`, `rn`, `wo`, `tg`, `ky`, `sm`, `to`, `fj`, `qu`, `ay`, `gn`, `nah`.
 
 ## Triage findings
@@ -59,6 +76,8 @@ Each code below is a separate locale requiring the following before approval:
 - French terminology follow-up found public assistance wording consistent (`Assistance`, `messagerie d'assistance`, `messagerie d'assistance par ticket`). The 15 English control labels in article instructions remain exact and are quoted; no French text change was needed for this check.
 - `ja`: replaced `messages.footer` English text with `© 2026 CityCore Admin. 無断複製・転載を禁じます。` as an unapproved draft and added a regression assertion.
 - Retained all keys, article IDs/step counts, and placeholder names, including `{mb}`. No locale status or enabled-language list was changed.
+- Added translated mobile menu, open-menu accessibility, and App Store download labels to the nine non-English target drafts; the localization test now requires these keys for those drafts.
+- Added Arabic to the mobile RTL policy-layout regression cases. No mobile navigation markup, styles, App Store destination, locale definitions, or asset rules were changed.
 - No locale status or enabled-language list was changed. The edits are still AI-assisted drafts and are not approvals.
 
 ## Unresolved questions for reviewers
@@ -72,10 +91,10 @@ Each code below is a separate locale requiring the following before approval:
 
 ## Technical verification
 
-- `npm test`: 11 tests passed after these corrections. This checks registry coverage, required public message keys, article structure, placeholder parity, disabled-locale gating, the Japanese footer regression, privacy/navigation markup, RTL direction rules, and storage behavior.
-- `npm run test:mobile`: all 12 WebKit viewport/storage combinations passed at 320, 375, 390, and 430 px.
-- The mobile suite checks mobile overflow and RTL policy layout and renders RTL policy drafts from Urdu (`ur`), Hebrew (`he`), and Pashto (`ps`) at each viewport. These locales remain disabled in the product.
-- A Workers preview returned HTTP 200 for all 106 locale module assets and `/privacy`; the excluded test asset returned 404. The existing `.assetsignore` locale allow rule is present.
+- `npm test`: 11 tests passed after the mobile-label assertions were added. This checks the 106-locale registry, required public message keys, article structure, placeholder parity, disabled-locale gating, the Japanese footer regression, privacy/navigation markup, RTL direction rules, and storage behavior.
+- `npm run test:mobile`: 18 WebKit cases passed against a local Workers preview. This includes the mobile navigation and App Store destinations, storage scenarios, and mobile widths 320, 375, 390, and 430 px.
+- The mobile suite checks mobile overflow and RTL policy layout and now renders the Arabic (`ar`) policy draft, in addition to Urdu (`ur`), Hebrew (`he`), and Pashto (`ps`), at each viewport. These locales remain disabled in the product.
+- The preview returned HTTP 200 for `/` and `/privacy`; the mobile suite reported no failed assets or page errors. A prior full Workers asset probe returned HTTP 200 for all 106 locale modules and 404 for the excluded test asset; `.assetsignore` was not changed in this pass.
 
 These are technical and AI-assisted triage results only. They are not a substitute for fluent-speaker copyediting or operator/privacy approval.
 

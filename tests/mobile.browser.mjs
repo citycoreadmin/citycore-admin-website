@@ -201,7 +201,7 @@ test("public mobile controls work with normal, denied, and quota-limited storage
             });
             assert.deepEqual(rtlPolicy, { overflow: false, alignment: "start" });
             await page.evaluate(() => { document.documentElement.dir = "ltr"; });
-            for (const code of ["ur", "he", "ps"]) {
+            for (const code of ["ar", "ur", "he", "ps"]) {
               const draftLayout = await page.evaluate(async localeCode => {
                 const { default: draft } = await import(`/js/locales/${localeCode}.js`);
                 const nodes = [...document.querySelectorAll(".privacy-policy [data-i18n]")];

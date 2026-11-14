@@ -156,6 +156,7 @@ const publicMessageKeys = [
   "contact_status_body", "footer", "privacy"
 ].sort();
 const mobileMenuKeys = ["nav_open_menu", "nav_menu", "nav_download_app_store"];
+const targetMobileDrafts = ["ht", "fr", "es", "pt", "de", "it", "ar", "zh-Hans", "ja"];
 const requested = "en fr ht es pt de it ar zh-Hans zh-Hant ja ko ru hi bn ur tr nl pl uk ro el sv nb da fi is cs sk hu bg sr hr bs sl sq mk lt lv et ga cy gd mt eu ca gl af sw am so yo ig ha zu xh mg rw sn st fa he ps kmr hy ka az kk uz mn ne si ta te kn ml mr gu pa or th vi id ms fil my km lo mi".split(" ");
 const ios = "en-US en-GB da de es es-419 fr ht hr it lt hu nl nb pl pt-BR ro fi sv tr cs el bg ru uk hi th zh-Hans zh-Hant ja ko vi ca gl eu sl sr mk be lv is ga gd cy mt sq am ti so sw yo ig zu xh sn rw rn wo ar fa ps ur bn pa gu mr ta te kn ml si ne my km lo mn tg kk uz ky mi sm to fj qu ay gn nah".split(" ");
 
@@ -266,11 +267,17 @@ test("locale files cover their required messages and all articles without empty 
     const baseKeys = ["en", "fr", "ht", "en-US", "en-GB"].includes(code)
       ? Object.keys(english.messages).filter(key => !mobileMenuKeys.includes(key))
       : publicMessageKeys;
-    const expectedKeys = [...baseKeys, ...mobileMenuKeys.filter(key => Object.hasOwn(locale.messages, key))].sort();
+    const expectedKeys = [
+      ...baseKeys,
+      ...mobileMenuKeys.filter(key => Object.hasOwn(locale.messages, key) || targetMobileDrafts.includes(code))
+    ].sort();
     assert.deepEqual(Object.keys(locale.messages).sort(), expectedKeys, code);
     for (const [key, value] of Object.entries(locale.messages)) {
       assert.equal(typeof value, "string", `${code}:${key}`);
       if (key !== "policy_app_before") assert.ok(value.trim(), `${code}:${key}`);
+    }
+    if (targetMobileDrafts.includes(code)) {
+      for (const key of mobileMenuKeys) assert.notEqual(locale.messages[key], english.messages[key], `${code}:${key}`);
     }
     assert.deepEqual(Object.keys(locale.articles).sort(), ARTICLES.map(article => article.id).sort(), code);
     for (const article of ARTICLES) {
