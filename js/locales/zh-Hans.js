@@ -2,6 +2,9 @@ export default {
   messages: {
     skip_content: "跳转到正文",
     close: "关闭",
+    nav_open_menu: "打开导航菜单",
+    nav_menu: "导航菜单",
+    nav_download_app_store: "在 App Store 下载",
     page_home_title: "CityCore Admin | 帮助中心",
     page_privacy_title: "隐私政策 - CityCore Admin",
     language_available: "可用语言",

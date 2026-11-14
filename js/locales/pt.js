@@ -2,6 +2,9 @@ export default {
   messages: {
     skip_content: "Saltar para o conteúdo",
     close: "Fechar",
+    nav_open_menu: "Abrir o menu de navegação",
+    nav_menu: "Menu de navegação",
+    nav_download_app_store: "Descarregar na App Store",
     page_home_title: "CityCore Admin | Centro de Ajuda",
     page_privacy_title: "Política de Privacidade - CityCore Admin",
     language_available: "Idiomas disponíveis",

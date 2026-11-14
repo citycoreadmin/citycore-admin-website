@@ -2,6 +2,9 @@ export default {
   messages: {
     skip_content: "本文へ移動",
     close: "閉じる",
+    nav_open_menu: "ナビゲーションメニューを開く",
+    nav_menu: "ナビゲーションメニュー",
+    nav_download_app_store: "App Storeからダウンロード",
     page_home_title: "CityCore Admin | ヘルプセンター",
     page_privacy_title: "プライバシーポリシー - CityCore Admin",
     language_available: "利用可能な言語",

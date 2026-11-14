@@ -2,6 +2,9 @@ export default {
   "messages": {
     "skip_content": "Ale dirèkteman nan kontni prensipal la",
     "close": "Fèmen",
+    "nav_open_menu": "Louvri meni navigasyon an",
+    "nav_menu": "Meni navigasyon",
+    "nav_download_app_store": "Telechaje sou App Store la",
     "page_home_title": "CityCore Admin | Sant Èd",
     "page_privacy_title": "Politik konfidansyalite - CityCore Admin",
     "language_available": "Lang ki disponib yo",
