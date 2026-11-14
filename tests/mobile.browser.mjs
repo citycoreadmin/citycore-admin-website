@@ -4,6 +4,94 @@ import { webkit } from "playwright";
 
 const base = process.env.PREVIEW_URL || "http://127.0.0.1:8124";
 
+test("mobile navigation is accessible and keeps the requested destinations", async t => {
+  const browser = await webkit.launch();
+  try {
+    for (const width of [320, 375, 768]) {
+      await t.test(`${width}px`, async () => {
+        const context = await browser.newContext({ viewport: { width, height: 667 }, isMobile: true, hasTouch: true });
+        try {
+          const page = await context.newPage();
+          for (const path of ["/", "/privacy"]) {
+            assert.equal((await page.goto(`${base}${path}`)).status(), 200);
+            const trigger = page.locator(".mobile-menu-trigger");
+            const menu = page.locator("#mobileMenu");
+            await trigger.click();
+            assert.equal(await trigger.getAttribute("aria-expanded"), "true");
+            assert.equal(await menu.evaluate(node => node.open), true);
+            assert.deepEqual(await menu.locator("a").evaluateAll(nodes => nodes.map(node => node.getAttribute("href"))), [
+              "/", "/privacy", "https://apps.apple.com/us/app/citycore-admin/id6816577256"
+            ]);
+            assert.equal(await menu.locator("img").getAttribute("src"), "citycore-logo.png");
+            assert.equal(await page.evaluate(() => document.activeElement === document.querySelector(".mobile-menu-close")), true);
+            assert.equal(await page.evaluate(() => document.documentElement.scrollWidth), width);
+            await menu.evaluate(node => Promise.all(node.getAnimations().map(animation => animation.finished)));
+            const bounds = await menu.boundingBox();
+            assert.ok(bounds.x >= 0 && bounds.x + bounds.width <= width);
+            assert.ok(bounds.y >= 0 && bounds.y + bounds.height <= 667);
+            for (let i = 0; i < 6; i++) {
+              await page.keyboard.press("Tab");
+              assert.equal(await page.evaluate(() => document.activeElement.closest("#mobileMenu") !== null), true);
+            }
+            for (let i = 0; i < 6; i++) {
+              await page.keyboard.press("Shift+Tab");
+              assert.equal(await page.evaluate(() => document.activeElement.closest("#mobileMenu") !== null), true);
+            }
+            await page.keyboard.press("Escape");
+            await page.waitForFunction(() => !document.querySelector("#mobileMenu").open);
+            await page.waitForFunction(() => document.querySelector(".mobile-menu-trigger").getAttribute("aria-expanded") === "false");
+            assert.equal(await trigger.getAttribute("aria-expanded"), "false");
+            assert.equal(await page.evaluate(() => document.activeElement === document.querySelector(".mobile-menu-trigger")), true);
+            await trigger.click();
+            await menu.locator(".mobile-menu-close").click();
+            await page.waitForFunction(() => !document.querySelector("#mobileMenu").open);
+            if (width > 440) {
+              await trigger.click();
+              await menu.evaluate(node => Promise.all(node.getAnimations().map(animation => animation.finished)));
+              await page.mouse.click(10, 300);
+              await page.waitForFunction(() => !document.querySelector("#mobileMenu").open);
+            }
+          }
+          await page.locator(".mobile-menu-trigger").click();
+          await page.locator('#mobileMenu a[href="/"]').click();
+          await page.waitForURL(`${base}/`);
+          await page.locator(".mobile-menu-trigger").click();
+          await page.locator('#mobileMenu a[href="/privacy"]').click();
+          await page.waitForURL(`${base}/privacy`);
+          await page.route("https://apps.apple.com/**", route => route.fulfill({ status: 200, body: "App Store" }));
+          await page.locator(".mobile-menu-trigger").click();
+          await page.locator(".mobile-menu-download").click();
+          await page.waitForURL("https://apps.apple.com/us/app/citycore-admin/id6816577256");
+        } finally {
+          await context.close();
+        }
+      });
+    }
+    await t.test("desktop and reduced motion", async () => {
+      const context = await browser.newContext({ viewport: { width: 1200, height: 800 }, reducedMotion: "reduce" });
+      try {
+        const page = await context.newPage();
+        await page.goto(base);
+        assert.equal(await page.locator(".mobile-menu-trigger").isVisible(), false);
+        assert.equal(await page.locator(".nav-links").isVisible(), true);
+        await page.setViewportSize({ width: 768, height: 800 });
+        await page.locator(".mobile-menu-trigger").click();
+        await page.keyboard.press("Escape");
+        assert.equal(await page.locator("#mobileMenu").evaluate(node => node.open), false);
+        await page.locator(".mobile-menu-trigger").click();
+        await page.setViewportSize({ width: 1200, height: 800 });
+        await page.waitForFunction(() => !document.querySelector("#mobileMenu").open);
+        await page.waitForFunction(() => document.querySelector(".mobile-menu-trigger").getAttribute("aria-expanded") === "false");
+        assert.equal(await page.locator(".mobile-menu-trigger").getAttribute("aria-expanded"), "false");
+      } finally {
+        await context.close();
+      }
+    });
+  } finally {
+    await browser.close();
+  }
+});
+
 test("public mobile controls work with normal, denied, and quota-limited storage", async t => {
   const browser = await webkit.launch();
   try {
@@ -99,13 +187,8 @@ test("public mobile controls work with normal, denied, and quota-limited storage
             await page.locator(".cat-card").first().tap();
             assert.equal(await page.locator(".art-card").count(), 1);
             await page.locator("#listBack").tap();
-            for (const hash of ["#home", "#help", "#contact"]) {
-              const link = page.locator(`.nav-links a[href="${hash}"]`);
-              assert.equal(await link.isVisible(), true);
-              await link.tap();
-              assert.equal(new URL(page.url()).hash, hash);
-            }
-            await page.locator('a[href="/privacy"]').tap();
+            await page.locator(".mobile-menu-trigger").tap();
+            await page.locator('#mobileMenu a[href="/privacy"]').tap();
             await page.waitForURL(/\/privacy$/);
             assert.match(page.url(), /\/privacy$/);
             assert.equal(await page.locator(".privacy-policy h1").textContent(), "Privacy Policy");

@@ -26,6 +26,69 @@ export function initTheme() {
   }));
 }
 
+export function initMobileNav() {
+  const trigger = document.querySelector(".mobile-menu-trigger");
+  const dialog = document.querySelector("#mobileMenu");
+  if (!trigger || !dialog) return;
+
+  const mobile = matchMedia("(max-width: 860px)");
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  const close = () => {
+    if (!dialog.open || dialog.classList.contains("is-closing")) return;
+    if (reducedMotion.matches) {
+      dialog.close();
+    } else {
+      dialog.classList.add("is-closing");
+    }
+  };
+
+  trigger.addEventListener("click", () => {
+    dialog.showModal();
+    document.body.classList.add("mobile-menu-open");
+    trigger.setAttribute("aria-expanded", "true");
+  });
+  dialog.querySelector(".mobile-menu-close").addEventListener("click", close);
+  dialog.addEventListener("cancel", event => {
+    event.preventDefault();
+    close();
+  });
+  dialog.addEventListener("keydown", event => {
+    if (event.key !== "Tab") return;
+    const focusable = [...dialog.querySelectorAll("button, a[href]")];
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+  dialog.addEventListener("click", event => {
+    if (event.target !== dialog) return;
+    const bounds = dialog.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right ||
+        event.clientY < bounds.top || event.clientY > bounds.bottom) close();
+  });
+  dialog.querySelectorAll("a").forEach(link => link.addEventListener("click", () => dialog.close()));
+  dialog.addEventListener("animationend", event => {
+    if (event.target === dialog && dialog.classList.contains("is-closing")) dialog.close();
+  });
+  dialog.addEventListener("close", () => {
+    dialog.classList.remove("is-closing");
+    document.body.classList.remove("mobile-menu-open");
+    trigger.setAttribute("aria-expanded", "false");
+    if (mobile.matches) trigger.focus();
+  });
+  mobile.addEventListener("change", () => {
+    if (!mobile.matches && dialog.open) dialog.close();
+  });
+  reducedMotion.addEventListener("change", () => {
+    if (reducedMotion.matches && dialog.classList.contains("is-closing")) dialog.close();
+  });
+}
+
 export function initLangSelects() {
   const triggers = [...document.querySelectorAll("[data-lang-select]")];
   if (!triggers.length) return;
