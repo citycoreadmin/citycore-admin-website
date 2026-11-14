@@ -342,6 +342,22 @@ test("HTML localization keys exist and both pages retain language and privacy na
   assert.match(policy, /href="mailto:citycoreadmin@gmail\.com"/);
 });
 
+test("the confirmed contact email is consistent across the first-ten support and privacy copy", async () => {
+  const homepage = await readFile("index.html", "utf8");
+  const policy = await readFile("privacy.html", "utf8");
+  assert.match(homepage, /id="contactStatusBody"/);
+  assert.match(policy, /href="mailto:citycoreadmin@gmail\.com">citycoreadmin@gmail\.com<\/a>/);
+  const supportTerms = {
+    en: "customer support", ht: "sipò kliyan", fr: "assistance", es: "asistencia",
+    pt: "apoio ao cliente", de: "Kundensupport", it: "assistenza clienti",
+    ar: "دعم العملاء", "zh-Hans": "客户支持", ja: "カスタマーサポート"
+  };
+  for (const [code, supportTerm] of Object.entries(supportTerms)) {
+    assert.match(locales[code].messages.contact_status_body, /citycoreadmin@gmail\.com/, `${code}: support contact`);
+    assert.ok(locales[code].messages.policy_contact_before.includes(supportTerm), `${code}: contact purposes`);
+  }
+});
+
 test("public RTL styles use reading direction without changing support or staff layout rules", async () => {
   const css = await readFile("css/styles.css", "utf8");
   assert.match(css, /\[dir="rtl"\] \.skip:focus/);

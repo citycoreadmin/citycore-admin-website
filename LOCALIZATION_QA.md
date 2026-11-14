@@ -7,7 +7,7 @@
 ## Summary
 
 - The registry contains 106 locales and all 106 have a module: English is complete/enabled, while the other 105 are review-needed/disabled.
-- All 105 review-needed modules are AI-generated drafts; this includes 103 non-English locales and the English (US) and English (UK) regional variants. No fluent-speaker review or operator approval is recorded.
+- All 105 review-needed modules are AI-generated drafts; this includes 103 non-English locales and the English (US) and English (UK) regional variants. No fluent-speaker review or full Privacy Policy approval is recorded.
 - Automated checks found no missing locale modules, required public message values, article IDs/steps, or placeholder mismatches.
 - The Japanese (`ja`) footer was an exact English carryover. It is now a Japanese draft consistent with the Japanese copyright wording elsewhere in the module; native copyediting and approval are still required.
 - Haitian Creole (`ht`) and French (`fr`) are the first human-review priorities. Potential wording and punctuation concerns are listed below; they are flags for a fluent reviewer, not definitive corrections.
@@ -33,6 +33,12 @@ The public website strings, navigation, search and accessibility labels, all 10 
 No human review or operator Privacy Policy approval is recorded for the nine non-English locales. Technical checks, including the Arabic RTL mobile layout check, do not satisfy either approval. Record both approvals and apply any reviewer corrections before changing a locale to Complete or enabling it.
 
 The [first-10 review package](LOCALIZATION_REVIEW_PACKAGE.md) reproduces the complete public UI strings, all ten Help Center articles, and the fully assembled Privacy Policy for each of the nine non-English targets. It also lists language-specific review flags and factual claims that the operator must confirm. It is an AI-assisted review aid, not an approval record.
+
+## Limited operator confirmation
+
+On 2026-11-14, WOOBENS STUDIO confirmed: “WOOBENS STUDIO confirms that citycoreadmin@gmail.com is the official contact email for CityCore Admin.” The operator confirmed this address for customer support, Privacy Policy inquiries, account deletion requests, bug reports, and feedback. The first-10 public contact copy now presents this address, and the Privacy Policy continues to link the same address.
+
+This confirmation covers only the official contact address and its approved uses. It does not approve the full Privacy Policy, confirm email monitoring or response practices, verify the deletion process, or resolve any other privacy or translation review item. All nine non-English locales remain Review needed and disabled.
 
 ## Per-locale review queue
 
@@ -80,6 +86,7 @@ Each code below is a separate locale requiring the following before approval:
 - French terminology follow-up found public assistance wording consistent (`Assistance`, `messagerie d'assistance`, `messagerie d'assistance par ticket`). The 15 English control labels in article instructions remain exact and are quoted; no French text change was needed for this check.
 - `de`: changed the technical term for audit logs in the `panel-settings` article to “Audit-Protokolle”.
 - `it`: replaced awkward self-service phrasing in the homepage contact notice and `contact` article with natural Italian wording.
+- First-10 public contact copy and Privacy Policy contact text now identify `citycoreadmin@gmail.com` for customer support, privacy inquiries, account deletion requests, bug reports, and feedback, based on the limited operator confirmation recorded above. The address itself is confirmed; translated phrasing still requires fluent-speaker review.
 - `ja`: replaced `messages.footer` English text with `© 2026 CityCore Admin. 無断複製・転載を禁じます。` as an unapproved draft and added a regression assertion.
 - Retained all keys, article IDs/step counts, and placeholder names, including `{mb}`. No locale status or enabled-language list was changed.
 - No locale status or enabled-language list was changed. The edits are still AI-assisted drafts and are not approvals.

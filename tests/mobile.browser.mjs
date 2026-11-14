@@ -40,6 +40,7 @@ test("public mobile controls work with normal, denied, and quota-limited storage
             assert.equal((await page.goto(base)).status(), 200);
             await page.locator(".cat-card").first().waitFor();
             assert.equal(await page.locator(".cat-card").count(), 8);
+            assert.equal(await page.locator('#contactStatusBody a[href="mailto:citycoreadmin@gmail.com"]').count(), 1);
             assert.equal(await page.locator("#platformSel option").count(), 5);
             assert.equal(await page.locator("html").getAttribute("lang"), "en");
             assert.equal(await page.evaluate(() => document.documentElement.scrollWidth), width);

@@ -2,7 +2,7 @@
 
 **Purpose:** human review of the nine non-English priority locale drafts. English (`en`) is the complete source language and is not included below.
 
-**Approval state:** all nine drafts remain Review needed and disabled. This package is AI-assisted material for review, not evidence of fluent-speaker approval or operator approval. Do not mark any locale Complete or enable it until both approvals and corrections are explicitly recorded.
+**Approval state:** all nine drafts remain Review needed and disabled. A narrow operator confirmation of the contact email is recorded below; no fluent-speaker review or full Privacy Policy approval is recorded. Do not mark any locale Complete or enable it until both approvals and corrections are explicitly recorded.
 
 ## Reviewer instructions
 
@@ -10,6 +10,7 @@
 - Review the complete policy text as a translation of the English source, then record operator fact-checking separately. Do not resolve factual uncertainty by making the localized text sound more certain.
 - Record reviewer name, fluency/language variant, date, findings/corrections, and operator policy decision in the PR. Keep the locale disabled until corrections pass the technical checks.
 - Arabic additionally needs a fluent copy review in RTL context. Automated mobile RTL checks are not linguistic approval.
+- The public contact section identifies `citycoreadmin@gmail.com` for customer support, privacy questions, account deletion requests, bug reports, and feedback. Confirm the translated wording while preserving that ticket messaging is not available on the website.
 
 ## Operator confirmation required for the Privacy Policy
 
@@ -20,8 +21,12 @@ Confirm these source facts before approving any localized policy; a translation 
 3. **Hosting and request data:** confirm Cloudflare/hosting logs and technical request information are described accurately. The text explicitly says the operator has not confirmed the provider handling; verify this is still true and whether that disclosure is sufficient.
 4. **App Store disclosure:** verify the linked App Store listing is the current CityCore Admin listing and that its named categories (name, email, photos/videos) and purposes/linkage match the live App Privacy disclosures.
 5. **Unconfirmed app practices:** confirm that collection/use, sharing, security, retention, deletion, and child-related practices have not been fully confirmed. Do not infer that a practice does not occur merely because it is unconfirmed.
-6. **Contact and deletion:** verify the contact email is monitored, the described deletion-request path is available, a request does not automatically delete data, and no processing timeframe is promised.
+6. **Contact and deletion:** the official address and its approved uses are confirmed below. Still verify the email is monitored, the described deletion-request path is available, a request does not automatically delete data, and no processing timeframe is promised.
 7. **Date and legal scope:** verify the “last updated” date and that no unsupported jurisdictional rights, guarantees, or legal conclusions have been added by translation.
+
+## Limited operator confirmation
+
+On 2026-11-14, WOOBENS STUDIO confirmed: “WOOBENS STUDIO confirms that citycoreadmin@gmail.com is the official contact email for CityCore Admin.” This address is confirmed for customer support, Privacy Policy inquiries, account deletion requests, bug reports, and feedback. This confirms only the contact address and its approved uses. It is not approval of the full Privacy Policy and does not verify monitoring, response times, deletion handling, or any other privacy practice.
 
 ## Corrections and language-specific review flags
 
@@ -164,7 +169,7 @@ Source: [js/locales/ht.js](../js/locales/ht.js)
 > Mesaj sipò yo poko disponib sou sit entènèt sa a.
 
 **contact_status_body**
-> Sant Èd la bay konsèy pou ede w jwenn repons poukont ou. Sèvis mesaj sipò a ap prepare epi li ap disponib apre tès sekirite ak fonksyònman yo fin fèt. Pa voye enfòmasyon sou kont ou oswa peman atravè sit entènèt sa a.
+> Sant Èd la bay konsèy pou ede w jwenn repons poukont ou. Pou sipò kliyan, kesyon sou konfidansyalite, demann pou efase kont, rapò ensèk oswa kòmantè, voye yon imèl nan citycoreadmin@gmail.com. Mesaj sipò pa disponib sou sit entènèt sa a. Pa voye enfòmasyon sou kont oswa peman atravè sit entènèt sa a.
 
 **footer**
 > © 2026 CityCore Admin. Tout dwa rezève.
@@ -192,7 +197,7 @@ Source: [js/locales/ht.js](../js/locales/ht.js)
 
 **Kontakte nou**
 
-> Pou kesyon sou konfidansyalite oswa pou mande pou yo efase kont ou oswa done ou, kontakte WOOBENS STUDIO nan [citycoreadmin@gmail.com](mailto:citycoreadmin@gmail.com). Yon demann pa vle di done yo ap efase otomatikman, epi pa gen okenn delè tretman ki pwomèt.
+> Pou sipò kliyan, kesyon sou konfidansyalite, demann pou efase kont ou oswa done ou, rapò ensèk oswa kòmantè, kontakte WOOBENS STUDIO nan [citycoreadmin@gmail.com](mailto:citycoreadmin@gmail.com) Yon demann efasman pa efase done yo otomatikman, epi pa gen okenn delè tretman ki pwomèt.
 
 > © 2026 Woobens Studio. Tout dwa rezève.
 
@@ -396,7 +401,7 @@ Source: [js/locales/fr.js](../js/locales/fr.js)
 > La messagerie d'assistance n'est pas encore disponible sur ce site.
 
 **contact_status_body**
-> Le centre d'aide propose des conseils en libre-service. La messagerie d'assistance par ticket sera activée après la réussite des tests de sécurité et de fonctionnement. N'envoyez pas d'informations de compte ou de paiement sur ce site.
+> Le centre d'aide propose des conseils en libre-service. Pour l'assistance, les questions de confidentialité, les demandes de suppression de compte, les signalements de bogues ou les commentaires, écrivez à citycoreadmin@gmail.com. La messagerie par ticket n'est pas disponible sur ce site. N'envoyez pas d'informations de compte ou de paiement sur ce site.
 
 **footer**
 > © 2026 CityCore Admin. Tous droits réservés.
@@ -424,7 +429,7 @@ Source: [js/locales/fr.js](../js/locales/fr.js)
 
 **Nous contacter**
 
-> Pour toute question sur la confidentialité ou pour demander la suppression de votre compte ou de vos données, contactez WOOBENS STUDIO à [citycoreadmin@gmail.com](mailto:citycoreadmin@gmail.com). Une demande n'entraîne pas de suppression automatique et aucun délai de traitement n'est garanti.
+> Pour l'assistance, les questions de confidentialité, les demandes de suppression de compte ou de données, les signalements de bogues ou les commentaires, contactez WOOBENS STUDIO à [citycoreadmin@gmail.com](mailto:citycoreadmin@gmail.com) Une demande de suppression n'entraîne pas la suppression automatique des données et aucun délai de traitement n'est garanti.
 
 > © 2026 Woobens Studio. Tous droits réservés.
 
@@ -628,7 +633,7 @@ Source: [js/locales/es.js](../js/locales/es.js)
 > La mensajería de soporte aún no está disponible en este sitio web.
 
 **contact_status_body**
-> El Centro de ayuda ofrece orientación de autoservicio. La mensajería mediante tickets se habilitará cuando finalicen las pruebas de seguridad y funcionamiento. No envíes información de tu cuenta ni de pago a través de este sitio web.
+> El Centro de ayuda ofrece orientación de autoservicio. Para obtener asistencia, hacer consultas sobre privacidad, solicitar la eliminación de tu cuenta, informar de errores o enviar comentarios, escribe a citycoreadmin@gmail.com. La mensajería mediante tickets no está disponible en este sitio web. No envíes información de tu cuenta ni de pago a través de este sitio web.
 
 **footer**
 > © 2026 CityCore Admin. Todos los derechos reservados.
@@ -656,7 +661,7 @@ Source: [js/locales/es.js](../js/locales/es.js)
 
 **Contacto**
 
-> Si tienes preguntas sobre privacidad o quieres solicitar la eliminación de tu cuenta o tus datos, ponte en contacto con WOOBENS STUDIO en [citycoreadmin@gmail.com](mailto:citycoreadmin@gmail.com). La solicitud no elimina los datos automáticamente y no se garantiza ningún plazo de tramitación.
+> Para solicitar asistencia, hacer consultas sobre privacidad, pedir la eliminación de tu cuenta o tus datos, informar de errores o enviar comentarios, ponte en contacto con WOOBENS STUDIO en [citycoreadmin@gmail.com](mailto:citycoreadmin@gmail.com) Una solicitud de eliminación no borra los datos automáticamente y no se garantiza ningún plazo de tramitación.
 
 > © 2026 Woobens Studio. Todos los derechos reservados.
 
@@ -860,7 +865,7 @@ Source: [js/locales/pt.js](../js/locales/pt.js)
 > As mensagens de suporte ainda não estão disponíveis neste site.
 
 **contact_status_body**
-> O Centro de Ajuda disponibiliza orientações de autoajuda. As mensagens por ticket serão ativadas após a conclusão dos testes de segurança e funcionamento. Não envie informações da conta nem de pagamento através deste site.
+> O Centro de Ajuda disponibiliza orientações de autoajuda. Para obter apoio ao cliente, colocar questões sobre privacidade, pedir a eliminação da conta, comunicar erros ou enviar comentários, escreva para citycoreadmin@gmail.com. As mensagens por ticket não estão disponíveis neste site. Não envie informações da conta nem de pagamento através deste site.
 
 **footer**
 > © 2026 CityCore Admin. Todos os direitos reservados.
@@ -888,7 +893,7 @@ Source: [js/locales/pt.js](../js/locales/pt.js)
 
 **Contacte-nos**
 
-> Para questões de privacidade ou para solicitar a eliminação da sua conta ou dos seus dados, contacte a WOOBENS STUDIO através de [citycoreadmin@gmail.com](mailto:citycoreadmin@gmail.com). Um pedido não resulta numa eliminação automática e não é prometido qualquer prazo de processamento.
+> Para obter apoio ao cliente, colocar questões sobre privacidade, solicitar a eliminação da sua conta ou dos seus dados, comunicar erros ou enviar comentários, contacte a WOOBENS STUDIO através de [citycoreadmin@gmail.com](mailto:citycoreadmin@gmail.com) Um pedido de eliminação não elimina os dados automaticamente e não é prometido qualquer prazo de processamento.
 
 > © 2026 Woobens Studio. Todos os direitos reservados.
 
@@ -1092,7 +1097,7 @@ Source: [js/locales/de.js](../js/locales/de.js)
 > Der Support-Nachrichtendienst ist auf dieser Website noch nicht verfügbar.
 
 **contact_status_body**
-> Das Hilfe-Center bietet Anleitungen zur Selbsthilfe. Der Ticket-Nachrichtendienst wird aktiviert, sobald die Sicherheits- und Funktionstests abgeschlossen sind. Sende über diese Website keine Konto- oder Zahlungsinformationen.
+> Das Hilfe-Center bietet Anleitungen zur Selbsthilfe. Für Kundensupport, Datenschutzfragen, Anfragen zur Kontolöschung, Fehlermeldungen oder Feedback schreibe an citycoreadmin@gmail.com. Ticket-Nachrichten sind auf dieser Website nicht verfügbar. Sende über diese Website keine Konto- oder Zahlungsinformationen.
 
 **footer**
 > © 2026 CityCore Admin. Alle Rechte vorbehalten.
@@ -1120,7 +1125,7 @@ Source: [js/locales/de.js](../js/locales/de.js)
 
 **Kontakt**
 
-> Bei Fragen zum Datenschutz oder wenn du die Löschung deines Kontos oder deiner Daten beantragen möchtest, kontaktiere WOOBENS STUDIO unter [citycoreadmin@gmail.com](mailto:citycoreadmin@gmail.com). Ein Antrag führt nicht automatisch zur Löschung; eine Bearbeitungszeit wird nicht zugesagt.
+> Bei Fragen zum Kundensupport oder Datenschutz sowie für Anträge auf Löschung deines Kontos oder deiner Daten, Fehlermeldungen oder Feedback erreichst du WOOBENS STUDIO unter [citycoreadmin@gmail.com](mailto:citycoreadmin@gmail.com) Ein Löschantrag führt nicht automatisch zur Löschung der Daten; eine Bearbeitungszeit wird nicht zugesagt.
 
 > © 2026 Woobens Studio. Alle Rechte vorbehalten.
 
@@ -1324,7 +1329,7 @@ Source: [js/locales/it.js](../js/locales/it.js)
 > La messaggistica di supporto non è ancora disponibile su questo sito.
 
 **contact_status_body**
-> Il Centro assistenza offre indicazioni per aiutarti a trovare autonomamente una soluzione. La messaggistica tramite ticket sarà attivata al termine dei test di sicurezza e funzionalità. Non inviare informazioni dell'account o di pagamento tramite questo sito.
+> Il Centro assistenza offre indicazioni per aiutarti a trovare autonomamente una soluzione. Per assistenza clienti, domande sulla privacy, richieste di eliminazione dell'account, segnalazioni di bug o commenti, scrivi a citycoreadmin@gmail.com. La messaggistica tramite ticket non è disponibile su questo sito. Non inviare informazioni dell'account o di pagamento tramite questo sito.
 
 **footer**
 > © 2026 CityCore Admin. Tutti i diritti riservati.
@@ -1352,7 +1357,7 @@ Source: [js/locales/it.js](../js/locales/it.js)
 
 **Contatti**
 
-> Per domande sulla privacy o per richiedere l'eliminazione del tuo account o dei tuoi dati, contatta WOOBENS STUDIO all'indirizzo [citycoreadmin@gmail.com](mailto:citycoreadmin@gmail.com). La richiesta non comporta l'eliminazione automatica e non viene garantito alcun tempo di elaborazione.
+> Per assistenza clienti, domande sulla privacy, richieste di eliminazione del tuo account o dei tuoi dati, segnalazioni di bug o commenti, contatta WOOBENS STUDIO all'indirizzo [citycoreadmin@gmail.com](mailto:citycoreadmin@gmail.com) Una richiesta di eliminazione non comporta l'eliminazione automatica dei dati e non viene garantito alcun tempo di elaborazione.
 
 > © 2026 Woobens Studio. Tutti i diritti riservati.
 
@@ -1556,7 +1561,7 @@ Source: [js/locales/ar.js](../js/locales/ar.js)
 > مراسلة الدعم غير متاحة على هذا الموقع بعد.
 
 **contact_status_body**
-> يوفر مركز المساعدة إرشادات للخدمة الذاتية. ستُتاح المراسلة عبر التذاكر بعد اكتمال اختبارات الأمان والوظائف. لا ترسل معلومات حسابك أو الدفع عبر هذا الموقع.
+> يوفر مركز المساعدة إرشادات للخدمة الذاتية. للحصول على دعم العملاء أو للاستفسار عن الخصوصية أو طلب حذف الحساب أو الإبلاغ عن الأخطاء أو إرسال الملاحظات، راسلنا عبر citycoreadmin@gmail.com. المراسلة عبر التذاكر غير متاحة على هذا الموقع. لا ترسل معلومات الحساب أو الدفع عبر هذا الموقع.
 
 **footer**
 > © 2026 CityCore Admin. جميع الحقوق محفوظة.
@@ -1584,7 +1589,7 @@ Source: [js/locales/ar.js](../js/locales/ar.js)
 
 **تواصل معنا**
 
-> للاستفسار عن الخصوصية أو لطلب حذف حسابك أو بياناتك، تواصل مع WOOBENS STUDIO عبر [citycoreadmin@gmail.com](mailto:citycoreadmin@gmail.com). لا يؤدي الطلب إلى حذف تلقائي، ولا نَعِد بمدة محددة للمعالجة.
+> للحصول على دعم العملاء أو للاستفسار عن الخصوصية أو طلب حذف حسابك أو بياناتك أو الإبلاغ عن الأخطاء أو إرسال الملاحظات، تواصل مع WOOBENS STUDIO عبر [citycoreadmin@gmail.com](mailto:citycoreadmin@gmail.com) لا يؤدي طلب الحذف إلى حذف البيانات تلقائيًا، ولا نَعِد بمدة محددة للمعالجة.
 
 > © 2026 Woobens Studio. جميع الحقوق محفوظة.
 
@@ -1788,7 +1793,7 @@ Source: [js/locales/zh-Hans.js](../js/locales/zh-Hans.js)
 > 此网站暂未提供支持消息功能。
 
 **contact_status_body**
-> 帮助中心提供自助指南。待安全和功能测试完成后，工单消息功能才会启用。请勿通过此网站发送账户或付款信息。
+> 帮助中心提供自助指南。如需客户支持、咨询隐私问题、申请删除账户、报告错误或提供反馈，请发送邮件至 citycoreadmin@gmail.com。本网站暂不提供工单消息功能。请勿通过此网站发送账户或付款信息。
 
 **footer**
 > © 2026 CityCore Admin。保留所有权利。
@@ -1816,7 +1821,7 @@ Source: [js/locales/zh-Hans.js](../js/locales/zh-Hans.js)
 
 **联系我们**
 
-> 如有隐私问题，或要申请删除账户或数据，请通过以下地址联系 WOOBENS STUDIO：[citycoreadmin@gmail.com](mailto:citycoreadmin@gmail.com)。提交申请不会自动删除数据，也不承诺处理时限。
+> 如需客户支持、咨询隐私问题、申请删除账户或数据、报告错误或提供反馈，请通过以下地址联系 WOOBENS STUDIO：[citycoreadmin@gmail.com](mailto:citycoreadmin@gmail.com)。删除申请不会自动删除数据，也不承诺处理时限。
 
 > © 2026 Woobens Studio。保留所有权利。
 
@@ -2020,7 +2025,7 @@ Source: [js/locales/ja.js](../js/locales/ja.js)
 > このウェブサイトでは、サポートメッセージ機能はまだ利用できません。
 
 **contact_status_body**
-> ヘルプセンターではセルフサービスの案内を提供しています。チケットでのメッセージ機能は、安全性と機能のテストが完了してから有効になります。このウェブサイトからアカウント情報や支払い情報を送信しないでください。
+> ヘルプセンターではセルフサービスの案内を提供しています。カスタマーサポート、プライバシーに関するお問い合わせ、アカウント削除の依頼、不具合の報告、フィードバックは、citycoreadmin@gmail.com までメールでご連絡ください。このウェブサイトではチケットでのメッセージ機能は利用できません。このウェブサイトからアカウント情報や支払い情報を送信しないでください。
 
 **footer**
 > © 2026 CityCore Admin. 無断複製・転載を禁じます。
@@ -2048,7 +2053,7 @@ Source: [js/locales/ja.js](../js/locales/ja.js)
 
 **お問い合わせ**
 
-> プライバシーに関する質問、またはアカウントやデータの削除依頼については、次の宛先から WOOBENS STUDIO にご連絡ください：[citycoreadmin@gmail.com](mailto:citycoreadmin@gmail.com)。依頼によって自動的に削除されることはなく、処理期間も約束されていません。
+> カスタマーサポート、プライバシーに関するお問い合わせ、アカウントまたはデータの削除依頼、不具合の報告、フィードバックについては、次の宛先から WOOBENS STUDIO にご連絡ください：[citycoreadmin@gmail.com](mailto:citycoreadmin@gmail.com)。削除依頼によってデータが自動的に削除されることはなく、処理期間も約束されていません。
 
 > © 2026 Woobens Studio. 無断複製・転載を禁じます。
 
