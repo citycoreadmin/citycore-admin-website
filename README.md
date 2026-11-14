@@ -37,6 +37,11 @@ The language chooser is a searchable, keyboard-accessible dialog that identifies
 Coming soon locales. It is constrained to the viewport on mobile; unsupported Wales and Scotland subdivision
 flags fall back to a globe while keeping the native language names visible.
 
+On mobile and tablet widths, the navigation drawer links to the homepage, Privacy Policy, and the official
+App Store listing. Language and theme controls remain in the header. Before enabling another locale, translate
+and review its `nav_open_menu`, `nav_menu`, and `nav_download_app_store` strings alongside its existing messages;
+the localization tests require these keys for every enabled locale.
+
 If browser storage is denied or full, public controls continue to work for the current page and log a warning.
 No unavailable translation is enabled by this fallback.
 

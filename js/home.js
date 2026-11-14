@@ -1,10 +1,11 @@
 import { t, articleTranslation, PLATFORMS, applyI18n } from "./i18n.js";
 import { ARTICLES, HELP_CATEGORIES } from "./articles.js";
-import { h, initTheme, initLangSelects } from "./ui.js";
+import { h, initTheme, initLangSelects, initMobileNav } from "./ui.js";
 import { readPreference, writePreference } from "./preferences.js";
 
 initTheme();
 initLangSelects();
+initMobileNav();
 
 const $ = id => document.getElementById(id);
 const state = { q: "", cat: null, platform: readPreference("cc_platform") || "all" };
