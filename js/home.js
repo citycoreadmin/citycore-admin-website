@@ -10,6 +10,22 @@ const $ = id => document.getElementById(id);
 const state = { q: "", cat: null, platform: readPreference("cc_platform") || "all" };
 if (!PLATFORMS.includes(state.platform)) state.platform = "all";
 
+function renderContactStatusBody() {
+  const body = $("contactStatusBody");
+  const message = t("contact_status_body");
+  const email = "citycoreadmin@gmail.com";
+  const emailIndex = message.indexOf(email);
+  if (emailIndex < 0) {
+    body.textContent = message;
+    return;
+  }
+  body.replaceChildren(
+    message.slice(0, emailIndex),
+    h("a", { href: `mailto:${email}` }, email),
+    message.slice(emailIndex + email.length)
+  );
+}
+
 const platformSel = $("platformSel");
 function drawPlatforms() {
   platformSel.replaceChildren(...PLATFORMS.map(p => h("option", { value: p }, t("p_" + p))));
@@ -73,8 +89,10 @@ $("searchInput").addEventListener("input", e => { if (!e.target.value.trim() && 
 $("listBack").addEventListener("click", () => { state.q = ""; state.cat = null; $("searchInput").value = ""; render(); });
 window.addEventListener("cc:lang", () => {
   drawPlatforms(); render(); applyI18n();
+  renderContactStatusBody();
   if (dlg.open && openId) openArticle(ARTICLES.find(a => a.id === openId));
 });
 
 drawPlatforms();
 render();
+renderContactStatusBody();
