@@ -54,7 +54,7 @@ export default {
     cat_privacy: "Privacy e sicurezza",
     cat_contact: "Disponibilità del supporto",
     contact_status_title: "La messaggistica di supporto non è ancora disponibile su questo sito.",
-    contact_status_body: "Il Centro assistenza offre indicazioni per l'autonomia degli utenti. La messaggistica tramite ticket sarà attivata al termine dei test di sicurezza e funzionalità. Non inviare informazioni dell'account o di pagamento tramite questo sito.",
+    contact_status_body: "Il Centro assistenza offre indicazioni per aiutarti a trovare autonomamente una soluzione. La messaggistica tramite ticket sarà attivata al termine dei test di sicurezza e funzionalità. Non inviare informazioni dell'account o di pagamento tramite questo sito.",
     footer: "© 2026 CityCore Admin. Tutti i diritti riservati.",
     privacy: "Informativa sulla privacy"
   },
@@ -145,7 +145,7 @@ export default {
     contact: {
       title: "Disponibilità del supporto",
       steps: [
-        "Al momento questo sito offre solo articoli di assistenza autonoma.",
+        "Al momento questo sito offre solo articoli del Centro assistenza da consultare in autonomia.",
         "La messaggistica tramite ticket è in preparazione e sarà attivata al termine dei test di sicurezza e funzionalità.",
         "Non inviare informazioni dell'account, password o dati di pagamento tramite questo sito."
       ]

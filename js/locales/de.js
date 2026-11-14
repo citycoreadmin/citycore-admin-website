@@ -75,7 +75,7 @@ export default {
         "Öffne „Panel Settings“.",
         "Verwalte Mitglieder und Mitarbeitende unter „Members & Staff“.",
         "Konfiguriere Sanktionen und Moderation unter „Moderation“.",
-        "Verwalte Berechtigungen, Prüfprotokolle, Benachrichtigungen und Einladungen unter „Server Management“."
+        "Verwalte Berechtigungen, Audit-Protokolle, Benachrichtigungen und Einladungen unter „Server Management“."
       ]
     },
     roles: {

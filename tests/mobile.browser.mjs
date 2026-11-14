@@ -43,18 +43,36 @@ test("public mobile controls work with normal, denied, and quota-limited storage
             assert.equal(await page.locator("#platformSel option").count(), 5);
             assert.equal(await page.locator("html").getAttribute("lang"), "en");
             assert.equal(await page.evaluate(() => document.documentElement.scrollWidth), width);
-            const rtl = await page.evaluate(() => {
+            const rtl = await page.evaluate(async () => {
+              const { default: arabic } = await import("/js/locales/ar.js");
+              document.querySelectorAll("[data-i18n]").forEach(node => {
+                node.textContent = arabic.messages[node.dataset.i18n];
+              });
+              document.querySelectorAll("[data-i18n-ph]").forEach(node => {
+                node.placeholder = arabic.messages[node.dataset.i18nPh];
+              });
+              document.querySelectorAll("[data-i18n-aria]").forEach(node => {
+                node.setAttribute("aria-label", arabic.messages[node.dataset.i18nAria]);
+              });
+              document.documentElement.lang = "ar";
               document.documentElement.dir = "rtl";
               return {
                 overflow: document.documentElement.scrollWidth > innerWidth,
                 searchAlignment: getComputedStyle(document.querySelector("#searchInput")).textAlign,
-                policyAlignment: getComputedStyle(document.querySelector(".cta")).textAlign
+                policyAlignment: getComputedStyle(document.querySelector(".cta")).textAlign,
+                searchLabel: document.querySelector("#searchInput").getAttribute("aria-label"),
+                hero: document.querySelector("h1").textContent
               };
             });
             assert.equal(rtl.overflow, false);
             assert.equal(rtl.searchAlignment, "start");
             assert.equal(rtl.policyAlignment, "center");
-            await page.evaluate(() => { document.documentElement.dir = "ltr"; });
+            assert.equal(rtl.searchLabel, "ابحث عن مقالات");
+            assert.equal(rtl.hero, "مرحبًا، كيف يمكننا مساعدتك؟");
+            await page.evaluate(() => {
+              document.documentElement.lang = "en";
+              document.documentElement.dir = "ltr";
+            });
 
             await page.locator("[data-lang-select]").tap();
             const dialog = page.locator("#languageDialog");
@@ -118,7 +136,7 @@ test("public mobile controls work with normal, denied, and quota-limited storage
             });
             assert.deepEqual(rtlPolicy, { overflow: false, alignment: "start" });
             await page.evaluate(() => { document.documentElement.dir = "ltr"; });
-            for (const code of ["ur", "he", "ps"]) {
+            for (const code of ["ar", "ur", "he", "ps"]) {
               const draftLayout = await page.evaluate(async localeCode => {
                 const { default: draft } = await import(`/js/locales/${localeCode}.js`);
                 const nodes = [...document.querySelectorAll(".privacy-policy [data-i18n]")];

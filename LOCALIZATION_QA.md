@@ -1,6 +1,6 @@
 # CityCore Admin localization QA report
 
-**Review date:** 2026-11-13  
+**Review date:** 2026-11-14
 **Scope:** All 106 locale modules in `js/locales/` and the public website surfaces  
 **Disposition:** Technical checks passed; linguistic and policy approval remain outstanding. No locale was approved or enabled.
 
@@ -12,6 +12,27 @@
 - The Japanese (`ja`) footer was an exact English carryover. It is now a Japanese draft consistent with the Japanese copyright wording elsewhere in the module; native copyediting and approval are still required.
 - Haitian Creole (`ht`) and French (`fr`) are the first human-review priorities. Potential wording and punctuation concerns are listed below; they are flags for a fluent reviewer, not definitive corrections.
 - The 103 non-English Privacy Policies need both operator approval and fluent-speaker review. The English (US) and English (UK) variants also need operator and regional-copy review. Do not enable any locale until its required reviews are documented.
+
+## First 10 language readiness
+
+The public website strings, navigation, search and accessibility labels, all 10 Help Center articles and steps, and the complete Privacy Policy were reviewed for this priority set. AI-assisted copy edits are not fluent-speaker approval.
+
+| Language | Current status | Remaining approval |
+| --- | --- | --- |
+| English (`en`) | Complete and enabled | None |
+| Haitian Creole (`ht`) | Review needed; disabled | Named fluent-speaker review and operator Privacy Policy approval |
+| French (`fr`) | Review needed; disabled | Named fluent-speaker review and operator Privacy Policy approval |
+| Spanish (`es`) | Review needed; disabled | Named fluent-speaker review and operator Privacy Policy approval |
+| Portuguese (`pt`) | Review needed; disabled | Named fluent-speaker review and operator Privacy Policy approval |
+| German (`de`) | Review needed; disabled | Named fluent-speaker review and operator Privacy Policy approval |
+| Italian (`it`) | Review needed; disabled | Named fluent-speaker review and operator Privacy Policy approval |
+| Arabic (`ar`) | Review needed; disabled | Named fluent-speaker review, RTL copy/layout review, and operator Privacy Policy approval |
+| Chinese Simplified (`zh-Hans`) | Review needed; disabled | Named fluent-speaker review and operator Privacy Policy approval |
+| Japanese (`ja`) | Review needed; disabled | Named fluent-speaker review and operator Privacy Policy approval |
+
+No human review or operator Privacy Policy approval is recorded for the nine non-English locales. Technical checks, including the Arabic RTL mobile layout check, do not satisfy either approval. Record both approvals and apply any reviewer corrections before changing a locale to Complete or enabling it.
+
+The [first-10 review package](LOCALIZATION_REVIEW_PACKAGE.md) reproduces the complete public UI strings, all ten Help Center articles, and the fully assembled Privacy Policy for each of the nine non-English targets. It also lists language-specific review flags and factual claims that the operator must confirm. It is an AI-assisted review aid, not an approval record.
 
 ## Per-locale review queue
 
@@ -57,6 +78,8 @@ Each code below is a separate locale requiring the following before approval:
 - `fr` public messages: revised `policy_app_unknown` and `policy_contact_after`, and standardized public support status wording as “messagerie d'assistance par ticket”.
 - `fr` Help Center: edited interface-label presentation and wording in `servers`, `panel-settings`, `roles`, `account-settings`, `get-started`, `login-problems`, `invite-members`, `app-crash`, and `contact`; changed “bugs” to “bogues”. All ten public article IDs were reviewed.
 - French terminology follow-up found public assistance wording consistent (`Assistance`, `messagerie d'assistance`, `messagerie d'assistance par ticket`). The 15 English control labels in article instructions remain exact and are quoted; no French text change was needed for this check.
+- `de`: changed the technical term for audit logs in the `panel-settings` article to “Audit-Protokolle”.
+- `it`: replaced awkward self-service phrasing in the homepage contact notice and `contact` article with natural Italian wording.
 - `ja`: replaced `messages.footer` English text with `© 2026 CityCore Admin. 無断複製・転載を禁じます。` as an unapproved draft and added a regression assertion.
 - Retained all keys, article IDs/step counts, and placeholder names, including `{mb}`. No locale status or enabled-language list was changed.
 - No locale status or enabled-language list was changed. The edits are still AI-assisted drafts and are not approvals.
@@ -74,8 +97,8 @@ Each code below is a separate locale requiring the following before approval:
 
 - `npm test`: 11 tests passed after these corrections. This checks registry coverage, required public message keys, article structure, placeholder parity, disabled-locale gating, the Japanese footer regression, privacy/navigation markup, RTL direction rules, and storage behavior.
 - `npm run test:mobile`: all 12 WebKit viewport/storage combinations passed at 320, 375, 390, and 430 px.
-- The mobile suite checks mobile overflow and RTL policy layout and renders RTL policy drafts from Urdu (`ur`), Hebrew (`he`), and Pashto (`ps`) at each viewport. These locales remain disabled in the product.
-- A Workers preview returned HTTP 200 for all 106 locale module assets and `/privacy`; the excluded test asset returned 404. The existing `.assetsignore` locale allow rule is present.
+- The mobile suite checks mobile overflow and RTL layout with Arabic homepage copy and Arabic Privacy Policy content, and renders additional RTL policy drafts from Urdu (`ur`), Hebrew (`he`), and Pashto (`ps`) at each viewport. These locales remain disabled in the product.
+- The existing full Workers scan returned HTTP 200 for all 106 locale module assets and `/privacy`. This pass also verified HTTP 200 for each of the 10 priority locale modules and `/privacy`, the `/privacy.html` redirect (final HTTP 200), and HTTP 404 for an excluded test asset. The existing `.assetsignore` locale allow rule is present.
 
 These are technical and AI-assisted triage results only. They are not a substitute for fluent-speaker copyediting or operator/privacy approval.
 
