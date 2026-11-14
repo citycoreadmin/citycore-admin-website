@@ -245,6 +245,7 @@ Pour toute question sur la confidentialité ou pour demander la suppression de v
 
 Complete this operator review independently for each language policy. Record supporting evidence or the named accountable person; do not approve based only on repository text or the App Store privacy label.
 
+- [x] **Operator name (confirmed 2026-11-14):** The user confirms “WOOBENS STUDIO is the official operator name for CityCore Admin.” This confirmation applies only to the operator name. It does not confirm legal-entity details, controller role, address, jurisdiction, or approve any part of the Privacy Policy or translations.
 - [ ] **Operator identity and role:** Is WOOBENS STUDIO the correct legal entity/operator/controller? Record legal name, address/contact, relevant jurisdictions, and any required representative.
 - [ ] **Website request behavior:** Does the production website request or collect account, payment, contact, or other personal information beyond the visible help/search experience? Confirm whether any embedded third-party services change this.
 - [ ] **Local storage:** Confirm `cc_lang`, `cc_theme`, and `cc_platform` are the only site preferences stored; explain purpose, expiration/lifetime, clearing behavior, and whether cookies, session storage, or other browser storage are used.
@@ -258,6 +259,7 @@ Complete this operator review independently for each language policy. Record sup
 
 ### Operator policy approval record — Haitian Creole
 
+- Operator-name confirmation: **WOOBENS STUDIO** (user-confirmed 2026-11-14; name only).
 - Reviewer name / role: ______________________________________________
 - Evidence reviewed (links, documents, dates): _________________________
 - Decisions/corrections required: ____________________________________
@@ -268,6 +270,7 @@ Complete this operator review independently for each language policy. Record sup
 
 ### Operator policy approval record — French
 
+- Operator-name confirmation: **WOOBENS STUDIO** (user-confirmed 2026-11-14; name only).
 - Reviewer name / role: ______________________________________________
 - Evidence reviewed (links, documents, dates): _________________________
 - Decisions/corrections required: ____________________________________

@@ -112,6 +112,7 @@ These are code-inspection facts, not an independent audit of production traffic,
 
 ### Operator decisions and evidence required before policy approval
 
+- **Operator name confirmed (2026-11-14):** The user confirms WOOBENS STUDIO is the official operator name for CityCore Admin. This is limited to the name only; it is not legal-entity/controller verification and does not approve any Privacy Policy or translation.
 - [ ] Confirm the legal identity and role of WOOBENS STUDIO as operator/controller, the correct contact address, and the jurisdictions served.
 - [ ] Confirm the live website storage behavior against the list above, including the purpose and lifetime of each preference, whether any additional storage or cookies are used, and whether any analytics, advertising, or third-party scripts are active.
 - [ ] Obtain Cloudflare/hosting-provider documentation or operator configuration evidence for request metadata (including IP addresses), logs, cookies, subprocessors, retention/deletion periods, and any cross-border processing. Do not treat these as absent merely because they are not implemented in the repository.
@@ -121,7 +122,7 @@ These are code-inspection facts, not an independent audit of production traffic,
 - [ ] Confirm the policy's legal disclosures and rights for each intended jurisdiction, the effective/last-updated date, and whether any user categories or age restrictions need to be described.
 - [ ] Have an appropriately qualified operator/legal reviewer approve the English source policy and record the reviewer, date, and policy revision. Then have fluent reviewers check each localized policy for complete and equivalent meaning; translations do not themselves establish operator approval.
 
-**Verified facts:** only the code-level website behaviors listed above. **Unresolved claims:** operator identity/jurisdiction, production hosting/logging and storage behavior, current App Store labels, all iOS app data practices, deletion/retention/security/children, and legal sufficiency. No policy approval is recorded.
+**Confirmed by user:** WOOBENS STUDIO is the official operator name, name only. **Verified facts:** only the code-level website behaviors listed above. **Unresolved claims:** legal-entity/controller identity and jurisdiction, production hosting/logging and storage behavior, current App Store labels, all iOS app data practices, deletion/retention/security/children, and legal sufficiency. No policy or translation approval is recorded.
 
 ## Exact remaining activation actions for the nine translations
 
