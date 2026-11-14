@@ -43,7 +43,7 @@
 | `p_android` | Android | Android | Android |
 | `p_web` | Web | Web | Web |
 | `language` | Language | Lang | Langue |
-| `theme` (theme button accessible name) | Toggle theme | Chanje aparans | Changer de thème |
+| `theme` (theme button accessible name) | Toggle theme | Chanje tèm | Changer de thème |
 | `help_cats` | Browse by category | Eksplore kategori yo | Parcourir par catégorie |
 | `articles` | Articles | Atik | Articles |
 | `results` | Search results | Rezilta rechèch | Résultats de recherche |
@@ -288,6 +288,7 @@ Complete this operator review independently for each language policy. Record sup
 - [ ] Reviewed all ten Help Center article titles and steps above.
 - [ ] Reviewed the complete Privacy Policy above for complete, natural, equivalent meaning.
 - [ ] Confirmed retained English app-control names match the shipped app labels, or recorded corrections.
+- [ ] Confirm `Chanje tèm` names the theme control naturally, and `Kilè sipò disponib` is suitable as both a category label and the contact-article title.
 - [ ] **LINGUISTIC APPROVAL** — I approve this Haitian Creole public website copy for the stated locale/variety.
 - Reviewer signature or recorded approval reference: __________________
 

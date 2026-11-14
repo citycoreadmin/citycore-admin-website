@@ -42,7 +42,7 @@ export default {
     "p_android": "Android",
     "p_web": "Web",
     "language": "Lang",
-    "theme": "Chanje aparans",
+    "theme": "Chanje tèm",
     "help_cats": "Eksplore kategori yo",
     "articles": "Atik",
     "results": "Rezilta rechèch",
