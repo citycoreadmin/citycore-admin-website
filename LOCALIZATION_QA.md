@@ -69,7 +69,7 @@ The nine translated modules remain unapproved drafts, not activation-ready local
 ## Corrections made in this pass
 
 - `ht` public messages: refined `skip_content`, language-selector labels, Privacy Policy wording (`policy_intro`, `policy_website_intro`, `policy_website_data`, `policy_app_link`, `policy_app_after`, `policy_app_unknown`, `policy_contact_before`, `policy_contact_after`), the homepage greeting, search/platform/category labels, and contact-status copy. Removed the space before `?` in the homepage greeting and used “konfidansyalite” consistently for privacy references.
-- Follow-up Haitian Creole terminology requests were applied: `Panno administrasyon` → `Panèl administrasyon` (including the related article heading and sentence), `Chanje tèm` → `Chanje aparans`, `Gade kategori yo` → `Eksplore kategori yo`, `Disponibilite sipò` → `Kilè sipò disponib`, the language-search empty state was revised, and the app-crash instruction now says `Fèmen aplikasyon an nèt`.
+- Follow-up Haitian Creole terminology requests were applied: `Panno administrasyon` → `Panèl administrasyon` (including the related article heading and sentence), the theme control was settled on `Chanje tèm` (not `Chanje aparans`), `Gade kategori yo` → `Eksplore kategori yo`, `Disponibilite sipò` → `Kilè sipò disponib`, the language-search empty state was revised, and the app-crash instruction now says `Fèmen aplikasyon an nèt`.
 - `ht` Help Center: edited the title/instructions in `servers`, `panel-settings`, `roles`, `account-settings`, `get-started`, `invite-members`, and `app-crash`; clarified the password-reset step, privacy link wording, and `contact` article. All ten public article IDs were reviewed.
 - `fr` public messages: revised `policy_app_unknown` and `policy_contact_after`, and standardized public support status wording as “messagerie d'assistance par ticket”.
 - `fr` Help Center: edited interface-label presentation and wording in `servers`, `panel-settings`, `roles`, `account-settings`, `get-started`, `login-problems`, `invite-members`, `app-crash`, and `contact`; changed “bugs” to “bogues”. All ten public article IDs were reviewed.
@@ -100,6 +100,13 @@ This review compared the public website message strings, accessibility/mobile-me
 The low-risk wording corrections listed above have been applied as unapproved drafts. English app-control names in article steps remain unchanged because they are intended to match the shipped app interface. Reviewers should verify all remaining strings and article steps, not only the corrected examples in this table. No locale has been approved or enabled.
 
 ## WOOBENS STUDIO Privacy Policy approval checklist
+
+### Minimum outstanding approvals that block publication
+
+1. **Production facts:** Verify who actually serves the domain (including Cloudflare/GitHub Pages routing), what request data/logs are collected, whether analytics/cookies or other third parties run, and the relevant subprocessors, retention, deletion, and cross-border handling.
+2. **App facts:** Compare the current App Store privacy labels with actual iOS app collection/use, linkage, sharing/tracking, SDKs and permissions, security, retention/deletion (including backups and processors), and children-related practices.
+3. **Operator/legal review:** Confirm the operator's legal identity/role, contact and jurisdictions; confirm deletion-request handling and applicable legal disclosures; then record qualified approval of the English policy revision.
+4. **Translation review:** Named fluent reviewers must approve each complete localized policy as equivalent to the approved English source, alongside the full public UI and Help Center review. The operator-name confirmation alone does not satisfy any of these approvals.
 
 ### Facts verified from this repository's current public implementation
 
@@ -156,10 +163,11 @@ For each locale below, the locale-specific language reviewer must resolve the li
 
 ## Technical verification
 
-- `npm test`: 11 tests passed after the mobile-label assertions were added. This checks the 106-locale registry, required public message keys, article structure, placeholder parity, disabled-locale gating, the Japanese footer regression, privacy/navigation markup, RTL direction rules, and storage behavior.
-- `npm run test:mobile`: 18 WebKit cases passed against a local Workers preview. This includes the mobile navigation and App Store destinations, storage scenarios, and mobile widths 320, 375, 390, and 430 px.
+- 2026-11-16 rerun: `npm ci && npm test` — 12 tests passed. This checks the 106-locale registry, required public message keys, article structure, placeholder parity, disabled-locale gating, the Japanese footer regression, privacy/navigation markup, RTL direction rules, and storage behavior.
+- 2026-11-16 rerun: `npm run test:mobile` — 18 WebKit cases passed against a local Workers preview. This includes mobile navigation, the App Store destination, language chooser gate, storage scenarios, and mobile widths 320, 375, 390, and 430 px.
 - The mobile suite checks mobile overflow and RTL policy layout and now renders the Arabic (`ar`) policy draft, in addition to Urdu (`ur`), Hebrew (`he`), and Pashto (`ps`), at each viewport. These locales remain disabled in the product.
 - The preview returned HTTP 200 for `/` and `/privacy`; the mobile suite reported no failed assets or page errors. A prior full Workers asset probe returned HTTP 200 for all 106 locale modules and 404 for the excluded test asset; `.assetsignore` was not changed in this pass.
+- The selector test confirms only English can currently be selected; it does not claim that the nine disabled drafts have passed end-to-end language-switching review. Do not enable drafts merely to exercise them.
 
 These are technical and AI-assisted triage results only. They are not a substitute for fluent-speaker copyediting or operator/privacy approval.
 
