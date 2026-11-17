@@ -22,8 +22,8 @@ export default {
     policy_app_after: " di CityCore Admin indicano che nome, indirizzo e-mail e foto o video potrebbero essere raccolti, collegati agli utenti e utilizzati per il funzionamento dell'app.",
     policy_app_unknown: "WOOBENS STUDIO non ha ancora confermato un resoconto completo della raccolta e dell'uso dei dati, della condivisione, della sicurezza, della conservazione, dell'eliminazione o delle pratiche relative ai minori nell'app pubblicata. Le informazioni dell'App Store non attestano tutte queste pratiche.",
     policy_contact: "Contatti",
-    policy_contact_before: "Per domande sulla privacy o per richiedere l'eliminazione del tuo account o dei tuoi dati, contatta WOOBENS STUDIO all'indirizzo ",
-    policy_contact_after: ". La richiesta non comporta l'eliminazione automatica e non viene garantito alcun tempo di elaborazione.",
+    policy_contact_before: "Per assistenza clienti, domande sulla privacy, richieste di eliminazione del tuo account o dei tuoi dati, segnalazioni di bug o commenti, contatta WOOBENS STUDIO all'indirizzo ",
+    policy_contact_after: " Una richiesta di eliminazione non comporta l'eliminazione automatica dei dati e non viene garantito alcun tempo di elaborazione.",
     policy_copyright: "© 2026 Woobens Studio. Tutti i diritti riservati.",
     nav_home: "Home",
     nav_help: "Centro assistenza",
@@ -54,7 +54,7 @@ export default {
     cat_privacy: "Privacy e sicurezza",
     cat_contact: "Disponibilità del supporto",
     contact_status_title: "La messaggistica di supporto non è ancora disponibile su questo sito.",
-    contact_status_body: "Il Centro assistenza offre indicazioni per l'autonomia degli utenti. La messaggistica tramite ticket sarà attivata al termine dei test di sicurezza e funzionalità. Non inviare informazioni dell'account o di pagamento tramite questo sito.",
+    contact_status_body: "Il Centro assistenza offre indicazioni per aiutarti a trovare autonomamente una soluzione. Per assistenza clienti, domande sulla privacy, richieste di eliminazione dell'account, segnalazioni di bug o commenti, scrivi a citycoreadmin@gmail.com. La messaggistica tramite ticket non è disponibile su questo sito. Non inviare informazioni dell'account o di pagamento tramite questo sito.",
     footer: "© 2026 CityCore Admin. Tutti i diritti riservati.",
     privacy: "Informativa sulla privacy"
   },
@@ -145,7 +145,7 @@ export default {
     contact: {
       title: "Disponibilità del supporto",
       steps: [
-        "Al momento questo sito offre solo articoli di assistenza autonoma.",
+        "Al momento questo sito offre solo articoli del Centro assistenza da consultare in autonomia.",
         "La messaggistica tramite ticket è in preparazione e sarà attivata al termine dei test di sicurezza e funzionalità.",
         "Non inviare informazioni dell'account, password o dati di pagamento tramite questo sito."
       ]
